@@ -1,17 +1,30 @@
+
+//---------- imports
+
+// react
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import { View, Image, SafeAreaView, Text } from 'react-native'
-import { TouchableOpacity } from "react-native-gesture-handler";
+
+// third party lib
+import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+
+// common componets
 import CustomText from "../../../components/CustomText";
+import NavigationService from "../../../navigation/NavigationService";
+
+// components
 import HeaderLeft from "../../../components/HeaderLeft";
 import HeaderRight from "../../../components/HeaderRight";
 import HeaderTitle from "../../../components/HeaderTitle";
-import { backIcon, bagIcon, drawerIcon, musicIcon, splashLog, grayStarIcon, blackRoundIcon } from "../../../constants/Images";
-import NavigationService from "../../../navigation/NavigationService";
-import AuthStyles from "../../../style/AuthStyles";
+
+// styles, icons and colors
 import CommonStyles from "../../../style/CommonStyles";
+import AuthStyles from "../../../style/AuthStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
 import TextStyles from "../../../style/TextStyles";
+import { backIcon, bagIcon, drawerIcon, musicIcon, splashLog, grayStarIcon, blackRoundIcon } from "../../../constants/Images";
 
+// constants
 const data = [
     { name: 'glow from the inside out' },
     { name: 'hair is thick, glossy & fast-growing' },
@@ -24,7 +37,13 @@ const data = [
     { name: 'deep, soul-level beauty' }
 ]
 
+//---------- component
+
 function categoryList({ navigation }) {
+
+    //---------- state, veriable and hooks
+
+    //---------- life cycle
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -34,49 +53,63 @@ function categoryList({ navigation }) {
         });
     }, [navigation]);
 
-    return (
-        <View style={AuthStyles.authContainer}>
-            <SafeAreaView />
-            <View style={SpaceStyles.top5}>
-                <TouchableOpacity style={CommonStyles.musicCategory}>
-                    <Image
-                        source={grayStarIcon}
-                        resizeMode='cover'
-                    />
-                    <CustomText
-                        text={'BEAUTY'}
-                        style={[TextStyles.quicksandRegular24Black, SpaceStyles.left5]}
-                    />
-                </TouchableOpacity>
+    //---------- helper: user's actions
 
-                <CustomText
-                    text={'Subliminal to amplify beauty'}
-                    style={[TextStyles.textBold24Black, SpaceStyles.textAlign, SpaceStyles.vertical2]}
-                />
-                {data.map((i) => {
-                    return (
-                        <TouchableOpacity style={CommonStyles.musicCategory} >
+    //---------- return main view
+
+    return (
+        <SafeAreaView >
+            <ScrollView>
+
+                <View style={AuthStyles.authContainer}>
+                    <View style={SpaceStyles.top5}>
+                        <TouchableOpacity style={CommonStyles.musicCategory}>
                             <Image
-                                source={blackRoundIcon}
-                                resizeMode='contain'
+                                source={grayStarIcon}
+                                resizeMode='cover'
                             />
                             <CustomText
-                                text={i.name}
-                                style={[TextStyles.quicksandRegular16Black, SpaceStyles.left5, SpaceStyles.bottom1]}
+                                text={'BEAUTY'}
+                                style={[TextStyles.quicksandRegular24Black, SpaceStyles.left5]}
                             />
                         </TouchableOpacity>
-                    )
-                })}
-            </View>
-            <TouchableOpacity onPress={() => NavigationService.navigate('MusicScreen')}>
-                <CustomText
-                    text={'Listen Now'}
-                    style={[TextStyles.textBold36Black, SpaceStyles.textAlign, SpaceStyles.top2, { textDecorationLine: 'underline' }]}
-                />
-            </TouchableOpacity>
-            <SafeAreaView />
-        </View>
+
+                        <CustomText
+                            text={'Subliminal to amplify beauty'}
+                            style={[TextStyles.textBold24Black, SpaceStyles.textAlign, SpaceStyles.vertical2]}
+                        />
+                        {data.map((i) => {
+                            return (
+                                <TouchableOpacity style={CommonStyles.musicCategory} >
+                                    <Image
+                                        source={blackRoundIcon}
+                                        resizeMode='contain'
+                                    />
+                                    <CustomText
+                                        text={i.name}
+                                        style={[TextStyles.quicksandRegular16Black, SpaceStyles.left5, SpaceStyles.bottom1]}
+                                    />
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
+                    <TouchableOpacity
+                        style={SpaceStyles.bottom20}
+                        onPress={() => NavigationService.navigate('MusicScreen')}
+                    >
+                        <CustomText
+                            text={'Listen Now'}
+                            style={[TextStyles.textBold36Black, SpaceStyles.textAlign, SpaceStyles.top2, { textDecorationLine: 'underline' }]}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+            </ScrollView>
+
+        </SafeAreaView >
     )
 }
+
+//---------- export component
 
 export default categoryList

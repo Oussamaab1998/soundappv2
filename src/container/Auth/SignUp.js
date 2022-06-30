@@ -1,16 +1,38 @@
+//---------- imports
+
+// react
 import React, { useEffect, useState } from "react";
 import { View, Image, SafeAreaView, Text, TouchableOpacity, ScrollView } from 'react-native'
+
+// third party lib
+import CheckBox from 'react-native-check-box'
+
+// common navigation
+import NavigationService from "../../navigation/NavigationService";
+
+// common componets
 import CustomText from "../../components/CustomText";
 import CustomTextInput from "../../components/CustomTextInput";
+
+// styles
 import AuthStyles from "../../style/AuthStyles";
 import SpaceStyles from "../../style/SpaceStyles";
 import TextStyles from "../../style/TextStyles";
-import CheckBox from 'react-native-check-box'
-import NavigationService from "../../navigation/NavigationService";
+
+//---------- component
 
 function SignUp({ navigation }) {
 
+    //---------- state, veriable and hooks
+
+    // state
     const [onCheckClick, setOnCheckClick] = useState(false);
+
+    //---------- life cycle
+
+    //---------- helper: user's actions
+
+    //---------- return main view
 
     return (
         <View style={AuthStyles.authContainer}>
@@ -24,13 +46,15 @@ function SignUp({ navigation }) {
                     <View style={SpaceStyles.alignSpaceBlock}>
                         <CustomTextInput
                             placeholder={'First Name'}
-                            containerStyle={SpaceStyles.top1}
-                            containerStyle={SpaceStyles.width37}
+                            containerStyle={{
+                                width: '48%'
+                            }}
                         />
                         <CustomTextInput
                             placeholder={'Last Name'}
-                            containerStyle={SpaceStyles.top1}
-                            containerStyle={SpaceStyles.width37}
+                            containerStyle={{
+                                width: '48%'
+                            }}
                         />
                     </View>
                     <CustomTextInput
@@ -79,7 +103,7 @@ function SignUp({ navigation }) {
                         placeholder={'CVV'}
                         containerStyle={SpaceStyles.top2}
                     />
-                    <TouchableOpacity style={[AuthStyles.largeButton, SpaceStyles.top5]} onPress={() => NavigationService.navigate('IntroApp')}>
+                    <TouchableOpacity style={[AuthStyles.largeButton, SpaceStyles.top5, {marginBottom:40}]} onPress={() => NavigationService.navigate('IntroApp')}>
                         <CustomText
                             text={'Start My Free Trial'}
                             style={TextStyles.textSegoe18White}
@@ -91,5 +115,7 @@ function SignUp({ navigation }) {
         </View>
     )
 }
+
+//---------- export component
 
 export default SignUp

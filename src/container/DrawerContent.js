@@ -1,15 +1,49 @@
+//---------- imports
+
+// react
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
+
+// third pary lib
 import { useTheme, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+
+// common components
 import NavigationService from '../navigation/NavigationService';
 import CommonStyles from '../style/CommonStyles';
-import { audioIcon, contactIcon, disclaimerIcon, fAQsIcon, homeIcon, howsItWorkIcon, instructions, secureIcon, shutdownIcon, subliminalsIcon, termsIcon, testimonialsIcon, userIcon, userWhiteIcon } from '../constants/Images';
+import {
+    audioIcon,
+    contactIcon,
+    disclaimerIcon,
+    fAQsIcon,
+    homeIcon,
+    howsItWorkIcon,
+    instructions,
+    secureIcon,
+    shutdownIcon,
+    subliminalsIcon,
+    termsIcon,
+    testimonialsIcon,
+    userIcon,
+    userWhiteIcon
+} from '../constants/Images'
+
+// styles
 import CustomText from '../components/CustomText';
 import TextStyles from '../style/TextStyles';
 import SpaceStyles from '../style/SpaceStyles';
 
+//---------- export component
+
 export default function DrawerContent(props) {
+
+    //---------- state, veriable and hooks
+
+    //---------- life cycle
+
+    //---------- helper: user's actions
+
+    //---------- return main view
 
     return (
         <View style={{ flex: 1 }}>
@@ -27,95 +61,99 @@ export default function DrawerContent(props) {
                     />
                     <View style={CommonStyles.borderView} />
 
-                    <View style={[SpaceStyles.padding5, SpaceStyles.top2]}>
+                    <View style={[SpaceStyles.padding10, { paddingBottom: 20 }]}>
                         <TouchableOpacity style={SpaceStyles.rowFlex} onPress={() => NavigationService.navigate('HomeScreen')}>
                             <Image source={homeIcon} />
                             <CustomText
                                 text={'Home'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]} onPress={() => NavigationService.navigate('SubliminalsScreen')}>
                             <Image source={subliminalsIcon} />
                             <CustomText
                                 text={'Subliminals'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </TouchableOpacity>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={instructions} />
                             <CustomText
                                 text={'Instructions'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={testimonialsIcon} />
                             <CustomText
                                 text={'Testimonials'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={howsItWorkIcon} />
                             <CustomText
                                 text={'How it works'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={audioIcon} />
                             <CustomText
                                 text={'Listening Tips'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={fAQsIcon} />
                             <CustomText
                                 text={'FAQs'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={contactIcon} />
                             <CustomText
                                 text={'Contact'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={disclaimerIcon} />
                             <CustomText
                                 text={'Disclaimer'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={secureIcon} />
                             <CustomText
                                 text={'Privacy Policy'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
                             <Image source={termsIcon} />
                             <CustomText
                                 text={'Terms of Service'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
                         </View>
                         <CustomText
                             text={'Intellectual Property Notice'}
                             style={[TextStyles.textQuicksand14LightGray, SpaceStyles.top5, { textAlign: 'center' }]}
                         />
-                        <View style={[SpaceStyles.rowFlex, SpaceStyles.top5]}>
+                        <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top5]}
+                            onPress={() => {
+                                NavigationService.navigate('AuthNavigator')
+                            }}
+                        >
                             <Image source={shutdownIcon} />
                             <CustomText
                                 text={'Logout'}
-                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left5]}
+                                style={[TextStyles.textQuicksandMedium18Black, SpaceStyles.left10]}
                             />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     {/* <Drawer.Section title="Preferences">
                         <TouchableRipple
@@ -146,6 +184,8 @@ export default function DrawerContent(props) {
         </View>
     );
 }
+
+//---------- drawer style
 
 const styles = StyleSheet.create({
     drawerContent: {

@@ -1,14 +1,26 @@
+//---------- imports
+
+// react
 import React, { useEffect, useState } from "react";
 import { View, Image, SafeAreaView, TouchableOpacity } from 'react-native'
+
+// third party lib
+import Swiper from 'react-native-swiper'
+
+// common navigation
+import NavigationService from "../../navigation/NavigationService";
+
+// common componets
 import CustomText from "../../components/CustomText";
 import { BLACK, INACTIVEDOT, TEXTGRAY } from "../../constants/Colors";
 import { introIcon, setp1, step2, step3, step4 } from "../../constants/Images";
-import NavigationService from "../../navigation/NavigationService";
+
+// styles
 import AuthStyles from "../../style/AuthStyles";
 import SpaceStyles from "../../style/SpaceStyles";
 import TextStyles from "../../style/TextStyles";
-import Swiper from 'react-native-swiper'
 
+// constants
 let data = [
     {
         title: 'How To Start Using Subliminals',
@@ -37,12 +49,22 @@ let data = [
     },
 ];
 
+//---------- component
+
 function IntroApp({ navigation }) {
+
+    //---------- state, veriable and hooks
+
+    //---------- life cycle
+
+    //---------- helper: user's actions
+
+    //---------- return main view
 
     return (
         <View style={AuthStyles.authContainer}>
             <SafeAreaView />
-            <View style={[SpaceStyles.height90, SpaceStyles.top5, SpaceStyles.padding5]}>
+            <View style={[SpaceStyles.height50, SpaceStyles.top5, SpaceStyles.padding5]}>
                 <Swiper
                     dotColor={INACTIVEDOT}
                     activeDotColor={BLACK}
@@ -52,7 +74,7 @@ function IntroApp({ navigation }) {
                 >
                     {data?.map((item, index) => {
                         return (
-                            <View style={[SpaceStyles.height90, SpaceStyles.alignSpaceVerticalBlock]} key={index}>
+                            <View style={[SpaceStyles.height50, SpaceStyles.alignSpaceVerticalBlock]} key={index}>
                                 <CustomText
                                     text={item.title}
                                     style={[index == 0 ? TextStyles.textBold36Black : TextStyles.textBold24Black, { textAlign: 'center' }]}
@@ -71,25 +93,7 @@ function IntroApp({ navigation }) {
                                     // style={(index == 1 || index == 2) ? AuthStyle.sliderImageBig : AuthStyle.sliderImage}
                                     />
                                 </View>
-                                {/* <View style={AuthStyles.centerImageView} key={index}>
-                                        <Image
-                                            source={item.image}
-                                            resizeMode='cover'
-                                            // style={(index == 1 || index == 2) ? AuthStyle.sliderImageBig : AuthStyle.sliderImage}
-                                        />
-                                    </View> */}
-                                {/* {index == 0 &&
-                                        <Text style={[TextStyles.textMedium20LightBlack, { textAlign: 'center' }]}>{item.title}</Text>
-                                    }
-                                    {index == 1 &&
-                                        <Text style={[TextStyles.textMedium20LightBlack, { textAlign: 'center' }]}>{item.title}</Text>
-                                    }
-                                    {index == 2 &&
-                                        <Text style={[TextStyles.textMedium20LightBlack, { textAlign: 'center' }]}>{item.title}</Text>
-                                    }
-                                    {index == 3 &&
-                                        <Text style={[TextStyles.textMedium20LightBlack, { textAlign: 'center', marginTop: isIos ? HEIGHT * -12 : HEIGHT * -10 }]}>{item.title}</Text>
-                                    } */}
+                             
                             </View>
                         )
                     })}
@@ -106,5 +110,7 @@ function IntroApp({ navigation }) {
         </View>
     )
 }
+
+//---------- export component
 
 export default IntroApp

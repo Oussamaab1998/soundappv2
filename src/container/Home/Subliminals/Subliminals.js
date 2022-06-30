@@ -1,17 +1,29 @@
+//---------- imports
+
+// react
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import { View, Image, SafeAreaView, Text } from 'react-native'
-import { TouchableOpacity } from "react-native-gesture-handler";
+
+// third party lib
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+
+// common componets
 import CustomText from "../../../components/CustomText";
+import NavigationService from "../../../navigation/NavigationService";
+
+// components
 import HeaderLeft from "../../../components/HeaderLeft";
 import HeaderRight from "../../../components/HeaderRight";
 import HeaderTitle from "../../../components/HeaderTitle";
-import { backIcon, bagIcon, drawerIcon, musicIcon, splashLog, grayStarIcon } from "../../../constants/Images";
-import NavigationService from "../../../navigation/NavigationService";
+
+// styles, icons and colors
 import AuthStyles from "../../../style/AuthStyles";
 import CommonStyles from "../../../style/CommonStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
 import TextStyles from "../../../style/TextStyles";
+import { backIcon, bagIcon, drawerIcon, musicIcon, splashLog, grayStarIcon } from "../../../constants/Images";
 
+// constants
 const data = [
     { name: 'BEAUTY' },
     { name: 'BODY' },
@@ -26,7 +38,14 @@ const data = [
     { name: 'TWIN FLAMES' },
 ]
 
+//---------- component
+
 function Subliminals({ navigation }) {
+
+
+    //---------- state, veriable and hooks
+
+    //---------- life cycle
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -36,28 +55,36 @@ function Subliminals({ navigation }) {
         });
     }, [navigation]);
 
+    //---------- helper: user's actions
+
+    //---------- return main view
+
     return (
         <View style={AuthStyles.authContainer}>
-            <SafeAreaView />
-            <View style={SpaceStyles.top5}>
-                {data.map((i) => {
-                    return (
-                        <TouchableOpacity style={CommonStyles.musicCategory} onPress={() => NavigationService.navigate('categoryListScreen')}>
-                            <Image
-                                source={grayStarIcon}
-                                resizeMode='cover'
-                            />
-                            <CustomText
-                                text={i.name}
-                                style={[TextStyles.quicksandRegular24Black, SpaceStyles.left5]}
-                            />
-                        </TouchableOpacity>
-                    )
-                })}
-            </View>
-            <SafeAreaView />
+            <SafeAreaView>
+                <View style={SpaceStyles.top5}>
+                    {data.map((i) => {
+                        return (
+                            <TouchableOpacity
+                             style={CommonStyles.musicCategory}
+                             onPress={() => NavigationService.navigate('categoryListScreen')}>
+                                <Image
+                                    source={grayStarIcon}
+                                    resizeMode='cover'
+                                />
+                                <CustomText
+                                    text={i.name}
+                                    style={[TextStyles.quicksandRegular24Black, SpaceStyles.left10]}
+                                />
+                            </TouchableOpacity>
+                        )
+                    })}
+                </View>
+            </SafeAreaView>
         </View>
     )
 }
+
+//---------- export component
 
 export default Subliminals

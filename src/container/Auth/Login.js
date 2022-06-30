@@ -21,9 +21,13 @@ import useServerCommunucation from '../../utils/ServerCommunication'
 
 function Login({ navigation }) {
 
+    //---------- state, veriable and hooks
+
+    // hook
     const { serverRequest, dataPocket, loading, error } = useServerCommunucation()
 
     //---------- life cycle
+
     useEffect(() => {
 
 
@@ -46,10 +50,11 @@ function Login({ navigation }) {
 
     const handleLogin = () => {
 
-        serverRequest({
-            key: 'login_data_pocket',
-            request_type: 'get'
-        })
+        NavigationService.navigate('Route')
+        // serverRequest({
+        //     key: 'login_data_pocket',
+        //     request_type: 'get'
+        // })
     }
 
     //---------- return main view
@@ -62,7 +67,7 @@ function Login({ navigation }) {
                     text={'Login'}
                     style={[TextStyles.textBold48Black, { alignSelf: 'center' }]}
                 />
-                <View style={[SpaceStyles.vertical2, SpaceStyles.top10]}>
+                <View style={[ SpaceStyles.top10]}>
                     <CustomTextInput
                         placeholder={'Email'}
                         containerStyle={SpaceStyles.top1}
@@ -88,7 +93,10 @@ function Login({ navigation }) {
                         style={TextStyles.textSegoe18White}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => NavigationService.navigate('SignUp')}>
+                <TouchableOpacity
+                 style={[ SpaceStyles.top5]}
+                 onPress={() => NavigationService.navigate('SignUp')}
+                 >
                     <CustomText
                         text={'Create Account'}
                         style={[TextStyles.textSegoe18Black, SpaceStyles.top10, { textAlign: 'center' }]}
