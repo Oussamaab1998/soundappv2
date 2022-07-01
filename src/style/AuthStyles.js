@@ -1,56 +1,58 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions } from "react-native";
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
 const AuthStyles = StyleSheet.create({
+  errorsLogin: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  errorsLogintxt: {
+    color: "red",
+    textAlign: "center",
+  },
+  authContainer: {
+    flex: 1,
 
-    authContainer: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 30,
+  },
+  textInputView: {
+    borderWidth: 1,
+    borderColor: "#000",
+  },
+  smallButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
 
-        flex:1,
+    alignItems: "center",
+    justifyContent: "center",
 
-        backgroundColor:'#fff',
-        paddingHorizontal: 30
-    },
-    textInputView:{
+    alignSelf: "center",
+    backgroundColor: "#000",
+  },
+  largeButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
 
-        borderWidth:1,
-        borderColor: '#000',
-    },
-    smallButton:{
+    alignItems: "center",
+    justifyContent: "center",
 
-        paddingHorizontal:20,
-        paddingVertical:10,
-
-        alignItems:'center',
-        justifyContent: 'center',
-
-        alignSelf:'center',
-        backgroundColor:'#000'
-        
-    },
-    largeButton:{
-
-        paddingHorizontal:20,
-        paddingVertical:10,
-
-        alignItems:'center',
-        justifyContent: 'center',
-
-        backgroundColor:'#000'
-    },
-    centerImageView:{
-
-        alignContent:'center',
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    deviceWidth:{
-        width: width
-    },
-    deviceHeight:{
-        height: height
-    }
-})
+    backgroundColor: "#000",
+  },
+  centerImageView: {
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  deviceWidth: {
+    width: width,
+  },
+  deviceHeight: {
+    height: height,
+  },
+});
 
 export default AuthStyles;
