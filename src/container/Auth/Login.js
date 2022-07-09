@@ -32,6 +32,7 @@ import {
   ResetErrorsState,
 } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
+import { saveUser } from "../../redux/Local/local.actions";
 
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
@@ -69,7 +70,10 @@ function Login({ navigation }) {
   //---------- helper: user's actions
 
   useEffect(() => {
-    NavigationService.navigate("Route");
+    if (propertySignInSuccess) {
+      dispatch(saveUser());
+      NavigationService.navigate("Route");
+    }
   }, [propertySignInSuccess]);
 
   const handleLogin = () => {

@@ -109,81 +109,57 @@ export const signInUser =
       //     });
       //   });
     } catch (err) {
-      console.log("from catch in login redux actions");
-      // const error = ["Login problem"];
-      // dispatch({
-      //   type: userTypes.SET_ERRORS,
-      //   payload: error,
-      // });
+      console.log("Error from catch in login redux actions");
     }
   };
 
 export const signUpUser =
-  ({ firstName, email, password }) =>
+  ({ email, password, confirmPassword, name }) =>
   async (dispatch) => {
-    let rule = 0;
-    let createdAt = new Date();
-    let updatedAt = new Date();
-    let deletedAt = new Date();
     let myObj = {
-      rule: rule,
-      fullname: firstName,
       email: email,
       password: password,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      deletedAt: deletedAt,
+      password2: confirmPassword,
+      name: name,
     };
     console.log("MyObj => ", myObj);
     try {
-      // console.log("Line 118 ACTION");
-      // await createUserWithEmailAndPassword(auth, email, password)
-      //   .then(async () => {
-      //     console.log("Line 122 ACTION");
-      //     const docRef = await addDoc(collection(db, "users"), {
-      //       rule: rule,
-      //       fullname: firstName,
-      //       email: email,
-      //       password: password,
-      //       createdAt: createdAt,
-      //       updatedAt: updatedAt,
-      //       deletedAt: deletedAt,
-      //     });
-      //     console.log("Document written with ID: ", docRef.id);
-      //     dispatch({
-      //       type: userTypes.USER_SIGN_UP_SUCCESS,
-      //       payload: true,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     if (err.code === "auth/email-already-in-use") {
-      //       const error = "This email address is already in use!";
-      //       console.log(error);
-      //       dispatch({
-      //         type: userTypes.SET_ERRORS,
-      //         payload: error,
-      //       });
-      //     }
-      //     if (err.code === "auth/invalid-email") {
-      //       const error = "This email address is invalid!";
-      //       console.log(error);
-      //       dispatch({
-      //         type: userTypes.SET_ERRORS,
-      //         payload: error,
-      //       });
-      //     }
-      //     console.log(err);
-      //   });
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          password2: confirmPassword,
+          name: name,
+        }),
+      };
+      fetch(
+        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/register/",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.errors) {
+            console.log("There is no user with this credentials");
+            const error = response.data.message;
+            dispatch({
+              type: userTypes.SET_ERRORS,
+              payload: error,
+            });
+          } else {
+            console.log("Yess we are here");
+            dispatch({
+              type: userTypes.USER_SIGN_UP_SUCCESS,
+              payload: true,
+            });
+          }
+        });
     } catch (err) {
-      // const error = "Please check your information again";
-      // dispatch({
-      //   type: userTypes.SET_ERRORS,
-      //   payload: error,
-      // });
-      // console.log(err);
+      console.log("Error from catch in login redux actions");
     }
   };
-
 // PROPERTY
 export const fetchUser = () => async (dispatch) => {
   try {
@@ -212,6 +188,12 @@ export const fetchUser = () => async (dispatch) => {
   }
 };
 // OTHERS
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: userTypes.SET_ERRORS,
+    payload: error,
+  });
+};
 export const resetAllAuthForms = () => ({
   type: userTypes.RESET_AUTH_FORMS,
 });

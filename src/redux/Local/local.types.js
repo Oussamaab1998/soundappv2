@@ -4,4 +4,4 @@ const localTypes = {
   REMOVE_USER: "REMOVE_USER",
 };
 
-export default userTypes;
+export default localTypes;

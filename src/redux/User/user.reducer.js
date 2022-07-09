@@ -20,6 +20,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         propertySignInSuccess: action.payload,
         currentProperty: true,
       };
+    case userTypes.CLEAR_ERRORS:
+      return {
+        ...state,
+        errors: [],
+      };
     case userTypes.USER_SIGN_IN_SUCCESS:
       return {
         ...state,

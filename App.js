@@ -32,15 +32,15 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <NavigationContainer
-        ref={(navigatorRef) => {
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }}
-      >
-        <StackNaviagtion />
-      </NavigationContainer>
-      {/* </PersistGate> */}
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer
+          ref={(navigatorRef) => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        >
+          <StackNaviagtion />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 };
