@@ -62,9 +62,13 @@ function IntroApp({ navigation }) {
     //---------- return main view
 
     return (
-        <View style={AuthStyles.authContainer}>
+        <View
+            style={AuthStyles.authContainer}
+        >
             <SafeAreaView />
-            <View style={[SpaceStyles.height50, SpaceStyles.top5, SpaceStyles.padding5]}>
+            <View
+                style={[SpaceStyles.height50, SpaceStyles.top5, SpaceStyles.padding5]}
+            >
                 <Swiper
                     dotColor={INACTIVEDOT}
                     activeDotColor={BLACK}
@@ -72,34 +76,45 @@ function IntroApp({ navigation }) {
                     activeDotStyle={{ height: 12, width: 12, borderRadius: 90 }}
                     removeClippedSubviews={false}
                 >
-                    {data?.map((item, index) => {
-                        return (
-                            <View style={[SpaceStyles.height50, SpaceStyles.alignSpaceVerticalBlock]} key={index}>
-                                <CustomText
-                                    text={item.title}
-                                    style={[index == 0 ? TextStyles.textBold36Black : TextStyles.textBold24Black, { textAlign: 'center' }]}
-                                />
-                                <View style={[SpaceStyles.padding5, SpaceStyles.top5]}>
+                    {
+                        data?.map((item, index) => {
+                            return (
+                                <View
+                                    style={[SpaceStyles.height50, SpaceStyles.alignSpaceVerticalBlock]}
+                                    key={index}
+                                >
                                     <CustomText
-                                        text={item.content}
-                                        style={[index == 0 ? TextStyles.textBold24Gray : TextStyles.textSegoe18DarkGray, { textAlign: 'center' }]}
+                                        text={item.title}
+                                        style={[index == 0 ? TextStyles.textBold36Black : TextStyles.textBold24Black, { textAlign: 'center' }]}
                                     />
+                                    <View style={[SpaceStyles.padding5, SpaceStyles.top5]}>
+                                        <CustomText
+                                            text={item.content}
+                                            style={[index == 0 ? TextStyles.textBold24Gray : TextStyles.textSegoe18DarkGray, { textAlign: 'center' }]}
+                                        />
+                                    </View>
+                                    <View
+                                        style={AuthStyles.centerImageView}
+                                        key={index}
+                                    >
+                                        <Image
+                                            source={item.image}
+                                            resizeMode='cover'
+                                            style={{ marginBottom: 30 }}
+                                        // style={(index == 1 || index == 2) ? AuthStyle.sliderImageBig : AuthStyle.sliderImage}
+                                        />
+                                    </View>
+
                                 </View>
-                                <View style={AuthStyles.centerImageView} key={index}>
-                                    <Image
-                                        source={item.image}
-                                        resizeMode='cover'
-                                        style={{ marginBottom: 30 }}
-                                    // style={(index == 1 || index == 2) ? AuthStyle.sliderImageBig : AuthStyle.sliderImage}
-                                    />
-                                </View>
-                             
-                            </View>
-                        )
-                    })}
+                            )
+                        })
+                    }
 
                 </Swiper>
-                <TouchableOpacity style={[SpaceStyles.padding5]} onPress={() => NavigationService.navigate('Route')}>
+                <TouchableOpacity
+                    style={[SpaceStyles.padding5]}
+                    onPress={() => NavigationService.navigate('Route')}
+                >
                     <CustomText
                         text={'Next'}
                         style={[TextStyles.textSegoe18DarkGray, { textAlign: 'center' }]}

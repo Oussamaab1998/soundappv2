@@ -78,6 +78,7 @@ function SignUp({ navigation }) {
       setLocalErros("All the fields are required");
     }
   };
+
   useEffect(() => {
     dispatch(ResetErrorsState());
     if (propertySignUpSuccess) {
@@ -87,7 +88,9 @@ function SignUp({ navigation }) {
   }, [propertySignUpSuccess]);
 
   return (
-    <View style={AuthStyles.authContainer}>
+    <View
+      style={AuthStyles.authContainer}
+    >
       <SafeAreaView />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -98,9 +101,17 @@ function SignUp({ navigation }) {
           style={[TextStyles.textBold48Black, { alignSelf: "center" }]}
         />
         <View style={AuthStyles.errorsLogin}>
-          <Text style={AuthStyles.errorsLogintxt}>{localErros + errors}</Text>
+          <Text
+            style={AuthStyles.errorsLogintxt}
+          >
+            {
+              localErros + errors
+            }
+          </Text>
         </View>
-        <View style={[SpaceStyles.vertical2]}>
+        <View
+          style={[SpaceStyles.vertical2]}
+        >
           {/* <CustomTextInput
               placeholder={"First Name"}
               containerStyle={{

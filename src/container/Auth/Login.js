@@ -41,6 +41,7 @@ const mapState = ({ user }) => ({
 });
 
 function Login({ navigation }) {
+
   //---------- state, veriable and hooks
 
   // hook
@@ -92,9 +93,13 @@ function Login({ navigation }) {
   //---------- return main view
 
   return (
-    <View style={AuthStyles.authContainer}>
+    <View
+      style={AuthStyles.authContainer}
+    >
       <SafeAreaView />
-      <View style={[SpaceStyles.top14, SpaceStyles.padding10]}>
+      <View
+        style={[SpaceStyles.top14, SpaceStyles.padding10]}
+      >
         <CustomText
           text={"Login"}
           style={[TextStyles.textBold48Black, { alignSelf: "center" }]}
@@ -105,7 +110,9 @@ function Login({ navigation }) {
             containerStyle={SpaceStyles.top1}
           />
         </View> */}
-        <View style={[SpaceStyles.top10, , AuthStyles.textInputView]}>
+        <View
+          style={[SpaceStyles.top10, , AuthStyles.textInputView]}
+        >
           <TextInput
             style={SpaceStyles.top1}
             placeholder="Email"
@@ -114,7 +121,9 @@ function Login({ navigation }) {
             textContentType="emailAddress"
           />
         </View>
-        <View style={[SpaceStyles.top10, , AuthStyles.textInputView]}>
+        <View
+          style={[SpaceStyles.top10, , AuthStyles.textInputView]}
+        >
           <TextInput
             style={SpaceStyles.top1}
             onChangeText={onChangepassword}
@@ -145,7 +154,9 @@ function Login({ navigation }) {
             handleLogin();
           }}
         >
-          <CustomText text={"Sign in"} style={TextStyles.textSegoe18White} />
+          <CustomText
+            text={"Sign in"} style={TextStyles.textSegoe18White}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           style={[SpaceStyles.top5]}
@@ -160,8 +171,16 @@ function Login({ navigation }) {
             ]}
           />
         </TouchableOpacity>
-        <View style={AuthStyles.errorsLogin}>
-          <Text style={AuthStyles.errorsLogintxt}>{localErros + errors}</Text>
+        <View
+          style={AuthStyles.errorsLogin}
+        >
+          <Text
+            style={AuthStyles.errorsLogintxt}
+          >
+            {
+              localErros + errors
+            }
+          </Text>
         </View>
       </View>
       <SafeAreaView />

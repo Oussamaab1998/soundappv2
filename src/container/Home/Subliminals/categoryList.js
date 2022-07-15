@@ -61,9 +61,15 @@ function categoryList({ navigation }) {
         <SafeAreaView >
             <ScrollView>
 
-                <View style={AuthStyles.authContainer}>
-                    <View style={SpaceStyles.top5}>
-                        <TouchableOpacity style={CommonStyles.musicCategory}>
+                <View
+                 style={AuthStyles.authContainer}
+                 >
+                    <View
+                     style={SpaceStyles.top5}
+                     >
+                        <TouchableOpacity 
+                        style={CommonStyles.musicCategory}
+                        >
                             <Image
                                 source={grayStarIcon}
                                 resizeMode='cover'
@@ -80,7 +86,9 @@ function categoryList({ navigation }) {
                         />
                         {data.map((i) => {
                             return (
-                                <TouchableOpacity style={CommonStyles.musicCategory} >
+                                <TouchableOpacity
+                                 style={CommonStyles.musicCategory} 
+                                >
                                     <Image
                                         source={blackRoundIcon}
                                         resizeMode='contain'
