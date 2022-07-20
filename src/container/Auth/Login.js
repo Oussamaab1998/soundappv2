@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator
 } from "react-native";
 
 // common componets
@@ -24,21 +25,27 @@ import TextStyles from "../../style/TextStyles";
 // server hooks
 import useServerCommunucation from "../../utils/ServerCommunication";
 
-//---------- component
-
 import {
   signInUser,
   resetAllAuthForms,
   ResetErrorsState,
+  ResetStates
 } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { saveUser } from "../../redux/Local/local.actions";
+import { findLastValidBreakpoint } from "native-base/lib/typescript/theme/tools";
 
-const mapState = ({ user }) => ({
+//---------- connect with redux state
+
+const mapState = ({ user, localReducer }) => ({
+
   currentProperty: user.currentProperty,
   propertySignInSuccess: user.propertySignInSuccess,
   errors: user.errors,
+  isLoggedIn: localReducer.isLoggedIn,
 });
+
+//---------- component
 
 function Login({ navigation }) {
 
@@ -48,33 +55,64 @@ function Login({ navigation }) {
   const { serverRequest, dataPocket, loading, error } =
     useServerCommunucation();
 
-  const { currentProperty, propertySignInSuccess, errors } =
-    useSelector(mapState);
+  const { currentProperty, propertySignInSuccess, errors } = useSelector(mapState);
+  const { isLoggedIn } = useSelector(mapState);
 
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
   const [password, onChangepassword] = useState("");
+  const [object, setObject] = useState({});
+  const [manageClicks, setManageClicks] = useState(0);
+
   const [localErros, setLocalErros] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   //---------- life cycle
 
   //---------- helper: user's actions
 
   useEffect(() => {
-    
+
     if (propertySignInSuccess) {
-    
+
       dispatch(saveUser());
-      NavigationService.navigate("Route");
     }
-  }, [propertySignInSuccess]);
+
+    if (errors.length > 0) {
+
+      setIsLoading(false)
+      setLocalErros(errors)
+      dispatch(ResetStates())
+    }
+  }, [propertySignInSuccess, errors]);
+
+  useEffect(() => {
+
+    dispatch(ResetStates())
+    setIsLoading(false)
+    navigation.navigate("Route");
+  }, [isLoggedIn])
 
   const handleLogin = () => {
+    setIsLoading(true)
+
+    if (email === object.email && password === object.password) {
+
+      setLocalErros("Please use correct email and password");
+      setIsLoading(false)
+      return
+    }
     if (email !== "" && password !== "") {
+
+      setManageClicks(manageClicks + 1)
+      setObject({
+        email, password
+      })
       setLocalErros("");
       dispatch(signInUser({ email, password }));
     } else {
       setLocalErros("Email and password required");
+      setIsLoading(false)
     }
   };
 
@@ -98,7 +136,7 @@ function Login({ navigation }) {
           <TextInput
             style={SpaceStyles.top1}
             placeholder="Email"
-            onChangeText={(text)=>{
+            onChangeText={(text) => {
               setLocalErros('')
               onChangeEmail(text)
             }}
@@ -111,7 +149,7 @@ function Login({ navigation }) {
         >
           <TextInput
             style={SpaceStyles.top1}
-            onChangeText={(text)=>{
+            onChangeText={(text) => {
               setLocalErros('')
               onChangepassword(text)
             }}
@@ -127,9 +165,20 @@ function Login({ navigation }) {
             handleLogin();
           }}
         >
-          <CustomText
-            text={"Sign in"} style={TextStyles.textSegoe18White}
-          />
+          {
+            isLoading ?
+              <View
+                style={{
+                  paddingHorizontal: 17
+                }}
+              >
+                <ActivityIndicator color={'#fff'} />
+              </View>
+              :
+              <CustomText
+                text={"Sign in"} style={TextStyles.textSegoe18White}
+              />
+          }
         </TouchableOpacity>
         <TouchableOpacity
           style={[SpaceStyles.top5]}
@@ -151,7 +200,7 @@ function Login({ navigation }) {
             style={AuthStyles.errorsLogintxt}
           >
             {
-              localErros + errors
+              localErros
             }
           </Text>
         </View>

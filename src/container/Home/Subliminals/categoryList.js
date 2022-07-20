@@ -39,7 +39,7 @@ const data = [
 
 //---------- component
 
-function categoryList({ navigation }) {
+function CategoryList({ navigation }) {
 
     //---------- state, veriable and hooks
 
@@ -120,4 +120,4 @@ function categoryList({ navigation }) {
 
 //---------- export component
 
-export default categoryList
+export default CategoryList;

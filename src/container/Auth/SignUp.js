@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ActivityIndicator
 } from "react-native";
 
 // third party lib
@@ -32,14 +33,17 @@ import {
   signUpUser,
   resetAllAuthForms,
   ResetErrorsState,
+  ResetStates
 } from "../../redux/User/user.actions";
 import { saveUser } from "../../redux/Local/local.actions";
 import { useDispatch, useSelector } from "react-redux";
 
-const mapState = ({ user }) => ({
+const mapState = ({ user, localReducer }) => ({
+
   currentProperty: user.currentProperty,
   propertySignUpSuccess: user.propertySignUpSuccess,
   errors: user.errors,
+  isLoggedIn: localReducer.isLoggedIn,
 });
 
 function SignUp({ navigation }) {
@@ -47,8 +51,8 @@ function SignUp({ navigation }) {
 
   // state
 
-  const { currentProperty, propertySignUpSuccess, errors } =
-    useSelector(mapState);
+  const { currentProperty, propertySignUpSuccess, errors } = useSelector(mapState);
+  const { isLoggedIn } = useSelector(mapState);
 
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
@@ -58,6 +62,7 @@ function SignUp({ navigation }) {
   const [localErros, setLocalErros] = useState("");
 
   const [onCheckClick, setOnCheckClick] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //---------- life cycle
 
@@ -65,7 +70,40 @@ function SignUp({ navigation }) {
 
   //---------- return main view
 
+  useEffect(() => {
+
+    if (propertySignUpSuccess) {
+
+      dispatch(saveUser());
+    }
+
+    if (errors.length > 0) {
+
+      setIsLoading(false)
+      setLocalErros(errors)
+      dispatch(ResetStates())
+      dispatch(ResetErrorsState());
+    }
+  }, [propertySignUpSuccess, errors]);
+
+  useEffect(() => {
+
+    dispatch(ResetStates())
+    dispatch(ResetErrorsState());
+    navigation.navigate("Route");
+  }, [isLoggedIn])
+
   const handleSignUp = () => {
+
+    setIsLoading(true)
+
+    if (password !== confirmPassword) {
+
+      setLocalErros('Please check the password...')
+      setIsLoading(false)
+      return
+    }
+
     if (
       email !== "" &&
       name !== "" &&
@@ -76,16 +114,9 @@ function SignUp({ navigation }) {
       dispatch(signUpUser({ email, password, confirmPassword, name }));
     } else {
       setLocalErros("All the fields are required");
+      setIsLoading(false)
     }
   };
-
-  useEffect(() => {
-    dispatch(ResetErrorsState());
-    if (propertySignUpSuccess) {
-      dispatch(saveUser());
-      NavigationService.navigate("Route");
-    }
-  }, [propertySignUpSuccess]);
 
   return (
     <View
@@ -204,10 +235,21 @@ function SignUp({ navigation }) {
               handleSignUp(email, name, password, confirmPassword);
             }}
           >
-            <CustomText
-              text={"Start My Free Trial"}
-              style={TextStyles.textSegoe18White}
-            />
+            {
+              isLoading ?
+                <View
+                  style={{
+                    paddingHorizontal: 17
+                  }}
+                >
+                  <ActivityIndicator color={'#fff'} />
+                </View>
+                :
+                <CustomText
+                  text={"Start My Free Trial"}
+                  style={TextStyles.textSegoe18White}
+                />
+            }
           </TouchableOpacity>
         </View>
       </ScrollView>

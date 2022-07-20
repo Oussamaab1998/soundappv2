@@ -12,7 +12,7 @@ import Songs from "../../container/Home/Subliminals/Songs";
 import AudioPlayer from "../../container/Home/Subliminals/AudioPlayer";
 import Home from "../../container/Home/Home";
 import Subliminals from "../../container/Home/Subliminals/Subliminals";
-import categoryList from "../../container/Home/Subliminals/categoryList";
+import CategoryList from "../../container/Home/Subliminals/categoryList";
 import MusicScreen from "../../container/Home/Subliminals/MusicScreen";
 // drawer contents
 import DrawerContent from "../../container/DrawerContent";
@@ -80,7 +80,7 @@ function HomeNavigation(props) {
           headerTitle: () => null,
         }}
         name="categoryListScreen"
-        component={categoryList}
+        component={CategoryList}
       />
       <Stack.Screen
         options={{
