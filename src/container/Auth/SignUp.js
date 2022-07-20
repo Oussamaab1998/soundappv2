@@ -128,7 +128,10 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Email"
-              onChangeText={onChangeEmail}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeEmail(text)
+              }}
               value={email}
               textContentType="emailAddress"
             />
@@ -143,7 +146,10 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Name"
-              onChangeText={onChangeName}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeName(text)
+              }}
               value={name}
               textContentType="name"
             />
@@ -159,7 +165,10 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Password"
-              onChangeText={onChangepassword}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangepassword(text)
+              }}
               value={password}
               textContentType="password"
               secureTextEntry={true}
@@ -175,60 +184,16 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Confirm Password"
-              onChangeText={onChangeConfirmPassword}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeConfirmPassword(text)
+              }}
               value={confirmPassword}
               textContentType="password"
               secureTextEntry={true}
             />
           </View>
-          {/* <CustomTextInput
-            placeholder={"Email Address"}
-            containerStyle={SpaceStyles.top2}
-          />
-          <CustomTextInput
-            placeholder={"Password"}
-            containerStyle={SpaceStyles.top2}
-          />
-          <CustomTextInput
-            placeholder={"Confirm Password"}
-            containerStyle={SpaceStyles.top2}
-          /> */}
 
-          {/* <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
-            <CheckBox
-              isChecked={onCheckClick}
-              checkBoxColor={"black"}
-              onClick={() => setOnCheckClick(!onCheckClick)}
-            />
-            <CustomText
-              text={"By continuing I agree to the Terms of Service"}
-              style={[TextStyles.textSegoe13Black, { marginLeft: 5 }]}
-            />
-          </View> */}
-          {/* <CustomText
-            text={
-              "Privacy Policy Disclaimer of  Liability and Intellectual Property Notice"
-            }
-            style={[TextStyles.textSegoe13Black, { marginLeft: 3 }]}
-          /> */}
-          {/* <CustomTextInput
-            placeholder={"Card Number"}
-            containerStyle={SpaceStyles.top2}
-          />
-          <View style={[SpaceStyles.alignSpaceBlock, SpaceStyles.top2]}>
-            <CustomTextInput
-              placeholder={"Expiry Month"}
-              containerStyle={SpaceStyles.width37}
-            />
-            <CustomTextInput
-              placeholder={"Expiry Year"}
-              containerStyle={SpaceStyles.width37}
-            />
-          </View>
-          <CustomTextInput
-            placeholder={"CVV"}
-            containerStyle={SpaceStyles.top2}
-          /> */}
           <TouchableOpacity
             style={[
               AuthStyles.largeButton,

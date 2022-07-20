@@ -58,20 +58,12 @@ function Login({ navigation }) {
 
   //---------- life cycle
 
-  useEffect(() => {
-    console.log("login data pocket :", dataPocket.login_data_pocket);
-  }, [dataPocket.login_data_pocket]);
-
-  useEffect(() => {
-    console.log("========================================");
-    console.log("login data pocket :", dataPocket);
-    console.log("========================================");
-  }, [dataPocket]);
-
   //---------- helper: user's actions
 
   useEffect(() => {
+    
     if (propertySignInSuccess) {
+    
       dispatch(saveUser());
       NavigationService.navigate("Route");
     }
@@ -84,10 +76,6 @@ function Login({ navigation }) {
     } else {
       setLocalErros("Email and password required");
     }
-    // serverRequest({
-    //     key: 'login_data_pocket',
-    //     request_type: 'get'
-    // })
   };
 
   //---------- return main view
@@ -104,19 +92,16 @@ function Login({ navigation }) {
           text={"Login"}
           style={[TextStyles.textBold48Black, { alignSelf: "center" }]}
         />
-        {/* <View style={[SpaceStyles.top10]}>
-          <CustomTextInput
-            placeholder={"Email"}
-            containerStyle={SpaceStyles.top1}
-          />
-        </View> */}
         <View
           style={[SpaceStyles.top10, , AuthStyles.textInputView]}
         >
           <TextInput
             style={SpaceStyles.top1}
             placeholder="Email"
-            onChangeText={onChangeEmail}
+            onChangeText={(text)=>{
+              setLocalErros('')
+              onChangeEmail(text)
+            }}
             value={email}
             textContentType="emailAddress"
           />
@@ -126,28 +111,16 @@ function Login({ navigation }) {
         >
           <TextInput
             style={SpaceStyles.top1}
-            onChangeText={onChangepassword}
+            onChangeText={(text)=>{
+              setLocalErros('')
+              onChangepassword(text)
+            }}
             value={password}
             secureTextEntry={true}
             placeholder="Password"
           />
         </View>
 
-        {/* <View style={SpaceStyles.vertical1}>
-          <CustomTextInput
-            placeholder={"Password"}
-            containerStyle={SpaceStyles.top1}
-          />
-
-          <CustomText
-            text={"Forgot your password?"}
-            style={[
-              TextStyles.textSegoe14Black,
-              SpaceStyles.top1,
-              { textAlign: "right" },
-            ]}
-          />
-        </View> */}
         <TouchableOpacity
           style={[AuthStyles.smallButton, SpaceStyles.top5]}
           onPress={() => {
