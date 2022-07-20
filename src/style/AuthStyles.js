@@ -22,6 +22,8 @@ const AuthStyles = StyleSheet.create({
   textInputView: {
     borderWidth: 1,
     borderColor: "#000",
+    paddingVertical:7,
+    paddingHorizontal:10
   },
   smallButton: {
     paddingHorizontal: 20,
