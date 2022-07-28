@@ -19,6 +19,8 @@ import DrawerContent from "../../container/DrawerContent";
 
 // heler
 import { WHITE } from "../../constants/Colors";
+import Instructions from "../../container/Home/Instructions";
+import HowItWorks from "../../container/Home/HowItWorks";
 
 // global stack veriable
 const Drawer = createDrawerNavigator();
@@ -91,6 +93,26 @@ function HomeNavigation(props) {
         }}
         name="MusicScreen"
         component={MusicScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Instructions"
+        component={Instructions}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="howItWorks"
+        component={HowItWorks}
       />
     </Stack.Navigator>
   );
