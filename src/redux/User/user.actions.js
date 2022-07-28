@@ -98,7 +98,7 @@ export const signInUser =
         //       });
         //     });
 
-        fetch(
+        await fetch(
           "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/login/",
           requestOptions
         )
