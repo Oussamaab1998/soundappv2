@@ -25,7 +25,10 @@ import DrawerContent from "../../container/DrawerContent";
 import { WHITE } from "../../constants/Colors";
 import Instructions from "../../container/Home/Instructions";
 import HowItWorks from "../../container/Home/HowItWorks";
-
+import ListeningTips from "../../container/Home/ListeningTips";
+import FAQs from "../../container/Home/FAQs";
+import Contact from "../../container/Home/Contact";
+import Intellectual from "../../container/Home/Intellectual";
 // global stack veriable
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -98,11 +101,6 @@ function HomeNavigation(props) {
         name="MusicScreen"
         component={MusicScreen}
       />
-
-
-
-
-
       <Stack.Screen
         options={{
           headerStyle: {
@@ -110,10 +108,9 @@ function HomeNavigation(props) {
           },
           headerTitle: () => null,
         }}
-        name="TermsAndService"
-        component={TermsAndService}
+        name="Instructions"
+        component={Instructions}
       />
-
       <Stack.Screen
         options={{
           headerStyle: {
@@ -121,10 +118,9 @@ function HomeNavigation(props) {
           },
           headerTitle: () => null,
         }}
-        name="PrivacyPolicy"
-        component={PrivacyPolicy}
+        name="howItWorks"
+        component={HowItWorks}
       />
-
       <Stack.Screen
         options={{
           headerStyle: {
@@ -132,11 +128,39 @@ function HomeNavigation(props) {
           },
           headerTitle: () => null,
         }}
-        name="Disclaimer"
-        component={Disclaimer}
+        name="ListeningTips"
+        component={ListeningTips}
       />
-
-
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="FAQs"
+        component={FAQs}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Contact"
+        component={Contact}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Intellectual"
+        component={Intellectual}
+      />
     </Stack.Navigator>
   );
 }
