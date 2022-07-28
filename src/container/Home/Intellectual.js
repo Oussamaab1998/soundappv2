@@ -126,7 +126,7 @@ const Intellectual = ({ navigation }) => {
               services in any manner not expressly authorized.
             </Text>
             <Text style={styles.desc2}>
-              The expression ‘Magnetize Yourself’ or ‘soundandsoulful’, their
+              The expression Magnetize Yourself or soundandsoulful, their
               logos and other trademarks, service marks, graphics and logos used
               in connection with the Website services are our trademarks or
               intellectual property. You are granted no right or license

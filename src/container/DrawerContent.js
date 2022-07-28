@@ -86,6 +86,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
+
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Songs")}
@@ -99,6 +100,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
+
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("SubliminalsScreen")}
@@ -112,6 +114,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
+
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Instructions")}
@@ -125,6 +128,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
+
             <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={testimonialsIcon} />
               <CustomText
@@ -135,6 +139,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </View>
+
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("howItWorks")}
@@ -148,8 +153,10 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+
+            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("ListeningTips")}
+            >
               <Image source={audioIcon} />
               <CustomText
                 text={"Listening Tips"}
@@ -159,8 +166,10 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("FAQs")}
+            >
+
               <Image source={fAQsIcon} />
               <CustomText
                 text={"FAQs"}
@@ -170,8 +179,11 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            
+            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Contact")}
+            >
+
               <Image source={contactIcon} />
               <CustomText
                 text={"Contact"}

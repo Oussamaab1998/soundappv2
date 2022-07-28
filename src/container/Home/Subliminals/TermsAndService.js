@@ -63,7 +63,7 @@ const TermsAndService = ({ navigation }) => {
         />
 
         <View
-          style={[AuthStyles.ContentContainer, SpaceStyles.top20]}
+          style={[AuthStyles.ContentContainer, SpaceStyles.top20, { paddingHorizontal: 10 }]}
         >
           <ContentContainer data={data} />
         </View>
@@ -98,7 +98,7 @@ const data = [
     content: [
       {
         id: 0,
-        heading: '1.1 These Terms and Conditions (“Terms”) constitute a legally binding agreement between you (hereinafter referred to as “you”, “your” or “User”) and Magnetize Yourself LLC, a company incorporated under the laws of the State of Wyoming and having its registered office located at 1309 Coffeen Avenue STE 2894, Sheridan, Wyoming, 82801 (the “Company”, “we”, “us”, or “our”) concerning your access to, and use of, the Company’s website (www.soundandsoulful.com) including its sub-domains and mobile-optimized version, if any (hereinafter collectively referred to as the “Website”). You agree that by accessing the Website, you have read, understood, and agree to be bound by all of these Terms.  IF YOU DO NOT AGREE WITH ALL OF THESE TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE Website AND YOU MUST DISCONTINUE YOUR USE IMMEDIATELY.',
+        heading: "1.1 These Terms and Conditions (“Terms”) constitute a legally binding agreement between you (hereinafter referred to as “you”, “your” or “User”) and Magnetize Yourself LLC, a company incorporated under the laws of the State of Wyoming and having its registered office located at 1309 Coffeen Avenue STE 2894, Sheridan, Wyoming, 82801 (the “Company”, “we”, “us”, or “our”) concerning your access to, and use of, the Company's website (www.soundandsoulful.com) including its sub-domains and mobile-optimized version, if any (hereinafter collectively referred to as the “Website”). You agree that by accessing the Website, you have read, understood, and agree to be bound by all of these Terms.  IF YOU DO NOT AGREE WITH ALL OF THESE TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE Website AND YOU MUST DISCONTINUE YOUR USE IMMEDIATELY.",
       },
       {
         id: 1,
@@ -124,7 +124,7 @@ const data = [
       },
       {
         id: 1,
-        heading: '2.2 Subliminal tracks are designed by embedding spoken affirmations within the meditation sounds and frequencies. By listening to the subliminal tracks, one can shift their thoughts which may affect the outcomes in one’s life. This is because it is believed that, since our conscious mind cannot hear spoken affirmations, these spoken affirmations are able to make more lasting impressions on our subconscious mind.',
+        heading: "2.2 Subliminal tracks are designed by embedding spoken affirmations within the meditation sounds and frequencies. By listening to the subliminal tracks, one can shift their thoughts which may affect the outcomes in one's life. This is because it is believed that, since our conscious mind cannot hear spoken affirmations, these spoken affirmations are able to make more lasting impressions on our subconscious mind.",
         body: [
           {
             title: ''
@@ -372,7 +372,7 @@ const data = [
             title: '7.3.18 delete the copyright or other proprietary rights notice from any Content;'
           },
           {
-            title: '7.3.19 copy or adapt the Website’s software, including but not limited to Flash, PHP, HTML, JavaScript, or other code;'
+            title: "7.3.19 copy or adapt the Website's software, including but not limited to Flash, PHP, HTML, JavaScript, or other code;"
           },
           {
             title: '7.3.20 upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation web bugs, cookies, or other similar devices (sometimes referred to as “spyware” or “passive collection mechanisms” or “pcms”);'
@@ -481,7 +481,7 @@ const data = [
     content: [
       {
         id: 0,
-        heading: '15.1 You agree to defend, indemnify and hold us harmless, including our subsidiaries, affiliates and all of our respective officers, agents, partners and employees, from and against any loss, damage, liability, claim or demand, including reasonable attorneys’ fees and expenses, made by any third party due to or arising out of: (1) use of the Website;  (2) breach of these Terms; (3) any breach of your representations and warranties set forth in these Terms; (4) your violation of the rights of a third party, including but not limited to intellectual property rights; or (5) any overt harmful act towards any other user of the Website with whom you connected via the Website. Notwithstanding the foregoing, we reserve the right, at your expense, to assume the exclusive defence and control of any matter for which you are required to indemnify us, and you agree to cooperate, at your expense, with our defence of such claims. We will use reasonable efforts to notify you of any such claim, action, or proceeding which is subject to this indemnification upon becoming aware of it.  ',
+        heading: "15.1 You agree to defend, indemnify and hold us harmless, including our subsidiaries, affiliates and all of our respective officers, agents, partners and employees, from and against any loss, damage, liability, claim or demand, including reasonable attorneys' fees and expenses, made by any third party due to or arising out of: (1) use of the Website;  (2) breach of these Terms; (3) any breach of your representations and warranties set forth in these Terms; (4) your violation of the rights of a third party, including but not limited to intellectual property rights; or (5) any overt harmful act towards any other user of the Website with whom you connected via the Website. Notwithstanding the foregoing, we reserve the right, at your expense, to assume the exclusive defence and control of any matter for which you are required to indemnify us, and you agree to cooperate, at your expense, with our defence of such claims. We will use reasonable efforts to notify you of any such claim, action, or proceeding which is subject to this indemnification upon becoming aware of it.",
       }
     ]
   },

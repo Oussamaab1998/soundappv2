@@ -63,7 +63,7 @@ const PrivacyPolicy = ({ navigation }) => {
         />
 
         <View
-          style={[AuthStyles.ContentContainer, SpaceStyles.top20]}
+          style={[AuthStyles.ContentContainer, SpaceStyles.top20, { paddingHorizontal: 10 }]}
         >
           <ContentContainer data={data} />
         </View>
@@ -233,7 +233,7 @@ const data = [
     title: '5. Data Storage',
     content: [
       {
-        heading: '5.1 We will store and process your Data at our dedicated Shopify’s customer account system, in the stripe.com system and in our Shopify membership app. '
+        heading: "5.1 We will store and process your Data at our dedicated Shopify's customer account system, in the stripe.com system and in our Shopify membership app.",
       },
       {
         heading: '5.2 We act as the controller and our above partners as processors, meaning they will not undergo Personal Data processing activities towards information registered, submitted or conveyed by us.'

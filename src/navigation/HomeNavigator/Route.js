@@ -26,9 +26,10 @@ import { WHITE } from "../../constants/Colors";
 import Instructions from "../../container/Home/Instructions";
 import HowItWorks from "../../container/Home/HowItWorks";
 import ListeningTips from "../../container/Home/ListeningTips";
-import FAQs from "../../container/Home/FAQs";
+import FAQs from "../../container/Home/FAQ";
 import Contact from "../../container/Home/Contact";
 import Intellectual from "../../container/Home/Intellectual";
+
 // global stack veriable
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -150,8 +151,9 @@ function HomeNavigation(props) {
         }}
         name="Contact"
         component={Contact}
-      />
-      <Stack.Screen
+      /> 
+
+<Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -161,6 +163,47 @@ function HomeNavigation(props) {
         name="Intellectual"
         component={Intellectual}
       />
+     
+
+     
+
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="TermsAndService"
+        component={TermsAndService}
+      />
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+      />
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Disclaimer"
+        component={Disclaimer}
+      />
+
+
+
+     
     </Stack.Navigator>
   );
 }
