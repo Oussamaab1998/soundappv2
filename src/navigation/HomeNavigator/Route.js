@@ -23,6 +23,8 @@ import DrawerContent from "../../container/DrawerContent";
 
 // heler
 import { WHITE } from "../../constants/Colors";
+import Instructions from "../../container/Home/Instructions";
+import HowItWorks from "../../container/Home/HowItWorks";
 
 // global stack veriable
 const Drawer = createDrawerNavigator();
@@ -96,29 +98,45 @@ function HomeNavigation(props) {
         name="MusicScreen"
         component={MusicScreen}
       />
+<<<<<<< HEAD
+      <Stack.Screen
+=======
 
 
 
 
 
 <Stack.Screen
+>>>>>>> f54539821375638cd54388ba5049571d7dc7b972
         options={{
           headerStyle: {
             backgroundColor: WHITE,
           },
           headerTitle: () => null,
         }}
+<<<<<<< HEAD
+        name="Instructions"
+        component={Instructions}
+      />
+      <Stack.Screen
+=======
         name="TermsAndService"
         component={TermsAndService}
       />
 
 <Stack.Screen
+>>>>>>> f54539821375638cd54388ba5049571d7dc7b972
         options={{
           headerStyle: {
             backgroundColor: WHITE,
           },
           headerTitle: () => null,
         }}
+<<<<<<< HEAD
+        name="howItWorks"
+        component={HowItWorks}
+      />
+=======
         name="PrivacyPolicy"
         component={PrivacyPolicy}
       />
@@ -135,6 +153,7 @@ function HomeNavigation(props) {
       />
 
 
+>>>>>>> f54539821375638cd54388ba5049571d7dc7b972
     </Stack.Navigator>
   );
 }

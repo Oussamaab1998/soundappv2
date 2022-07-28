@@ -114,7 +114,10 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+              onPress={() => NavigationService.navigate("Instructions")}
+            >
               <Image source={instructions} />
               <CustomText
                 text={"Instructions"}
@@ -123,7 +126,7 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
+            </TouchableOpacity>
             <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={testimonialsIcon} />
               <CustomText
@@ -134,7 +137,10 @@ export default function DrawerContent(props) {
                 ]}
               />
             </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+              onPress={() => NavigationService.navigate("howItWorks")}
+            >
               <Image source={howsItWorkIcon} />
               <CustomText
                 text={"How it works"}
@@ -143,7 +149,7 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
+            </TouchableOpacity>
             <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={audioIcon} />
               <CustomText
