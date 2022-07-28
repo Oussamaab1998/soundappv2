@@ -86,12 +86,27 @@ const TextStyles = StyleSheet.create({
         ...Fonts.boldQuicksand64,
 
     },
+    textQuicksandMedium18Black:{
+        ...Fonts.quicksandMedium18,
+    },
     textQuicksand14Black: {
 
         ...Fonts.quicksandMedium14,
     },
-    textQuicksandMedium18Black:{
-        ...Fonts.quicksandMedium18,
+    textQuicksand10Black: {
+
+        ...Fonts.quicksandMedium10,
+    },
+
+    textQuicksandBold10Black: {
+
+        ...Fonts.quicksandMedium10,
+        fontWeight: 'bold',
+    },
+    textQuicksandBold14Black: {
+
+        ...Fonts.quicksandMedium14,
+        fontWeight: 'bold',
     },
 
     // gray

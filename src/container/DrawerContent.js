@@ -174,7 +174,12 @@ export default function DrawerContent(props) {
                 ]}
               />
             </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+
+            <TouchableOpacity
+              onPress={() => [
+                NavigationService.navigate("Disclaimer")
+              ]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={disclaimerIcon} />
               <CustomText
                 text={"Disclaimer"}
@@ -183,8 +188,13 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => [
+                NavigationService.navigate("PrivacyPolicy")
+              ]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={secureIcon} />
               <CustomText
                 text={"Privacy Policy"}
@@ -193,8 +203,13 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => [
+                NavigationService.navigate("TermsAndService")
+              ]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={termsIcon} />
               <CustomText
                 text={"Terms of Service"}
@@ -203,7 +218,8 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
+            </TouchableOpacity>
+
             <CustomText
               text={"Intellectual Property Notice"}
               style={[

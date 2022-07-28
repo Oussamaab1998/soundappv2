@@ -55,6 +55,12 @@ const AuthStyles = StyleSheet.create({
   deviceHeight: {
     height: height,
   },
+
+  ContentContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  }
 });
 
 export default AuthStyles;

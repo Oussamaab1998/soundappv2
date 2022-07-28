@@ -14,6 +14,10 @@ import Home from "../../container/Home/Home";
 import Subliminals from "../../container/Home/Subliminals/Subliminals";
 import CategoryList from "../../container/Home/Subliminals/categoryList";
 import MusicScreen from "../../container/Home/Subliminals/MusicScreen";
+import TermsAndService from "../../container/Home/Subliminals/TermsAndService";
+import PrivacyPolicy from "../../container/Home/Subliminals/PrivacyPolicy";
+import Disclaimer from "../../container/Home/Subliminals/Disclaimer";
+
 // drawer contents
 import DrawerContent from "../../container/DrawerContent";
 
@@ -92,6 +96,45 @@ function HomeNavigation(props) {
         name="MusicScreen"
         component={MusicScreen}
       />
+
+
+
+
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="TermsAndService"
+        component={TermsAndService}
+      />
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+      />
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Disclaimer"
+        component={Disclaimer}
+      />
+
+
     </Stack.Navigator>
   );
 }

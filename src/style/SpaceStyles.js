@@ -8,30 +8,30 @@ const SpaceStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    alignSpaceBlock:{
+    alignSpaceBlock: {
 
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    alignSpaceVerticalBlock:{
+    alignSpaceVerticalBlock: {
 
-        height:500
+        height: 500
     },
 
-    rowFlex:{
+    rowFlex: {
 
         flexDirection: 'row',
         alignItems: 'center',
     },
 
-    textAlign:{
+    textAlign: {
 
-        textAlign:'center'
+        textAlign: 'center'
     },
 
-    spaceHorizonatl:{
+    spaceHorizonatl: {
 
     },
 
@@ -42,9 +42,9 @@ const SpaceStyles = StyleSheet.create({
 
         marginTop: 10
     },
-    top2:{
+    top2: {
 
-        marginTop:20
+        marginTop: 20
     },
     top5: {
 
@@ -58,23 +58,49 @@ const SpaceStyles = StyleSheet.create({
 
         marginTop: 14
     },
+    top20: {
 
-    left5:{
-
-        marginLeft:5
-    },
-    left10:{
-
-        marginLeft:10
+        marginTop: 20
     },
 
-    
-    bottom20:{
+    left5: {
 
-        marginBottom:20
+        marginLeft: 5
+    },
+    left10: {
+
+        marginLeft: 10
+    },
+    left20: {
+
+        marginLeft: 20
+    },
+    left30: {
+
+        marginLeft: 30
     },
 
-    padding5:{
+
+
+
+    bottom5: {
+
+        marginBottom: 5
+    },
+    bottom10: {
+
+        marginBottom: 10
+    },
+    bottom20: {
+
+        marginBottom: 20
+    },
+    bottom30: {
+
+        marginBottom: 30
+    },
+
+    padding5: {
 
         padding: 5
     },
@@ -96,13 +122,13 @@ const SpaceStyles = StyleSheet.create({
 
     },
 
-    height50:{
+    height50: {
 
-        height:550
+        height: 550
     },
-    height90:{
+    height90: {
 
-        height:900
+        height: 900
     },
 })
 
