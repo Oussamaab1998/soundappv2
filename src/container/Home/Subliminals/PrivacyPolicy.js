@@ -2,7 +2,7 @@ import { StyleSheet, ScrollView, View, Text } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import CustomText from "../../../components/CustomText";
-import ContentContainer from '../../../components/ContentContainer'
+import ContentContainer from '../../../Common/ContentContainer'
 
 import HeaderRight from "../../../components/HeaderRight";
 import HeaderTitle from "../../../components/HeaderTitle";
