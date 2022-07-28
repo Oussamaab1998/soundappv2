@@ -98,50 +98,34 @@ function HomeNavigation(props) {
         name="MusicScreen"
         component={MusicScreen}
       />
-<<<<<<< HEAD
+
+
+
+
+
       <Stack.Screen
-=======
-
-
-
-
-
-<Stack.Screen
->>>>>>> f54539821375638cd54388ba5049571d7dc7b972
         options={{
           headerStyle: {
             backgroundColor: WHITE,
           },
           headerTitle: () => null,
         }}
-<<<<<<< HEAD
-        name="Instructions"
-        component={Instructions}
-      />
-      <Stack.Screen
-=======
         name="TermsAndService"
         component={TermsAndService}
       />
 
-<Stack.Screen
->>>>>>> f54539821375638cd54388ba5049571d7dc7b972
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
           },
           headerTitle: () => null,
         }}
-<<<<<<< HEAD
-        name="howItWorks"
-        component={HowItWorks}
-      />
-=======
         name="PrivacyPolicy"
         component={PrivacyPolicy}
       />
 
-<Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -153,7 +137,6 @@ function HomeNavigation(props) {
       />
 
 
->>>>>>> f54539821375638cd54388ba5049571d7dc7b972
     </Stack.Navigator>
   );
 }
