@@ -51,6 +51,10 @@ const Fonts = {
     fontSize: 14,
     fontFamily: 'Quicksand-Medium'  //14 Quicksand
   },
+  quicksandMedium10: {
+    fontSize: 10,
+    fontFamily: 'Quicksand-Medium'  //14 Quicksand
+  },
   regular13: {
     fontSize: 13,
     fontFamily: 'Segoe UI'  //13 Segoe

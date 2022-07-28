@@ -1,3 +1,5 @@
+//---------- imports
+// react
 import {
   Image,
   StyleSheet,
@@ -9,9 +11,16 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
+
+// third party lib
+import Sound from "react-native-sound";
+import Slider from "@react-native-community/slider";
+
+// headers
 import HeaderRight from "../../../components/HeaderRight";
 import HeaderTitle from "../../../components/HeaderTitle";
 import HeaderLeft from "../../../components/HeaderLeft";
+
 import {
   addIcon,
   amplifyIcon,
@@ -23,20 +32,27 @@ import {
   playIcon,
   skiptoStart,
 } from "../../../constants/Images";
+
+// styles
 import CommonStyles from "../../../style/CommonStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
 import CustomText from "../../../components/CustomText";
-import Slider from "@react-native-community/slider";
 import { BLACK } from "../../../constants/Colors";
-import Sound from "react-native-sound";
 
+//---------- componets
 const AudioPlayer = ({ navigation, route }) => {
+  
+  //---------- state and params
   const { item } = route.params;
+  
+  // state
   const [modalVisible, setModalVisible] = useState(false);
   const [songVar, setSongVar] = useState(null);
   const [songLength, setSongLength] = useState(0);
   const [songStatus, setSongStatus] = useState(false);
   const [songCS, setSongCS] = useState(0);
+
+  //---------- life cycles
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -58,6 +74,8 @@ const AudioPlayer = ({ navigation, route }) => {
       ),
     });
   }, [navigation]);
+
+  //--------- users actions
 
   const playSound = () => {
     // var sound1 = new Sound(item.url, "", (error, _sound) => {
@@ -95,6 +113,8 @@ const AudioPlayer = ({ navigation, route }) => {
     songVar.pause();
     setSongStatus(false);
   };
+
+  //---------- render main view
 
   return (
     <>

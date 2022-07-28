@@ -39,7 +39,7 @@ const data = [
 
 //---------- component
 
-function categoryList({ navigation }) {
+function CategoryList({ navigation }) {
 
     //---------- state, veriable and hooks
 
@@ -61,9 +61,15 @@ function categoryList({ navigation }) {
         <SafeAreaView >
             <ScrollView>
 
-                <View style={AuthStyles.authContainer}>
-                    <View style={SpaceStyles.top5}>
-                        <TouchableOpacity style={CommonStyles.musicCategory}>
+                <View
+                 style={AuthStyles.authContainer}
+                 >
+                    <View
+                     style={SpaceStyles.top5}
+                     >
+                        <TouchableOpacity 
+                        style={CommonStyles.musicCategory}
+                        >
                             <Image
                                 source={grayStarIcon}
                                 resizeMode='cover'
@@ -80,7 +86,9 @@ function categoryList({ navigation }) {
                         />
                         {data.map((i) => {
                             return (
-                                <TouchableOpacity style={CommonStyles.musicCategory} >
+                                <TouchableOpacity
+                                 style={CommonStyles.musicCategory} 
+                                >
                                     <Image
                                         source={blackRoundIcon}
                                         resizeMode='contain'
@@ -112,4 +120,4 @@ function categoryList({ navigation }) {
 
 //---------- export component
 
-export default categoryList
+export default CategoryList;

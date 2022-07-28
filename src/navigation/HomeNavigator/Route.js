@@ -12,8 +12,12 @@ import Songs from "../../container/Home/Subliminals/Songs";
 import AudioPlayer from "../../container/Home/Subliminals/AudioPlayer";
 import Home from "../../container/Home/Home";
 import Subliminals from "../../container/Home/Subliminals/Subliminals";
-import categoryList from "../../container/Home/Subliminals/categoryList";
+import CategoryList from "../../container/Home/Subliminals/categoryList";
 import MusicScreen from "../../container/Home/Subliminals/MusicScreen";
+import TermsAndService from "../../container/Home/Subliminals/TermsAndService";
+import PrivacyPolicy from "../../container/Home/Subliminals/PrivacyPolicy";
+import Disclaimer from "../../container/Home/Subliminals/Disclaimer";
+
 // drawer contents
 import DrawerContent from "../../container/DrawerContent";
 
@@ -82,7 +86,7 @@ function HomeNavigation(props) {
           headerTitle: () => null,
         }}
         name="categoryListScreen"
-        component={categoryList}
+        component={CategoryList}
       />
       <Stack.Screen
         options={{
@@ -94,26 +98,62 @@ function HomeNavigation(props) {
         name="MusicScreen"
         component={MusicScreen}
       />
+<<<<<<< HEAD
       <Stack.Screen
+=======
+
+
+
+
+
+<Stack.Screen
+>>>>>>> f54539821375638cd54388ba5049571d7dc7b972
         options={{
           headerStyle: {
             backgroundColor: WHITE,
           },
           headerTitle: () => null,
         }}
+<<<<<<< HEAD
         name="Instructions"
         component={Instructions}
       />
       <Stack.Screen
+=======
+        name="TermsAndService"
+        component={TermsAndService}
+      />
+
+<Stack.Screen
+>>>>>>> f54539821375638cd54388ba5049571d7dc7b972
         options={{
           headerStyle: {
             backgroundColor: WHITE,
           },
           headerTitle: () => null,
         }}
+<<<<<<< HEAD
         name="howItWorks"
         component={HowItWorks}
       />
+=======
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+      />
+
+<Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Disclaimer"
+        component={Disclaimer}
+      />
+
+
+>>>>>>> f54539821375638cd54388ba5049571d7dc7b972
     </Stack.Navigator>
   );
 }

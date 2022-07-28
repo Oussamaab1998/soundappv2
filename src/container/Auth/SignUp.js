@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ActivityIndicator
 } from "react-native";
 
 // third party lib
@@ -32,14 +33,17 @@ import {
   signUpUser,
   resetAllAuthForms,
   ResetErrorsState,
+  ResetStates
 } from "../../redux/User/user.actions";
 import { saveUser } from "../../redux/Local/local.actions";
 import { useDispatch, useSelector } from "react-redux";
 
-const mapState = ({ user }) => ({
+const mapState = ({ user, localReducer }) => ({
+
   currentProperty: user.currentProperty,
   propertySignUpSuccess: user.propertySignUpSuccess,
   errors: user.errors,
+  isLoggedIn: localReducer.isLoggedIn,
 });
 
 function SignUp({ navigation }) {
@@ -47,8 +51,8 @@ function SignUp({ navigation }) {
 
   // state
 
-  const { currentProperty, propertySignUpSuccess, errors } =
-    useSelector(mapState);
+  const { currentProperty, propertySignUpSuccess, errors } = useSelector(mapState);
+  const { isLoggedIn } = useSelector(mapState);
 
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
@@ -58,6 +62,7 @@ function SignUp({ navigation }) {
   const [localErros, setLocalErros] = useState("");
 
   const [onCheckClick, setOnCheckClick] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //---------- life cycle
 
@@ -65,7 +70,40 @@ function SignUp({ navigation }) {
 
   //---------- return main view
 
+  useEffect(() => {
+
+    if (propertySignUpSuccess) {
+
+      dispatch(saveUser());
+    }
+
+    if (errors.length > 0) {
+
+      setIsLoading(false)
+      setLocalErros(errors)
+      dispatch(ResetStates())
+      dispatch(ResetErrorsState());
+    }
+  }, [propertySignUpSuccess, errors]);
+
+  useEffect(() => {
+
+    dispatch(ResetStates())
+    dispatch(ResetErrorsState());
+    navigation.navigate("Route");
+  }, [isLoggedIn])
+
   const handleSignUp = () => {
+
+    setIsLoading(true)
+
+    if (password !== confirmPassword) {
+
+      setLocalErros('Please check the password...')
+      setIsLoading(false)
+      return
+    }
+
     if (
       email !== "" &&
       name !== "" &&
@@ -76,18 +114,14 @@ function SignUp({ navigation }) {
       dispatch(signUpUser({ email, password, confirmPassword, name }));
     } else {
       setLocalErros("All the fields are required");
+      setIsLoading(false)
     }
   };
-  useEffect(() => {
-    dispatch(ResetErrorsState());
-    if (propertySignUpSuccess) {
-      dispatch(saveUser());
-      NavigationService.navigate("Route");
-    }
-  }, [propertySignUpSuccess]);
 
   return (
-    <View style={AuthStyles.authContainer}>
+    <View
+      style={AuthStyles.authContainer}
+    >
       <SafeAreaView />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -98,9 +132,17 @@ function SignUp({ navigation }) {
           style={[TextStyles.textBold48Black, { alignSelf: "center" }]}
         />
         <View style={AuthStyles.errorsLogin}>
-          <Text style={AuthStyles.errorsLogintxt}>{localErros + errors}</Text>
+          <Text
+            style={AuthStyles.errorsLogintxt}
+          >
+            {
+              localErros + errors
+            }
+          </Text>
         </View>
-        <View style={[SpaceStyles.vertical2]}>
+        <View
+          style={[SpaceStyles.vertical2]}
+        >
           {/* <CustomTextInput
               placeholder={"First Name"}
               containerStyle={{
@@ -117,7 +159,10 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Email"
-              onChangeText={onChangeEmail}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeEmail(text)
+              }}
               value={email}
               textContentType="emailAddress"
             />
@@ -132,7 +177,10 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Name"
-              onChangeText={onChangeName}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeName(text)
+              }}
               value={name}
               textContentType="name"
             />
@@ -148,7 +196,10 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Password"
-              onChangeText={onChangepassword}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangepassword(text)
+              }}
               value={password}
               textContentType="password"
               secureTextEntry={true}
@@ -164,60 +215,16 @@ function SignUp({ navigation }) {
             <TextInput
               style={SpaceStyles.top1}
               placeholder="Confirm Password"
-              onChangeText={onChangeConfirmPassword}
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeConfirmPassword(text)
+              }}
               value={confirmPassword}
               textContentType="password"
               secureTextEntry={true}
             />
           </View>
-          {/* <CustomTextInput
-            placeholder={"Email Address"}
-            containerStyle={SpaceStyles.top2}
-          />
-          <CustomTextInput
-            placeholder={"Password"}
-            containerStyle={SpaceStyles.top2}
-          />
-          <CustomTextInput
-            placeholder={"Confirm Password"}
-            containerStyle={SpaceStyles.top2}
-          /> */}
 
-          {/* <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
-            <CheckBox
-              isChecked={onCheckClick}
-              checkBoxColor={"black"}
-              onClick={() => setOnCheckClick(!onCheckClick)}
-            />
-            <CustomText
-              text={"By continuing I agree to the Terms of Service"}
-              style={[TextStyles.textSegoe13Black, { marginLeft: 5 }]}
-            />
-          </View> */}
-          {/* <CustomText
-            text={
-              "Privacy Policy Disclaimer of  Liability and Intellectual Property Notice"
-            }
-            style={[TextStyles.textSegoe13Black, { marginLeft: 3 }]}
-          /> */}
-          {/* <CustomTextInput
-            placeholder={"Card Number"}
-            containerStyle={SpaceStyles.top2}
-          />
-          <View style={[SpaceStyles.alignSpaceBlock, SpaceStyles.top2]}>
-            <CustomTextInput
-              placeholder={"Expiry Month"}
-              containerStyle={SpaceStyles.width37}
-            />
-            <CustomTextInput
-              placeholder={"Expiry Year"}
-              containerStyle={SpaceStyles.width37}
-            />
-          </View>
-          <CustomTextInput
-            placeholder={"CVV"}
-            containerStyle={SpaceStyles.top2}
-          /> */}
           <TouchableOpacity
             style={[
               AuthStyles.largeButton,
@@ -228,10 +235,21 @@ function SignUp({ navigation }) {
               handleSignUp(email, name, password, confirmPassword);
             }}
           >
-            <CustomText
-              text={"Start My Free Trial"}
-              style={TextStyles.textSegoe18White}
-            />
+            {
+              isLoading ?
+                <View
+                  style={{
+                    paddingHorizontal: 17
+                  }}
+                >
+                  <ActivityIndicator color={'#fff'} />
+                </View>
+                :
+                <CustomText
+                  text={"Start My Free Trial"}
+                  style={TextStyles.textSegoe18White}
+                />
+            }
           </TouchableOpacity>
         </View>
       </ScrollView>

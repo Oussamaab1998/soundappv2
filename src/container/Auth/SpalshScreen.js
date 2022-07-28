@@ -12,10 +12,17 @@ function SpalshScreen({ navigation }) {
     }, []);
 
     return (
-        <View style={AuthStyles.authContainer}>
+        <View
+            style={AuthStyles.authContainer}
+        >
             <SafeAreaView />
-            <View style={SpaceStyles.flexCenter}>
-                <Image source={splashLog} resizeMode='contain' />
+            <View
+                style={SpaceStyles.flexCenter}
+            >
+                <Image
+                    source={splashLog}
+                    resizeMode='contain'
+                />
             </View>
             <SafeAreaView />
         </View>

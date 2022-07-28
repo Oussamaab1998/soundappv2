@@ -44,7 +44,9 @@ import SpaceStyles from "../style/SpaceStyles";
 import { useDispatch } from "react-redux";
 //---------- export component
 import { removeUser } from "../redux/Local/local.actions";
+
 export default function DrawerContent(props) {
+
   const dispatch = useDispatch();
   //---------- state, veriable and hooks
 
@@ -53,10 +55,13 @@ export default function DrawerContent(props) {
   //---------- helper: user's actions
 
   //---------- return main view
+
   const handleLoggedOut = () => {
     dispatch(removeUser());
   };
+
   return (
+
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
@@ -175,7 +180,12 @@ export default function DrawerContent(props) {
                 ]}
               />
             </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+
+            <TouchableOpacity
+              onPress={() => [
+                NavigationService.navigate("Disclaimer")
+              ]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={disclaimerIcon} />
               <CustomText
                 text={"Disclaimer"}
@@ -184,8 +194,13 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => [
+                NavigationService.navigate("PrivacyPolicy")
+              ]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={secureIcon} />
               <CustomText
                 text={"Privacy Policy"}
@@ -194,8 +209,13 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => [
+                NavigationService.navigate("TermsAndService")
+              ]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
               <Image source={termsIcon} />
               <CustomText
                 text={"Terms of Service"}
@@ -204,7 +224,8 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
+            </TouchableOpacity>
+
             <CustomText
               text={"Intellectual Property Notice"}
               style={[
