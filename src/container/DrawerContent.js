@@ -46,7 +46,6 @@ import { useDispatch } from "react-redux";
 import { removeUser } from "../redux/Local/local.actions";
 
 export default function DrawerContent(props) {
-
   const dispatch = useDispatch();
   //---------- state, veriable and hooks
 
@@ -61,7 +60,6 @@ export default function DrawerContent(props) {
   };
 
   return (
-
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
@@ -150,7 +148,8 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+              onPress={() => NavigationService.navigate("ListeningTips")}
               <Image source={audioIcon} />
               <CustomText
                 text={"Listening Tips"}
@@ -159,8 +158,9 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            </TouchableOpacity>
+            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+              onPress={() => NavigationService.navigate("FAQs")}
               <Image source={fAQsIcon} />
               <CustomText
                 text={"FAQs"}
@@ -169,8 +169,9 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
-            <View style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+            </TouchableOpacity>
+            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+              onPress={() => NavigationService.navigate("Contact")}
               <Image source={contactIcon} />
               <CustomText
                 text={"Contact"}
@@ -179,13 +180,12 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </View>
+            </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => [
-                NavigationService.navigate("Disclaimer")
-              ]}
-              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+              onPress={() => [NavigationService.navigate("Disclaimer")]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            >
               <Image source={disclaimerIcon} />
               <CustomText
                 text={"Disclaimer"}
@@ -197,10 +197,9 @@ export default function DrawerContent(props) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => [
-                NavigationService.navigate("PrivacyPolicy")
-              ]}
-              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+              onPress={() => [NavigationService.navigate("PrivacyPolicy")]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            >
               <Image source={secureIcon} />
               <CustomText
                 text={"Privacy Policy"}
@@ -212,10 +211,9 @@ export default function DrawerContent(props) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => [
-                NavigationService.navigate("TermsAndService")
-              ]}
-              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}>
+              onPress={() => [NavigationService.navigate("TermsAndService")]}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            >
               <Image source={termsIcon} />
               <CustomText
                 text={"Terms of Service"}
@@ -226,14 +224,20 @@ export default function DrawerContent(props) {
               />
             </TouchableOpacity>
 
-            <CustomText
-              text={"Intellectual Property Notice"}
-              style={[
-                TextStyles.textQuicksand14LightGray,
-                SpaceStyles.top5,
-                { textAlign: "center" },
-              ]}
-            />
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+              onPress={() => NavigationService.navigate("Intellectual")}
+            >
+              <Image source={termsIcon} />
+              <CustomText
+                text={"Intellectual Property Notice"}
+                style={[
+                  TextStyles.textQuicksandMedium18Black,
+                  SpaceStyles.left10,
+                ]}
+              />
+            </TouchableOpacity>
+
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top5]}
               onPress={() => {
