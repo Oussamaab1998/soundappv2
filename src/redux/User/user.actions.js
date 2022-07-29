@@ -118,6 +118,12 @@ export const signInUser =
               type: userTypes.USER_SIGN_IN_SUCCESS,
               payload: true,
             });
+            dispatch({
+              type: userTypes.SAVE_USER_DATA,
+              payload: {
+                name:'unknown'
+              },
+            });
           }
         })
         .catch((err) => {
@@ -225,7 +231,7 @@ export const signUpUser =
       )
         .then((response) => response.json())
         .then((response) => {
-          console.log(response.data);
+          console.log('signup :',response.data);
           if (response.data.errors) {
             console.log("There is no user with this credentials");
             const error = response.data.message;
@@ -238,6 +244,10 @@ export const signUpUser =
             dispatch({
               type: userTypes.USER_SIGN_UP_SUCCESS,
               payload: true,
+            });
+            dispatch({
+              type: userTypes.SAVE_USER_DATA,
+              payload: myObj,
             });
           }
         });

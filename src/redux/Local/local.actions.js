@@ -12,3 +12,9 @@ export const removeUser = () => async (dispatch) => {
     payload: false,
   });
 };
+export const saveUerData = () => async (dispatch) => {
+  dispatch({
+    type: localTypes.SAVE_USER_DATA,
+    payload: false,
+  });
+};

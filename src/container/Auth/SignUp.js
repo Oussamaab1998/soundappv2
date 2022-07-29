@@ -88,7 +88,7 @@ function SignUp({ navigation }) {
 
   useEffect(() => {
 
-    dispatch(ResetStates())
+    // dispatch(ResetStates())
     dispatch(ResetErrorsState());
     navigation.navigate("Route");
   }, [isLoggedIn])

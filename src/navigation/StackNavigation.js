@@ -40,7 +40,7 @@ function StackNaviagtion(props) {
         name="AuthNavigator"
         component={AuthNavigation} /> */}
 
-      {!isLoggedIn ? (
+      {isLoggedIn ? (
         <Stack.Screen
           options={{ headerShown: false }}
           name="Route"

@@ -88,7 +88,7 @@ function Login({ navigation }) {
 
   useEffect(() => {
 
-    dispatch(ResetStates())
+    // dispatch(ResetStates())
     setIsLoading(false)
     navigation.navigate("Route");
   }, [isLoggedIn])

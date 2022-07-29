@@ -41,21 +41,41 @@ import {
 import CustomText from "../components/CustomText";
 import TextStyles from "../style/TextStyles";
 import SpaceStyles from "../style/SpaceStyles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 //---------- export component
 import { removeUser } from "../redux/Local/local.actions";
+import {ResetStates} from "../redux/User/user.actions";
+
+const mapState = ({ user, localReducer }) => ({
+
+  userData: user.userData,
+  propertySignInSuccess: user.propertySignInSuccess,
+  errors: user.errors,
+  isLoggedIn: localReducer.isLoggedIn,
+});
+
 
 export default function DrawerContent(props) {
-  const dispatch = useDispatch();
+
   //---------- state, veriable and hooks
+  const dispatch = useDispatch();
+  const { isLoggedIn, userData } = useSelector(mapState);
+  console.log('curent property', userData)
 
   //---------- life cycle
+
+  useEffect(() => {
+
+    props.navigation.navigate("AuthNavigator");
+  }, [isLoggedIn])
 
   //---------- helper: user's actions
 
   //---------- return main view
 
   const handleLoggedOut = () => {
+    dispatch(ResetStates())
     dispatch(removeUser());
   };
 
@@ -67,7 +87,7 @@ export default function DrawerContent(props) {
             <Image source={userWhiteIcon} />
           </View>
           <CustomText
-            text={"John Carter"}
+            text={userData?.name ? userData?.name : "John Carter"}
             style={[TextStyles.textQuicksand14Black, SpaceStyles.textAlign]}
           />
           <View style={CommonStyles.borderView} />
@@ -179,7 +199,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            
+
             <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Contact")}
             >

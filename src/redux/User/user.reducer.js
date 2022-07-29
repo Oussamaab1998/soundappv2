@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   fetchUserD: null,
   // Errors
   errors: [],
+  userData:undefined,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -43,6 +44,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
         propertyRecoverySuccess: action.payload,
       };
 
+    case userTypes.SAVE_USER_DATA:
+      return {
+        ...state,
+        userData: action.payload,
+      };
+
     // PROPERTY
     case userTypes.OUT_CURRENT_USER:
       return {
@@ -75,6 +82,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         fetchUserD: null,
         // Errors
         errors: [],
+        userData:undefined,
+
       };
     // DEFAULT
     default:
