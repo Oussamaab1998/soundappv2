@@ -112,6 +112,16 @@ function HomeNavigation(props) {
         name="Instructions"
         component={Instructions}
       />
+        <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="Testimonials"
+        component={Instructions}
+      />
       <Stack.Screen
         options={{
           headerStyle: {
