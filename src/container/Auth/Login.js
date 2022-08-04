@@ -122,6 +122,7 @@ function Login({ navigation }) {
     <View
       style={AuthStyles.authContainer}
     >
+
       <SafeAreaView />
       <View
         style={[SpaceStyles.top14, SpaceStyles.padding10]}

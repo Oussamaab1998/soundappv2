@@ -7,6 +7,14 @@ const height = Dimensions.get('window').height;
 
 const CommonStyles = StyleSheet.create({
 
+
+    GrayBtn: {
+
+        backgroundColor: '#495057',
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius:5
+    },
     authContainer: {
 
         flex: 1,
@@ -26,6 +34,27 @@ const CommonStyles = StyleSheet.create({
     },
     headerLeftView: {
 
+    },
+
+    RowSpaceBetween: {
+
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+
+    RowStart: {
+
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+
+    RowEnd: {
+
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
 
     drawerUserIconSection: {
@@ -60,7 +89,7 @@ const CommonStyles = StyleSheet.create({
 
     musicCategory: {
 
-        marginVertical:10,
+        marginVertical: 10,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -82,6 +111,14 @@ const CommonStyles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
 
+    },
+
+    DeviderLine: {
+        height: 10,
+        // backgroundColor: 'red',
+        backgroundColor: '#dee2e6',
+        // background: 'red',
+        width: '100%'
     }
 
 })

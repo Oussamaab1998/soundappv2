@@ -22,8 +22,8 @@ const AuthStyles = StyleSheet.create({
   textInputView: {
     borderWidth: 1,
     borderColor: "#000",
-    paddingVertical:7,
-    paddingHorizontal:10
+    paddingVertical: 7,
+    paddingHorizontal: 10
   },
   smallButton: {
     paddingHorizontal: 20,
@@ -60,7 +60,25 @@ const AuthStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
-  }
+  },
+
+  // modal
+  ModalCenteredView: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex:1,
+  },
+  ModalScrollContainer: {
+    backgroundColor: '#fff',
+    // height: '100%',
+    // width: '100%'
+  },
+  ModalContentContainer: {
+    padding: 10,
+  },
+  
+  
+
 });
 
 export default AuthStyles;

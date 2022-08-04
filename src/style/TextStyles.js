@@ -19,16 +19,19 @@ const TextStyles = StyleSheet.create({
     textBold36Black: {
         ...Fonts.regular36,
         fontWeight: '400',
-    },
-    textBold24Black: {
-
-        ...Fonts.regular24,
-        fontWeight: '400',
+        color: Colors.BLACK
     },
     textBold28Black:{
 
         ...Fonts.regular24,
         fontWeight: '400',
+        color: Colors.BLACK
+    },
+    textBold24Black: {
+
+        ...Fonts.regular24,
+        fontWeight: '400',
+        color: Colors.BLACK
     },
 
     // gray
