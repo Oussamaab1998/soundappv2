@@ -175,6 +175,7 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
+            
 
             <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("ListeningTips")}
