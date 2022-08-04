@@ -112,7 +112,7 @@ function HomeNavigation(props) {
         name="Instructions"
         component={Instructions}
       />
-        <Stack.Screen
+        {/* <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -121,7 +121,7 @@ function HomeNavigation(props) {
         }}
         name="Testimonials"
         component={Instructions}
-      />
+      /> */}
       <Stack.Screen
         options={{
           headerStyle: {

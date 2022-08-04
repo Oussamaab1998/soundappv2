@@ -149,7 +149,7 @@ export default function DrawerContent(props) {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            {/* <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Testimonials")}
               >
               <Image source={testimonialsIcon} />
@@ -160,7 +160,7 @@ export default function DrawerContent(props) {
                   SpaceStyles.left10,
                 ]}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
