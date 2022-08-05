@@ -22,7 +22,9 @@ const CustomTextInput = ({
     textAlignVertical
 }) => {
     return (
-        <View style={[AuthStyles.textInputView, containerStyle]}>
+        <View
+         style={[AuthStyles.textInputView, containerStyle]}
+        >
             <TextInput
                 style={[TextStyles.textSegoe18Black, style]}
                 placeholder={placeholder}

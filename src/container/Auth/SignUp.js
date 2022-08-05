@@ -157,7 +157,8 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={SpaceStyles.top1}
+              style={[{ color: '#000' }]}
+              placeholderTextColor="gray"
               placeholder="Email"
               onChangeText={(text) => {
                 setLocalErros('')
@@ -175,7 +176,8 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={SpaceStyles.top1}
+              style={[{ color: '#000' }]}
+              placeholderTextColor="gray"
               placeholder="Name"
               onChangeText={(text) => {
                 setLocalErros('')
@@ -194,7 +196,8 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={SpaceStyles.top1}
+              style={[{ color: '#000' }]}
+              placeholderTextColor="gray"
               placeholder="Password"
               onChangeText={(text) => {
                 setLocalErros('')
@@ -213,7 +216,8 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={SpaceStyles.top1}
+              style={[{ color: '#000' }]}
+              placeholderTextColor="gray"
               placeholder="Confirm Password"
               onChangeText={(text) => {
                 setLocalErros('')

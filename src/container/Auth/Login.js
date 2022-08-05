@@ -135,7 +135,8 @@ function Login({ navigation }) {
           style={[SpaceStyles.top10, , AuthStyles.textInputView]}
         >
           <TextInput
-            style={SpaceStyles.top1}
+            style={[{ color: '#000' }]}
+            placeholderTextColor="gray"
             placeholder="Email"
             onChangeText={(text) => {
               setLocalErros('')
@@ -149,7 +150,9 @@ function Login({ navigation }) {
           style={[SpaceStyles.top10, , AuthStyles.textInputView]}
         >
           <TextInput
-            style={SpaceStyles.top1}
+            style={[{ color: '#000' }]}
+            placeholderTextColor="gray"
+
             onChangeText={(text) => {
               setLocalErros('')
               onChangepassword(text)

@@ -27,7 +27,7 @@ import TextStyles from "../style/TextStyles";
 
 //---------- component
 
-function ModalContainer({ navigation, key, content, isVisible }) {
+function ModalContainer({ navigation, key, content, isVisible, renderItem }) {
 
     //---------- state, veriable and hooks
 
@@ -102,7 +102,10 @@ function ModalContainer({ navigation, key, content, isVisible }) {
                 )
                 break;
 
+            case 'render_view':
 
+                return renderItem()
+                break;
 
             default:
                 break;
