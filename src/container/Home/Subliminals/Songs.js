@@ -70,7 +70,7 @@ const Songs = ({ navigation }) => {
         {songs?.length > 0 &&
           songs.map((item, index) => (
             <View key={index}>
-              <SongModal item={item} index={index} navigation={navigation} />
+              <SongModal item={item} index={index} navigation={navigation} songs={songs} />
             </View>
           ))}
       </ScrollView>
