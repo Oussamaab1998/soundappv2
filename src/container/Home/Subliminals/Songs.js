@@ -67,12 +67,14 @@ const Songs = ({ navigation }) => {
         {error.length > 0 && songs.length === 0 && (
           <Text style={styles.error}>{error}</Text>
         )}
-        {songs?.length > 0 &&
+        {
+          songs?.length > 0 &&
           songs.map((item, index) => (
             <View key={index}>
-              <SongModal item={item} index={index} navigation={navigation} />
+              <SongModal item={item} index={index} navigation={navigation} songs={songs} />
             </View>
-          ))}
+          ))
+        }
       </ScrollView>
     </View>
   );

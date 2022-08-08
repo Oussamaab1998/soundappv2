@@ -2,11 +2,12 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
 const SongModal = (props) => {
-  const { item, index, navigation } = props;
+  const { item, index, navigation, songs } = props;
   const handlePress = () => {
     console.log("Clicked");
-    navigation.navigate("audioPlayer", { item: item });
+    navigation.navigate("audioPlayer", { item: item, songs: songs });
   };
+
   return (
     <TouchableOpacity
       style={[styles.songContainer, styles.shadow1]}

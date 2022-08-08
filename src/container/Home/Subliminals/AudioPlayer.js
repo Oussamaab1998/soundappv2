@@ -10,11 +10,10 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 // third party lib
 import Sound from "react-native-sound";
-import Slider from "@react-native-community/slider";
 
 // headers
 import HeaderRight from "../../../components/HeaderRight";
@@ -22,7 +21,6 @@ import HeaderTitle from "../../../components/HeaderTitle";
 import HeaderLeft from "../../../components/HeaderLeft";
 
 import {
-  addIcon,
   amplifyIcon,
   backIcon,
   drawerIcon,
@@ -36,23 +34,60 @@ import {
 // styles
 import CommonStyles from "../../../style/CommonStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
-import CustomText from "../../../components/CustomText";
-import { BLACK } from "../../../constants/Colors";
 
 //---------- componets
+
 const AudioPlayer = ({ navigation, route }) => {
-  
   //---------- state and params
-  const { item } = route.params;
-  
+  const {
+    item,
+    // songs                         // original songs
+  } = route.params;
+
+  let songs = songs1           // for testing
+
   // state
+  const [currentSong, setCurrentSong] = useState(item);
   const [modalVisible, setModalVisible] = useState(false);
-  const [songVar, setSongVar] = useState(null);
+  const [songVar, setSongVar] = useState(undefined);
   const [songLength, setSongLength] = useState(0);
   const [songStatus, setSongStatus] = useState(false);
   const [songCS, setSongCS] = useState(0);
+  const [songsSameGenre, setSongsSameGenre] = useState([]);
 
   //---------- life cycles
+
+  useEffect(() => {
+    if (songs) fetchSameGenre();
+  }, []);
+
+  useEffect(() => {
+
+    if (item?.url) {
+
+      setCurrentSong(item)
+      // setSongStatus(true)
+    } else {
+
+      setCurrentSong(undefined)
+      // setSongStatus(false)
+    }
+  }, [item?.url])
+
+  useEffect(() => {
+
+    if (currentSong?.url) {
+
+      playSound(currentSong)
+    }else{
+
+      pauseSound()
+      setCurrentSong(undefined)
+    }
+
+    console.log('update for current song', currentSong)
+
+  }, [currentSong?.url])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -77,41 +112,57 @@ const AudioPlayer = ({ navigation, route }) => {
 
   //--------- users actions
 
-  const playSound = () => {
-    // var sound1 = new Sound(item.url, "", (error, _sound) => {
-    //   if (error) {
-    //     alert("error" + error.message);
-    //     return;
-    //   }
-    //   sound1.play(() => {
-    //     sound1.release();
-    //   });
-    // });
-    var whoosh = new Sound(item.url, Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.log("failed to load the sound", error);
-        return;
-      }
-      // loaded successfully
+  const fetchSameGenre = async () => {
+    let arr = [];
+    let i = 0;
+    songs.map((song) => {
+      i++;
+      if (song.genre.id === item.genre.id) arr.push(song);
+    });
+    setSongsSameGenre(arr);
+    // if (songs.length - 1 === i) {
+    // }
+  };
 
-      whoosh.getCurrentTime((seconds) => setSongCS(seconds));
-      setSongVar(whoosh);
-      setSongLength(whoosh.getDuration());
+  const playSound = (song) => {
+
+    console.log('call this function again and again', currentSong)
+    if (song.url) {
+
       setSongStatus(true);
 
-      // Play the sound with an onEnd callback
-      whoosh.play((success) => {
-        if (success) {
-          console.log("successfully finished playing");
-        } else {
-          console.log("playback failed due to audio decoding errors");
+      // if (songVar !== null) pauseSound();
+      var whoosh = new Sound(song.url, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log("failed to load the sound", error);
+          return;
         }
+        // loaded successfully
+
+        whoosh.getCurrentTime((seconds) => setSongCS(seconds));
+        setSongVar(whoosh);
+        setSongLength(whoosh.getDuration());
+
+        // Play the sound with an onEnd callback
+        whoosh.play((success) => {
+          if (success) {
+            console.log("successfully finished playing");
+          } else {
+            console.log("playback failed due to audio decoding errors");
+          }
+        });
       });
-    });
+    }
   };
+
   const pauseSound = () => {
-    songVar.pause();
-    setSongStatus(false);
+
+    console.log('songVar', songVar)
+    if (songVar) {
+
+      songVar.pause();
+      setSongStatus(false);
+    }
   };
 
   //---------- render main view
@@ -167,6 +218,99 @@ const AudioPlayer = ({ navigation, route }) => {
                 <Text style={styles.title1}>{item.genre.name}</Text>
               </View>
             </View>
+            <View style={styles.genre2}>
+              {songsSameGenre.length > 3 ? (
+                <ScrollView style={{ flex: 1, maxHeight: 100, width: "100%" }}>
+                  {songsSameGenre.map((song, index) => {
+                    if (currentSong?.id === song.id) {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setCurrentSong(song);
+                            // playSound(song);
+                          }}
+                          style={styles.gernre2}
+                        >
+                          <Text style={[styles.title1, { fontWeight: "bold" }]}>
+                            {song.title}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    } else {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setCurrentSong(song);
+                            // playSound(song);
+                          }}
+                          style={styles.gernre2}
+                        >
+                          <Text style={styles.title1}>{song.title}</Text>
+                        </TouchableOpacity>
+                      );
+                    }
+                  })}
+                </ScrollView>
+              ) : (
+                <>
+                  {songsSameGenre.map((song, index) => {
+                    if (currentSong?.id === song.id && songStatus) {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setCurrentSong({});
+                            // pauseSound();
+                          }}
+                          style={styles.gernre2}
+                        >
+
+                          <Image
+                            source={pause}
+                            resizeMode="cover"
+                            style={{
+                              height: 16,
+                              width: 16,
+                              marginLeft: 2
+                            }}
+
+                          />
+
+                          <Text style={[styles.title1, { fontWeight: "bold", marginLeft: 12 }]}>
+                            {song.title}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    } else {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setCurrentSong(song);
+                            // playSound(song);
+                          }}
+                          style={styles.gernre2}
+                        >
+
+                          <Image
+                            source={playIcon}
+                            resizeMode="cover"
+                            style={{
+                              height: 20,
+                              width: 20
+                            }}
+                          />
+
+                          <Text style={[styles.title1, { marginLeft: 10 }]}>{song.title}</Text>
+                        </TouchableOpacity>
+                      );
+                    }
+                  })}
+                </>
+              )}
+            </View>
             <View
               style={[
                 SpaceStyles.alignSpaceBlock,
@@ -188,7 +332,10 @@ const AudioPlayer = ({ navigation, route }) => {
                 {songStatus ? (
                   <TouchableOpacity
                     style={styles.playpauseIcon}
-                    onPress={() => pauseSound()}
+                    onPress={() => {
+                      setCurrentSong({});
+                      // pauseSound()
+                    }}
                   >
                     <Image
                       source={pause}
@@ -199,7 +346,10 @@ const AudioPlayer = ({ navigation, route }) => {
                 ) : (
                   <TouchableOpacity
                     style={styles.playpauseIcon}
-                    onPress={() => playSound()}
+                    onPress={() => {
+                      setCurrentSong(currentSong?.url ? currentSong : item);
+                      // playSound()
+                    }}
                   >
                     <Image
                       source={playIcon}
@@ -254,6 +404,8 @@ const AudioPlayer = ({ navigation, route }) => {
 
 export default AudioPlayer;
 
+//---------- styels
+
 const styles = StyleSheet.create({
   conatiner: {
     flex: 1,
@@ -286,6 +438,8 @@ const styles = StyleSheet.create({
   gernre2: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: 'flex-start',
+    marginBottom: 10,
   },
   thumbnail2: {
     width: 30,
@@ -296,6 +450,10 @@ const styles = StyleSheet.create({
   genre: {
     flexDirection: "column",
     alignItems: "center",
+  },
+  genre2: {
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
   title0: {
     fontSize: 12,
@@ -348,3 +506,140 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
 });
+
+// constants testing data
+
+const songs1 = [
+  {
+    id: 1,
+    album: [
+      {
+        id: 1,
+        name: "Face Sublimal Songs",
+        thumbnail:
+          "http://soundnsoulful.alliedtechnologies.co:8000/media/album/aibackground.jpg",
+      },
+    ],
+    genre: {
+      id: 1,
+      name: "Beauty Sublimals Songs",
+      thumbnail:
+        "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
+    },
+    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    audio_id: "sG6sIjXlHWV2iqOu",
+    title: "111 Clear Skin and Birds",
+    description: "A sublimal that makes life great",
+    thumbnail:
+      "http://soundnsoulful.alliedtechnologies.co:8000/media/thumbnails/The_Creation_v2.minified.jpg",
+    song: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    size: 30,
+    playtime: "0.00",
+    type: "single",
+    price: "0.00",
+    featured: true,
+    created_at: "2022-07-28T16:58:38Z",
+    affirmations_song:
+      "*develop an amazing personality\r\n    *attract loyal & supportive friends easily\r\n    *be extremely funny and witty\r\n    *make others laugh all the time\r\n    *have total knowledge of all subjects and world events\r\n    make conversation easily\r\n    always know the perfect thing to say\r\n    be the best listener\r\n    be extremely kind & empathetic\r\n    give the best advice to others\r\n    make others gravitate to you & want to talk with you\r\n    get invited to all places and events\r\n    speak perfectly clearly & with flawless pronunciation\r\n    become an optimistic and positive-minded person\r\n    love yourself completely\r\n    feel a deep sense of confidence in yourself\r\n    strike up conversations easily\r\n    attract your crush\r\n    have an amazing connection with your crush\r\n    clearly & eloquently express your ideas\r\n    become extremely lucky, wealthy & successful",
+    user: 1,
+  },
+  {
+    id: 2,
+    album: [
+      {
+        id: 1,
+        name: "Face Sublimal Songs",
+        thumbnail:
+          "http://soundnsoulful.alliedtechnologies.co:8000/media/album/aibackground.jpg",
+      },
+    ],
+    genre: {
+      id: 2,
+      name: "Beauty Sublimals Songs",
+      thumbnail:
+        "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
+    },
+    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    audio_id: "sG6sIjXlHWV2iqOu",
+    title: "222 Clear Skin and Birds",
+    description: "A sublimal that makes life great",
+    thumbnail:
+      "http://soundnsoulful.alliedtechnologies.co:8000/media/thumbnails/The_Creation_v2.minified.jpg",
+    song: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    size: 30,
+    playtime: "0.00",
+    type: "single",
+    price: "0.00",
+    featured: true,
+    created_at: "2022-07-28T16:58:38Z",
+    affirmations_song:
+      "*develop an amazing personality\r\n    *attract loyal & supportive friends easily\r\n    *be extremely funny and witty\r\n    *make others laugh all the time\r\n    *have total knowledge of all subjects and world events\r\n    make conversation easily\r\n    always know the perfect thing to say\r\n    be the best listener\r\n    be extremely kind & empathetic\r\n    give the best advice to others\r\n    make others gravitate to you & want to talk with you\r\n    get invited to all places and events\r\n    speak perfectly clearly & with flawless pronunciation\r\n    become an optimistic and positive-minded person\r\n    love yourself completely\r\n    feel a deep sense of confidence in yourself\r\n    strike up conversations easily\r\n    attract your crush\r\n    have an amazing connection with your crush\r\n    clearly & eloquently express your ideas\r\n    become extremely lucky, wealthy & successful",
+    user: 1,
+  },
+  {
+    id: 3,
+    album: [
+      {
+        id: 1,
+        name: "Face Sublimal Songs",
+        thumbnail:
+          "http://soundnsoulful.alliedtechnologies.co:8000/media/album/aibackground.jpg",
+      },
+    ],
+    genre: {
+      id: 1,
+      name: "Beauty Sublimals Songs",
+      thumbnail:
+        "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
+    },
+    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    audio_id: "sG6sIjXlHWV2iqOu",
+    title: "333 Clear Skin and Birds",
+    description: "A sublimal that makes life great",
+    thumbnail:
+      "http://soundnsoulful.alliedtechnologies.co:8000/media/thumbnails/The_Creation_v2.minified.jpg",
+    song: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    size: 30,
+    playtime: "0.00",
+    type: "single",
+    price: "0.00",
+    featured: true,
+    created_at: "2022-07-28T16:58:38Z",
+    affirmations_song:
+      "*develop an amazing personality\r\n    *attract loyal & supportive friends easily\r\n    *be extremely funny and witty\r\n    *make others laugh all the time\r\n    *have total knowledge of all subjects and world events\r\n    make conversation easily\r\n    always know the perfect thing to say\r\n    be the best listener\r\n    be extremely kind & empathetic\r\n    give the best advice to others\r\n    make others gravitate to you & want to talk with you\r\n    get invited to all places and events\r\n    speak perfectly clearly & with flawless pronunciation\r\n    become an optimistic and positive-minded person\r\n    love yourself completely\r\n    feel a deep sense of confidence in yourself\r\n    strike up conversations easily\r\n    attract your crush\r\n    have an amazing connection with your crush\r\n    clearly & eloquently express your ideas\r\n    become extremely lucky, wealthy & successful",
+    user: 1,
+  },
+  {
+    id: 4,
+    album: [
+      {
+        id: 1,
+        name: "Face Sublimal Songs",
+        thumbnail:
+          "http://soundnsoulful.alliedtechnologies.co:8000/media/album/aibackground.jpg",
+      },
+    ],
+    genre: {
+      id: 1,
+      name: "Beauty Sublimals Songs",
+      thumbnail:
+        "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
+    },
+    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    audio_id: "sG6sIjXlHWV2iqOu",
+    title: "444 Clear Skin and Birds",
+    description: "A sublimal that makes life great",
+    thumbnail:
+      "http://soundnsoulful.alliedtechnologies.co:8000/media/thumbnails/The_Creation_v2.minified.jpg",
+    song: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    size: 30,
+    playtime: "0.00",
+    type: "single",
+    price: "0.00",
+    featured: true,
+    created_at: "2022-07-28T16:58:38Z",
+    affirmations_song:
+      "*develop an amazing personality\r\n    *attract loyal & supportive friends easily\r\n    *be extremely funny and witty\r\n    *make others laugh all the time\r\n    *have total knowledge of all subjects and world events\r\n    make conversation easily\r\n    always know the perfect thing to say\r\n    be the best listener\r\n    be extremely kind & empathetic\r\n    give the best advice to others\r\n    make others gravitate to you & want to talk with you\r\n    get invited to all places and events\r\n    speak perfectly clearly & with flawless pronunciation\r\n    become an optimistic and positive-minded person\r\n    love yourself completely\r\n    feel a deep sense of confidence in yourself\r\n    strike up conversations easily\r\n    attract your crush\r\n    have an amazing connection with your crush\r\n    clearly & eloquently express your ideas\r\n    become extremely lucky, wealthy & successful",
+    user: 1,
+  },
+];
