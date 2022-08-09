@@ -5,9 +5,12 @@ import React, { useEffect, useState } from "react";
 
 // navigations
 import { createStackNavigator } from "@react-navigation/stack";
+import { useDispatch, useSelector } from "react-redux";
 import AuthNavigation from "./AuthNavigator/AuthNavigation";
 import Route from "./HomeNavigator/Route";
-import { useDispatch, useSelector } from "react-redux";
+
+import SpalshScreen from '../container/Auth/SpalshScreen';
+
 // global stack veriable
 const Stack = createStackNavigator();
 
@@ -28,7 +31,15 @@ function StackNaviagtion(props) {
   }, [isLoggedIn]);
 
   return (
-    <Stack.Navigator initialRouteName="AuthNavigator">
+    <Stack.Navigator initialRouteName="SpalshScreen">
+      
+      
+      <Stack.Screen
+        options={{ headerShown: false }}
+
+        name="SpalshScreen"
+        component={SpalshScreen} />
+
       {/* <Stack.Screen
         options={{ headerShown: false }}
 

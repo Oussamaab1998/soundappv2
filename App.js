@@ -25,7 +25,7 @@ const App = () => {
   //---------- life cycle
 
   useEffect(() => {
-    SplashScreen.hide();
+    // SplashScreen.hide();
   }, []);
 
   //---------- return main view

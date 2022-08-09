@@ -1,5 +1,6 @@
 module.exports = {
   //login
+  splasGif: require("./../assets/sound-and-soulfull.gif"),
   splashLog: require("./../assets/splashLog.png"),
   introIcon: require("./../assets/introIcon.png"),
   setp1: require("./../assets/setp1.png"),
