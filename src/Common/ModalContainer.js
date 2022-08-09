@@ -12,12 +12,16 @@ import {
     ActivityIndicator,
     Modal,
     StyleSheet,
-    Pressable
+    Pressable,
 } from "react-native";
 
 // third party lib
 import { ScrollView } from "react-native-gesture-handler";
 import { Portal, Button, Provider } from "react-native-paper";
+
+import {
+    addIcon,
+} from ".././constants/Images";
 
 // styles
 import AuthStyles from "../style/AuthStyles";
@@ -27,7 +31,7 @@ import TextStyles from "../style/TextStyles";
 
 //---------- component
 
-function ModalContainer({ navigation, key, content, isVisible, renderItem }) {
+function ModalContainer({ navigation, render_view_key, content, isVisible, renderItem, hideModal }) {
 
     //---------- state, veriable and hooks
 
@@ -37,68 +41,55 @@ function ModalContainer({ navigation, key, content, isVisible, renderItem }) {
 
     useEffect(() => {
 
+        console.log('isVisible :', isVisible, 'key:', render_view_key, 'content :', content)
         setVisible(isVisible);
     }, [isVisible]);
 
     //---------- helper: user's actions
 
     const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
 
-    const renderContent = () => {
+    const renderContent = (params) => {
 
-        switch (key) {
+        switch (params) {
 
             case 'affirmations':
 
                 return (
-                    <React.Fragment>
-                        <View
-                            style={[CommonStyles.RowSpaceBetween, { padding: 10 }]}
-                        >
-                            <Text
-                                style={[TextStyles.textBold24Black]}
-                            >
-                                Affirmations
-                            </Text>
-                        </View>
-
-                        <View style={CommonStyles.DeviderLine} />
-
-                        <View
-                            style={
-                                AuthStyles.ModalContentContainer
+                    renderContentLayout({
+                        title: 'Affirmations',
+                        content: <Text style={{ color: '#000' }}>
+                            {
+                                content
                             }
+                        </Text>
+                    })
+                )
+                break;
+
+            case 'save':
+
+                return (
+                    renderContentLayout({
+                        title: 'Playlists',
+                        content: <TouchableOpacity
+                            onPress={() => {
+                                alert('...in process')
+                            }}
+                            style={CommonStyles.RowStart}
                         >
-                            <Text>
+                            <Image
+                                style={{ marginRight: 10 }}
+                                source={addIcon}
+                                resizeMode='cover'
+                            />
+                            <Text style={{ color: '#000' }}>
                                 {
-                                    content
+                                    'Create New Plalist'
                                 }
                             </Text>
-                        </View>
-
-                        <View style={CommonStyles.DeviderLine} />
-
-                        <View
-                            style={[CommonStyles.RowEnd, { padding: 10 }]}
-                        >
-                            <TouchableOpacity
-                                style={CommonStyles.GrayBtn}
-                                onPress={() => {
-                                    hideModal()
-                                }}
-                            >
-                                <Text
-                                    style={
-                                        TextStyles.textSegoe18White
-                                    }
-                                >
-                                    Close
-                                </Text>
-                            </TouchableOpacity>
-
-                        </View>
-                    </React.Fragment>
+                        </TouchableOpacity>
+                    })
                 )
                 break;
 
@@ -112,32 +103,87 @@ function ModalContainer({ navigation, key, content, isVisible, renderItem }) {
         }
     }
 
+
+    const renderContentLayout = ({ title, content }) => {
+
+        return (
+            <React.Fragment>
+                <View
+                    style={[
+                        CommonStyles.RowSpaceBetween,
+                        { padding: 10, width: '100%', alignSelf:'flex-start' }
+                    ]}
+                >
+                    <Text
+                        style={[
+                            TextStyles.textBold24Black
+                        ]}
+                    >
+                        {
+                            title
+                        }
+                    </Text>
+                </View>
+
+                <View
+                    style={
+                        AuthStyles.ModalContentContainer
+                    }
+                >
+                    {
+                        content
+                    }
+                </View>
+
+                <View
+                    style={[
+                        CommonStyles.RowEnd,
+                        { padding: 10, width: '100%' }
+                    ]}
+                >
+                    <TouchableOpacity
+                        style={CommonStyles.GrayBtn}
+                        onPress={() => {
+                            hideModal()
+                        }}
+                    >
+                        <Text
+                            style={
+                                TextStyles.textSegoe18White
+                            }
+                        >
+                            Close
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+            </React.Fragment>
+        )
+    }
     //---------- return main view
 
-
+    console.log('visible', visible)
     return (
-        <View
-            style={styles.centeredView}
+
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isVisible}
+            onRequestClose={() => {
+                hideModal()
+                setVisible(false)
+            }}
         >
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={visible}
-                onRequestClose={() => {
-                    hideModal()
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
+            <View style={styles.centeredView1}>
+                <View style={styles.modalView}>
 
-                        {
-                            renderContent(key)
-                        }
+                    {
+                        renderContent(render_view_key)
+                    }
 
-                    </View>
                 </View>
-            </Modal>
-        </View>
+            </View>
+        </Modal>
     );
 };
 
@@ -146,20 +192,26 @@ function ModalContainer({ navigation, key, content, isVisible, renderItem }) {
 
 export default ModalContainer;
 
-
-
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
+        position: 'absolute'
+    },
+    centeredView1: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
     },
     modalView: {
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
-        // alignItems: "center",
+        padding: 20,
+        alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

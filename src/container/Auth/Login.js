@@ -35,6 +35,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveUser } from "../../redux/Local/local.actions";
 import { findLastValidBreakpoint } from "native-base/lib/typescript/theme/tools";
 
+import ModalContainer from "../../Common/ModalContainer";
+
 //---------- connect with redux state
 
 const mapState = ({ user, localReducer }) => ({
@@ -122,7 +124,6 @@ function Login({ navigation }) {
     <View
       style={AuthStyles.authContainer}
     >
-
       <SafeAreaView />
       <View
         style={[SpaceStyles.top14, SpaceStyles.padding10]}

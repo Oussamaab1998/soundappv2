@@ -54,7 +54,7 @@ const CommonStyles = StyleSheet.create({
 
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     drawerUserIconSection: {
@@ -112,14 +112,6 @@ const CommonStyles = StyleSheet.create({
         bottom: 0,
 
     },
-
-    DeviderLine: {
-        height: 10,
-        // backgroundColor: 'red',
-        backgroundColor: '#dee2e6',
-        // background: 'red',
-        width: '100%'
-    }
 
 })
 

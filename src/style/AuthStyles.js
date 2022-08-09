@@ -73,7 +73,13 @@ const AuthStyles = StyleSheet.create({
     // width: '100%'
   },
   ModalContentContainer: {
-    padding: 10,
+    width: '100%',
+    borderBottomColor:'#dee2e6',
+    borderTopColor:'#dee2e6',
+    borderBottomWidth:1,
+    borderTopWidth:1,
+    minWidth:width-100,
+    padding:10
   },
   
   

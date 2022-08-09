@@ -64,9 +64,11 @@ const Songs = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {error.length > 0 && songs.length === 0 && (
-          <Text style={styles.error}>{error}</Text>
-        )}
+        {
+          error.length > 0 && songs.length === 0 && (
+            <Text style={styles.error}>{error}</Text>
+          )
+        }
         {
           songs?.length > 0 &&
           songs.map((item, index) => (

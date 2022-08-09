@@ -20,8 +20,13 @@ import HeaderRight from "../../../components/HeaderRight";
 import HeaderTitle from "../../../components/HeaderTitle";
 import HeaderLeft from "../../../components/HeaderLeft";
 
+// components
+import ModalContainer from '../../../Common/ModalContainer';
+
 import {
   amplifyIcon,
+  addIcon,
+  musicIcon,
   backIcon,
   drawerIcon,
   endIcon,
@@ -41,19 +46,21 @@ const AudioPlayer = ({ navigation, route }) => {
   //---------- state and params
   const {
     item,
-    // songs                         // original songs
+    songs                         // original songs
   } = route.params;
 
-  let songs = songs1           // for testing
+  // let songs = songs1           // for testing
 
   // state
   const [currentSong, setCurrentSong] = useState(item);
   const [modalVisible, setModalVisible] = useState(false);
-  const [songVar, setSongVar] = useState(undefined);
-  const [songLength, setSongLength] = useState(0);
   const [songStatus, setSongStatus] = useState(false);
+  const [isAffirmations, setIsAffirmations] = useState(false);
+  const [songLength, setSongLength] = useState(0);
   const [songCS, setSongCS] = useState(0);
   const [songsSameGenre, setSongsSameGenre] = useState([]);
+  const [songVar, setSongVar] = useState(undefined);
+  const [modalKey, setModalKey] = useState(undefined);
 
   //---------- life cycles
 
@@ -79,7 +86,7 @@ const AudioPlayer = ({ navigation, route }) => {
     if (currentSong?.url) {
 
       playSound(currentSong)
-    }else{
+    } else {
 
       pauseSound()
       setCurrentSong(undefined)
@@ -125,7 +132,9 @@ const AudioPlayer = ({ navigation, route }) => {
   };
 
   const playSound = (song) => {
-
+    
+    pauseSound();
+    
     console.log('call this function again and again', currentSong)
     if (song.url) {
 
@@ -169,7 +178,17 @@ const AudioPlayer = ({ navigation, route }) => {
 
   return (
     <>
-      <Modal
+
+
+      <ModalContainer
+        navigation={navigation}
+        isVisible={isAffirmations}
+        render_view_key={modalKey}
+        content={item.affirmations_song}
+        hideModal={() => setIsAffirmations(false)}
+      />
+
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -200,8 +219,9 @@ const AudioPlayer = ({ navigation, route }) => {
             </ScrollView>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       <View style={styles.conatiner}>
+
         <View style={styles.header}>
           <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
           <Text style={styles.title2}>{item.title}</Text>
@@ -262,7 +282,7 @@ const AudioPlayer = ({ navigation, route }) => {
                           key={index}
                           onPress={() => {
                             setCurrentSong({});
-                            // pauseSound();
+                            pauseSound();
                           }}
                           style={styles.gernre2}
                         >
@@ -329,35 +349,37 @@ const AudioPlayer = ({ navigation, route }) => {
                   resizeMode="cover"
                   style={SpaceStyles.left5}
                 />
-                {songStatus ? (
-                  <TouchableOpacity
-                    style={styles.playpauseIcon}
-                    onPress={() => {
-                      setCurrentSong({});
-                      // pauseSound()
-                    }}
-                  >
-                    <Image
-                      source={pause}
-                      resizeMode="cover"
-                      style={styles.pauseSyles}
-                    />
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.playpauseIcon}
-                    onPress={() => {
-                      setCurrentSong(currentSong?.url ? currentSong : item);
-                      // playSound()
-                    }}
-                  >
-                    <Image
-                      source={playIcon}
-                      resizeMode="cover"
-                      style={SpaceStyles.left5}
-                    />
-                  </TouchableOpacity>
-                )}
+                {
+                  songStatus ? (
+                    <TouchableOpacity
+                      style={styles.playpauseIcon}
+                      onPress={() => {
+                        setCurrentSong({});
+                        // pauseSound()
+                      }}
+                    >
+                      <Image
+                        source={pause}
+                        resizeMode="cover"
+                        style={styles.pauseSyles}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.playpauseIcon}
+                      onPress={() => {
+                        setCurrentSong(currentSong?.url ? currentSong : item);
+                        // playSound()
+                      }}
+                    >
+                      <Image
+                        source={playIcon}
+                        resizeMode="cover"
+                        style={SpaceStyles.left5}
+                      />
+                    </TouchableOpacity>
+                  )
+                }
 
                 <Image
                   source={endIcon}
@@ -365,8 +387,11 @@ const AudioPlayer = ({ navigation, route }) => {
                   style={SpaceStyles.left5}
                 />
               </View>
-              <TouchableOpacity
-                onPress={() => setModalVisible(!modalVisible)}
+
+              {/* <TouchableOpacity
+
+                // onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => setIsAffirmations(!isAffirmations)}
                 style={SpaceStyles.rowFlex}
               >
                 <Image
@@ -374,7 +399,38 @@ const AudioPlayer = ({ navigation, route }) => {
                   style={styles.pauseSyles}
                   resizeMode="cover"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
+
+              <View style={SpaceStyles.rowFlex}>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalKey('save')
+                    setIsAffirmations(!isAffirmations)
+                  }}
+                >
+
+                  <Image
+                    source={addIcon}
+                    resizeMode='cover'
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalKey('affirmations')
+                    setIsAffirmations(!isAffirmations)
+                  }}
+                >
+                  <Image
+                    source={musicIcon}
+                    resizeMode='cover'
+                    style={SpaceStyles.left5}
+                  />
+                </TouchableOpacity>
+              </View>
+
             </View>
 
             {/* <View
@@ -407,6 +463,10 @@ export default AudioPlayer;
 //---------- styels
 
 const styles = StyleSheet.create({
+  centeredView: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   conatiner: {
     flex: 1,
   },
@@ -526,7 +586,7 @@ const songs1 = [
       thumbnail:
         "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
     },
-    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    url: "https://www.kozco.com/tech/piano2-Audacity1.2.5.mp3",
     audio_id: "sG6sIjXlHWV2iqOu",
     title: "111 Clear Skin and Birds",
     description: "A sublimal that makes life great",
@@ -559,7 +619,7 @@ const songs1 = [
       thumbnail:
         "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
     },
-    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    url: "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
     audio_id: "sG6sIjXlHWV2iqOu",
     title: "222 Clear Skin and Birds",
     description: "A sublimal that makes life great",
@@ -592,7 +652,8 @@ const songs1 = [
       thumbnail:
         "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
     },
-    url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    // url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
+    url:'https://drive.google.com/file/d/1ooFUF0jOTmv6EMoXpjaLy6hshlZx6V2B/view?usp=sharing',
     audio_id: "sG6sIjXlHWV2iqOu",
     title: "333 Clear Skin and Birds",
     description: "A sublimal that makes life great",
