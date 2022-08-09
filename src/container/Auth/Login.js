@@ -136,7 +136,7 @@ function Login({ navigation }) {
           style={[SpaceStyles.top10, , AuthStyles.textInputView]}
         >
           <TextInput
-            style={[{ color: '#000' }]}
+            style={[{ color: '#000', paddingVertical:5 }]}
             placeholderTextColor="gray"
             placeholder="Email"
             onChangeText={(text) => {
@@ -151,7 +151,7 @@ function Login({ navigation }) {
           style={[SpaceStyles.top10, , AuthStyles.textInputView]}
         >
           <TextInput
-            style={[{ color: '#000' }]}
+            style={[{ color: '#000', paddingVertical:5 }]}
             placeholderTextColor="gray"
 
             onChangeText={(text) => {

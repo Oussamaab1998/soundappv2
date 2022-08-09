@@ -157,7 +157,7 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={[{ color: '#000' }]}
+              style={[{ color: '#000', paddingVertical: 5 }]}
               placeholderTextColor="gray"
               placeholder="Email"
               onChangeText={(text) => {
@@ -176,7 +176,7 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={[{ color: '#000' }]}
+              style={[{ color: '#000', paddingVertical: 5 }]}
               placeholderTextColor="gray"
               placeholder="Name"
               onChangeText={(text) => {
@@ -196,7 +196,7 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={[{ color: '#000' }]}
+              style={[{ color: '#000', paddingVertical: 5 }]}
               placeholderTextColor="gray"
               placeholder="Password"
               onChangeText={(text) => {
@@ -216,7 +216,7 @@ function SignUp({ navigation }) {
             ]}
           >
             <TextInput
-              style={[{ color: '#000' }]}
+              style={[{ color: '#000', paddingVertical: 5 }]}
               placeholderTextColor="gray"
               placeholder="Confirm Password"
               onChangeText={(text) => {
