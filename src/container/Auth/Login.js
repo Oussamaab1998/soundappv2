@@ -12,7 +12,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { TextInput } from "react-native-paper";
+import CheckBox from "react-native-check-box";
 
 // common componets
 import CustomText from "../../components/CustomText";
@@ -43,6 +43,7 @@ import { saveUser } from "../../redux/Local/local.actions";
 import { findLastValidBreakpoint } from "native-base/lib/typescript/theme/tools";
 
 import ModalContainer from "../../Common/ModalContainer";
+import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
 
 //---------- connect with redux state
 
@@ -76,7 +77,8 @@ function Login({ navigation }) {
   const [localErros, setLocalErros] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [securePassword, setSecurePassword] = useState(true);
-
+  const [isSavePassword, setIsSavePassword] = useState(false);
+  const [isUserSaved, setIsUserSaved] = useState(false);
 
   //---------- life cycle
 
@@ -84,17 +86,60 @@ function Login({ navigation }) {
 
   useEffect(() => {
 
-    if (propertySignInSuccess) {
+    const getUserInfo = async () => {
+      let data = await getData('remember_me')
 
-      dispatch(saveUser());
+      if (data) {
+
+        let parse_data = JSON.parse(data)
+        onChangeEmail(parse_data.email)
+        onChangepassword(parse_data.password)
+        setIsUserSaved(true)
+        setIsSavePassword(true)
+      }
+      console.log('==========================')
+      console.log('data :', data)
+      console.log('==========================')
     }
 
-    if (errors.length > 0) {
+    getUserInfo()
+  }, [])
 
-      setIsLoading(false)
-      setLocalErros(errors)
-      dispatch(ResetStates())
+  useEffect(() => {
+
+    const saveUserIfo = async () => {
+      if (propertySignInSuccess) {
+
+        let is_save_user = await saveData('remember_me', {
+          email,
+          password
+        })
+
+        if (is_save_user) {
+
+          dispatch(saveUser());
+        }
+      }
+    };
+
+    if (isSavePassword && propertySignInSuccess) {
+
+      saveUserIfo();
+    } else {
+
+      if (propertySignInSuccess) {
+
+        dispatch(saveUser());
+      }
+
+      if (errors.length > 0) {
+
+        setIsLoading(false)
+        setLocalErros(errors)
+        dispatch(ResetStates())
+      }
     }
+
   }, [propertySignInSuccess, errors]);
 
   useEffect(() => {
@@ -115,6 +160,11 @@ function Login({ navigation }) {
     }
     if (email !== "" && password !== "") {
 
+      if (isUserSaved && !isSavePassword) {
+
+        removeData('remember_me')
+      }
+
       setManageClicks(manageClicks + 1)
       setObject({
         email, password
@@ -128,7 +178,9 @@ function Login({ navigation }) {
   };
 
   const saveData = async (key, data) => {
-    await AsyncStorage.setItem(key, data);
+    let string_data = JSON.stringify(data)
+    await AsyncStorage.setItem(key, string_data);
+    return true
   };
 
   const removeData = async (key) => {
@@ -221,6 +273,16 @@ function Login({ navigation }) {
 
         </View>
 
+        <CheckBox
+          style={SpaceStyles.top2}
+          onClick={() => {
+            setIsSavePassword(!isSavePassword)
+          }}
+          isChecked={isSavePassword}
+          rightText={"Remember me"}
+          rightTextStyle={{ color: '#000' }}
+        />
+
         <TouchableOpacity
           style={[AuthStyles.smallButton, SpaceStyles.top5]}
           onPress={() => {
@@ -242,6 +304,7 @@ function Login({ navigation }) {
               />
           }
         </TouchableOpacity>
+
         <TouchableOpacity
           style={[SpaceStyles.top5]}
           onPress={() => NavigationService.navigate("SignUp")}
@@ -255,6 +318,7 @@ function Login({ navigation }) {
             ]}
           />
         </TouchableOpacity>
+
         <View
           style={AuthStyles.errorsLogin}
         >

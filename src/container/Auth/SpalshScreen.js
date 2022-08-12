@@ -7,7 +7,6 @@ import AuthStyles from "../../style/AuthStyles";
 import SpaceStyles from "../../style/SpaceStyles";
 import FastImage from 'react-native-fast-image'
 
-
 const mapState = ({ localReducer }) => ({
     isLoggedIn: localReducer.isLoggedIn,
 });
