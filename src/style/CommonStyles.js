@@ -33,7 +33,7 @@ const CommonStyles = StyleSheet.create({
 
     },
     headerLeftView: {
-
+        marginLeft: 10
     },
 
     RowSpaceBetween: {

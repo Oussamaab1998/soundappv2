@@ -29,7 +29,7 @@ function HeaderRight({ iconName1, iconName2, iconName3, onPress = () => { }, onP
                 <Image
                     source={iconName3}
                     resizeMode='contain'
-                    style={{ margin: 5 }}
+                    style={{ marginLeft: 5 }}
                 />
             </TouchableOpacity>
         </View>

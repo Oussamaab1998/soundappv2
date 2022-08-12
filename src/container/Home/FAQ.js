@@ -390,6 +390,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 12,
     textAlign: "left",
+    color:'#000'
   },
   ilItem: {
     paddingLeft: 20,

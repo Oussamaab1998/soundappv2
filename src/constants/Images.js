@@ -35,4 +35,6 @@ module.exports = {
   addIcon: require("./../assets/addIcon.png"),
   pause: require("./../assets/pause.png"),
   more: require("./../assets/more.png"),
+  show: require("./../assets/show.png"),
+  hide: require("./../assets/hide.png"),
 };

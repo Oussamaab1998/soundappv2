@@ -51,7 +51,11 @@ const Intellectual = ({ navigation }) => {
     <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-          <View>
+          <View
+            style={{
+              alignItems: 'center'
+            }}
+          >
             <CustomText
               text={"Intellectual Property Notice"}
               style={[styles.title1, { marginVertical: 20 }]}

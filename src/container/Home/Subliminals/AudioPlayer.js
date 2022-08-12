@@ -222,7 +222,7 @@ const AudioPlayer = ({ navigation, route }) => {
       </Modal> */}
       <View style={styles.conatiner}>
 
-        <View style={styles.header}>
+        <View style={[styles.header, { justifyContent:'center', alignItems:'center'}]}>
           <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
           <Text style={styles.title2}>{item.title}</Text>
         </View>

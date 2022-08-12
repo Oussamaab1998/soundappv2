@@ -23,6 +23,13 @@ import NavigationService from "../../navigation/NavigationService";
 import CustomText from "../../components/CustomText";
 import CustomTextInput from "../../components/CustomTextInput";
 
+
+import {
+  show,
+  hide,
+} from "../../constants/Images";
+
+
 // styles
 import AuthStyles from "../../style/AuthStyles";
 import SpaceStyles from "../../style/SpaceStyles";
@@ -63,6 +70,8 @@ function SignUp({ navigation }) {
 
   const [onCheckClick, setOnCheckClick] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [securePassword1, setSecurePassword1] = useState(true);
+  const [securePassword2, setSecurePassword2] = useState(true);
 
   //---------- life cycle
 
@@ -120,12 +129,12 @@ function SignUp({ navigation }) {
 
   return (
     <View
-      style={AuthStyles.authContainer}
+      style={[AuthStyles.authContainer, { justifyContent: 'center', alignItems: 'center' }]}
     >
       <SafeAreaView />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={[SpaceStyles.top5, SpaceStyles.padding10]}
+        style={[SpaceStyles.top5, SpaceStyles.padding10, { width: '100%' }]}
       >
         <CustomText
           text={"Sign Up"}
@@ -149,6 +158,26 @@ function SignUp({ navigation }) {
                 width: "48%",
               }}
             /> */}
+
+          <View
+            style={[
+              SpaceStyles.top10,
+              AuthStyles.textInputView,
+              { width: "100%" },
+            ]}
+          >
+            <TextInput
+              style={[{ color: '#000', paddingVertical: 5 }]}
+              placeholderTextColor="gray"
+              placeholder="Name"
+              onChangeText={(text) => {
+                setLocalErros('')
+                onChangeName(text)
+              }}
+              value={name}
+              textContentType="name"
+            />
+          </View>
           <View
             style={[
               SpaceStyles.top10,
@@ -172,31 +201,11 @@ function SignUp({ navigation }) {
             style={[
               SpaceStyles.top10,
               AuthStyles.textInputView,
-              { width: "100%" },
+              { width: "100%", flexDirection: 'row' },
             ]}
           >
             <TextInput
-              style={[{ color: '#000', paddingVertical: 5 }]}
-              placeholderTextColor="gray"
-              placeholder="Name"
-              onChangeText={(text) => {
-                setLocalErros('')
-                onChangeName(text)
-              }}
-              value={name}
-              textContentType="name"
-            />
-          </View>
-
-          <View
-            style={[
-              SpaceStyles.top10,
-              AuthStyles.textInputView,
-              { width: "100%" },
-            ]}
-          >
-            <TextInput
-              style={[{ color: '#000', paddingVertical: 5 }]}
+              style={[{ color: '#000', paddingVertical: 5, width: '95%' }]}
               placeholderTextColor="gray"
               placeholder="Password"
               onChangeText={(text) => {
@@ -205,18 +214,42 @@ function SignUp({ navigation }) {
               }}
               value={password}
               textContentType="password"
-              secureTextEntry={true}
+              secureTextEntry={securePassword1}
             />
+
+
+            <TouchableOpacity
+              style={{ alignSelf: 'center' }}
+              onPress={() => {
+                setSecurePassword1(!securePassword1)
+              }}
+            >
+              {
+                securePassword1 ?
+                  <Image
+                    style={{ height: 20, width: 20, alignSelf: 'center' }}
+                    source={show}
+                    resizeMode='cover'
+                  />
+                  :
+                  <Image
+                    style={{ height: 20, width: 20, alignSelf: 'center' }}
+                    source={hide}
+                    resizeMode='cover'
+                  />
+              }
+            </TouchableOpacity>
+
           </View>
           <View
             style={[
               SpaceStyles.top10,
               AuthStyles.textInputView,
-              { width: "100%" },
+              { width: "100%", flexDirection: 'row' },
             ]}
           >
             <TextInput
-              style={[{ color: '#000', paddingVertical: 5 }]}
+              style={[{ color: '#000', paddingVertical: 5, width: '95%' }]}
               placeholderTextColor="gray"
               placeholder="Confirm Password"
               onChangeText={(text) => {
@@ -225,8 +258,33 @@ function SignUp({ navigation }) {
               }}
               value={confirmPassword}
               textContentType="password"
-              secureTextEntry={true}
+              secureTextEntry={securePassword2}
             />
+
+
+
+            <TouchableOpacity
+              style={{ alignSelf: 'center' }}
+              onPress={() => {
+                setSecurePassword2(!securePassword2)
+              }}
+            >
+              {
+                securePassword2 ?
+                  <Image
+                    style={{ height: 20, width: 20, alignSelf: 'center' }}
+                    source={show}
+                    resizeMode='cover'
+                  />
+                  :
+                  <Image
+                    style={{ height: 20, width: 20, alignSelf: 'center' }}
+                    source={hide}
+                    resizeMode='cover'
+                  />
+              }
+            </TouchableOpacity>
+
           </View>
 
           <TouchableOpacity

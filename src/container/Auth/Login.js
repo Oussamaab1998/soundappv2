@@ -11,6 +11,8 @@ import {
   TextInput,
   ActivityIndicator
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { TextInput } from "react-native-paper";
 
 // common componets
 import CustomText from "../../components/CustomText";
@@ -21,6 +23,11 @@ import NavigationService from "../../navigation/NavigationService";
 import AuthStyles from "../../style/AuthStyles";
 import SpaceStyles from "../../style/SpaceStyles";
 import TextStyles from "../../style/TextStyles";
+
+import {
+  show,
+  hide,
+} from "../../constants/Images";
 
 // server hooks
 import useServerCommunucation from "../../utils/ServerCommunication";
@@ -68,6 +75,8 @@ function Login({ navigation }) {
 
   const [localErros, setLocalErros] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [securePassword, setSecurePassword] = useState(true);
+
 
   //---------- life cycle
 
@@ -118,15 +127,39 @@ function Login({ navigation }) {
     }
   };
 
+  const saveData = async (key, data) => {
+    await AsyncStorage.setItem(key, data);
+  };
+
+  const removeData = async (key) => {
+    await AsyncStorage.removeItem(key);
+  };
+
+  const getData = async (key) => {
+    return new Promise((resolve, reject) => {
+      AsyncStorage.getItem(key)
+        .then((res) => {
+          if (res) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
+
   //---------- return main view
 
   return (
     <View
-      style={AuthStyles.authContainer}
+      style={[AuthStyles.authContainer, { justifyContent: 'center' }]}
     >
       <SafeAreaView />
       <View
-        style={[SpaceStyles.top14, SpaceStyles.padding10]}
+        style={[SpaceStyles.top14, SpaceStyles.padding10, { width: '100%' }]}
       >
         <CustomText
           text={"Login"}
@@ -136,7 +169,7 @@ function Login({ navigation }) {
           style={[SpaceStyles.top10, , AuthStyles.textInputView]}
         >
           <TextInput
-            style={[{ color: '#000', paddingVertical:5 }]}
+            style={[{ color: '#000', paddingVertical: 5 }]}
             placeholderTextColor="gray"
             placeholder="Email"
             onChangeText={(text) => {
@@ -148,10 +181,11 @@ function Login({ navigation }) {
           />
         </View>
         <View
-          style={[SpaceStyles.top10, , AuthStyles.textInputView]}
+          style={[SpaceStyles.top10, , AuthStyles.textInputView, { flexDirection: 'row', alignContent: 'flex-end' }]}
         >
+
           <TextInput
-            style={[{ color: '#000', paddingVertical:5 }]}
+            style={[{ color: '#000', paddingVertical: 5, width: '95%' }]}
             placeholderTextColor="gray"
 
             onChangeText={(text) => {
@@ -159,9 +193,32 @@ function Login({ navigation }) {
               onChangepassword(text)
             }}
             value={password}
-            secureTextEntry={true}
+            secureTextEntry={securePassword}
             placeholder="Password"
           />
+
+          <TouchableOpacity
+            style={{ alignSelf: 'center' }}
+            onPress={() => {
+              setSecurePassword(!securePassword)
+            }}
+          >
+            {
+              securePassword ?
+                <Image
+                  style={{ height: 20, width: 20, alignSelf: 'center' }}
+                  source={show}
+                  resizeMode='cover'
+                />
+                :
+                <Image
+                  style={{ height: 20, width: 20, alignSelf: 'center' }}
+                  source={hide}
+                  resizeMode='cover'
+                />
+            }
+          </TouchableOpacity>
+
         </View>
 
         <TouchableOpacity

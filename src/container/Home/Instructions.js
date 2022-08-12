@@ -159,11 +159,13 @@ const styles = StyleSheet.create({
   desc1: {
     fontSize: 12,
     textAlign: "center",
+    color:'#000',
   },
   desc2: {
     paddingLeft: 5,
     marginTop: 5,
     fontSize: 12,
+    color:'#000',
     textAlign: "left",
   },
   ilItem: {
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 12,
     textAlign: "left",
+    color:'#000',
   },
   lastLine: {
     flexWrap: "wrap",
