@@ -71,33 +71,6 @@ export const signInUser =
           password: password,
         }),
       };
-
-      // await  axios('http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/login/', {
-      //     method: "post",
-      //     headers: {
-      //       'Content-type': 'Application/json',
-      //     },
-      //     data: {
-      //       email: email,
-      //       password: password,
-      //     },
-      //   })
-      //     .then(function (response) {
-
-      //       console.log('-----------------------------------------------')
-      //       console.log('response :', response.data?.data)
-      //       console.log('-----------------------------------------------')
-      //     })
-      //     .catch(function (error) {
-      //       console.log('=---------<><><>--------------------------=');
-      //       console.log(error);
-      //       console.log('=---------<><><>--------------------------=');
-      //       dispatch({
-      //         type: userTypes.SET_ERRORS,
-      //         payload: error,
-      //       });
-      //     });
-
       await fetch(
         "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/login/",
         requestOptions
@@ -121,7 +94,7 @@ export const signInUser =
             dispatch({
               type: userTypes.SAVE_USER_DATA,
               payload: {
-                name:'unknown'
+                name: "unknown",
               },
             });
           }
@@ -136,21 +109,6 @@ export const signInUser =
         });
 
       console.log("From Sign In action");
-      // await signInWithEmailAndPassword(auth, email, password)
-      //   .then(() => {
-      //     dispatch({
-      //       type: userTypes.USER_SIGN_IN_SUCCESS,
-      //       payload: true,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     const error = ["These credientials dosn't much !!"];
-      //     dispatch({
-      //       type: userTypes.SET_ERRORS,
-      //       payload: error,
-      //     });
-      //   });
     } catch (err) {
       console.log("----------------------", err);
       console.log("Error from catch in login redux actions");
@@ -231,7 +189,7 @@ export const signUpUser =
       )
         .then((response) => response.json())
         .then((response) => {
-          console.log('signup :',response.data);
+          console.log("signup :", response.data);
           if (response.data.errors) {
             console.log("There is no user with this credentials");
             const error = response.data.message;

@@ -45,37 +45,34 @@ import { useDispatch, useSelector } from "react-redux";
 
 //---------- export component
 import { removeUser } from "../redux/Local/local.actions";
-import {ResetStates} from "../redux/User/user.actions";
+import { ResetStates } from "../redux/User/user.actions";
 
 const mapState = ({ user, localReducer }) => ({
-
   userData: user.userData,
   propertySignInSuccess: user.propertySignInSuccess,
   errors: user.errors,
   isLoggedIn: localReducer.isLoggedIn,
+  isUserPremium: localReducer.isUserPremium,
 });
 
-
 export default function DrawerContent(props) {
-
   //---------- state, veriable and hooks
   const dispatch = useDispatch();
-  const { isLoggedIn, userData } = useSelector(mapState);
-  console.log('curent property', userData)
+  const { isLoggedIn, userData, isUserPremium } = useSelector(mapState);
+  console.log("curent property", userData);
 
   //---------- life cycle
 
   useEffect(() => {
-
     props.navigation.navigate("AuthNavigator");
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   //---------- helper: user's actions
 
   //---------- return main view
 
   const handleLoggedOut = () => {
-    dispatch(ResetStates())
+    dispatch(ResetStates());
     dispatch(removeUser());
   };
 
@@ -108,8 +105,15 @@ export default function DrawerContent(props) {
             </TouchableOpacity>
 
             <TouchableOpacity
+              // disabled={!isUserPremium}
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
-              onPress={() => NavigationService.navigate("Songs")}
+              onPress={() => {
+                if (isUserPremium) {
+                  NavigationService.navigate("Songs");
+                } else {
+                  Alert.alert("Go Premium");
+                }
+              }}
             >
               <Image source={subliminalsIcon} />
               <CustomText
@@ -117,6 +121,7 @@ export default function DrawerContent(props) {
                 style={[
                   TextStyles.textQuicksandMedium18Black,
                   SpaceStyles.left10,
+                  { color: isUserPremium ? "black" : "red" },
                 ]}
               />
             </TouchableOpacity>
@@ -134,7 +139,19 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+              onPress={() => NavigationService.navigate("premium")}
+            >
+              <Image source={instructions} />
+              <CustomText
+                text={"Go Premium"}
+                style={[
+                  TextStyles.textQuicksandMedium18Black,
+                  SpaceStyles.left10,
+                ]}
+              />
+            </TouchableOpacity>
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Instructions")}
@@ -175,9 +192,9 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            
 
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("ListeningTips")}
             >
               <Image source={audioIcon} />
@@ -189,10 +206,10 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("FAQs")}
             >
-
               <Image source={fAQsIcon} />
               <CustomText
                 text={"FAQs"}
@@ -203,10 +220,10 @@ export default function DrawerContent(props) {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+            <TouchableOpacity
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => NavigationService.navigate("Contact")}
             >
-
               <Image source={contactIcon} />
               <CustomText
                 text={"Contact"}

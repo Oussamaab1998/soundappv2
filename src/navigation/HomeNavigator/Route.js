@@ -29,6 +29,7 @@ import ListeningTips from "../../container/Home/ListeningTips";
 import FAQs from "../../container/Home/FAQ";
 import Contact from "../../container/Home/Contact";
 import Intellectual from "../../container/Home/Intellectual";
+import Premium from "../../container/Home/Premium";
 
 // global stack veriable
 const Drawer = createDrawerNavigator();
@@ -71,6 +72,16 @@ function HomeNavigation(props) {
         name="audioPlayer"
         component={AudioPlayer}
       />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="premium"
+        component={Premium}
+      />
 
       <Stack.Screen
         options={{
@@ -112,7 +123,7 @@ function HomeNavigation(props) {
         name="Instructions"
         component={Instructions}
       />
-        {/* <Stack.Screen
+      {/* <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -161,9 +172,9 @@ function HomeNavigation(props) {
         }}
         name="Contact"
         component={Contact}
-      /> 
+      />
 
-<Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -173,12 +184,8 @@ function HomeNavigation(props) {
         name="Intellectual"
         component={Intellectual}
       />
-     
 
-     
-
-
-<Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -189,7 +196,7 @@ function HomeNavigation(props) {
         component={TermsAndService}
       />
 
-<Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -200,7 +207,7 @@ function HomeNavigation(props) {
         component={PrivacyPolicy}
       />
 
-<Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: WHITE,
@@ -210,10 +217,6 @@ function HomeNavigation(props) {
         name="Disclaimer"
         component={Disclaimer}
       />
-
-
-
-     
     </Stack.Navigator>
   );
 }

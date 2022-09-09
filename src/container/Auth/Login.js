@@ -9,7 +9,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CheckBox from "react-native-check-box";
@@ -24,10 +24,7 @@ import AuthStyles from "../../style/AuthStyles";
 import SpaceStyles from "../../style/SpaceStyles";
 import TextStyles from "../../style/TextStyles";
 
-import {
-  show,
-  hide,
-} from "../../constants/Images";
+import { show, hide } from "../../constants/Images";
 
 // server hooks
 import useServerCommunucation from "../../utils/ServerCommunication";
@@ -36,10 +33,10 @@ import {
   signInUser,
   resetAllAuthForms,
   ResetErrorsState,
-  ResetStates
+  ResetStates,
 } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { saveUser } from "../../redux/Local/local.actions";
+import { saveUser, storeUserId } from "../../redux/Local/local.actions";
 import { findLastValidBreakpoint } from "native-base/lib/typescript/theme/tools";
 
 import ModalContainer from "../../Common/ModalContainer";
@@ -48,7 +45,6 @@ import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
 //---------- connect with redux state
 
 const mapState = ({ user, localReducer }) => ({
-
   currentProperty: user.currentProperty,
   propertySignInSuccess: user.propertySignInSuccess,
   errors: user.errors,
@@ -58,14 +54,14 @@ const mapState = ({ user, localReducer }) => ({
 //---------- component
 
 function Login({ navigation }) {
-
   //---------- state, veriable and hooks
 
   // hook
   const { serverRequest, dataPocket, loading, error } =
     useServerCommunucation();
 
-  const { currentProperty, propertySignInSuccess, errors } = useSelector(mapState);
+  const { currentProperty, propertySignInSuccess, errors } =
+    useSelector(mapState);
   const { isLoggedIn } = useSelector(mapState);
 
   const dispatch = useDispatch();
@@ -73,7 +69,7 @@ function Login({ navigation }) {
   const [password, onChangepassword] = useState("");
   const [object, setObject] = useState({});
   const [manageClicks, setManageClicks] = useState(0);
-
+  const [ourIds, setOurIds] = useState(null);
   const [localErros, setLocalErros] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [securePassword, setSecurePassword] = useState(true);
@@ -85,102 +81,97 @@ function Login({ navigation }) {
   //---------- helper: user's actions
 
   useEffect(() => {
-
     const getUserInfo = async () => {
-      let data = await getData('remember_me')
+      let data = await getData("remember_me");
 
       if (data) {
-
-        let parse_data = JSON.parse(data)
-        onChangeEmail(parse_data.email)
-        onChangepassword(parse_data.password)
-        setIsUserSaved(true)
-        setIsSavePassword(true)
+        let parse_data = JSON.parse(data);
+        onChangeEmail(parse_data.email);
+        onChangepassword(parse_data.password);
+        setIsUserSaved(true);
+        setIsSavePassword(true);
       }
-      console.log('==========================')
-      console.log('data :', data)
-      console.log('==========================')
-    }
+      console.log("==========================");
+      console.log("data :", data);
+      console.log("==========================");
+    };
 
-    getUserInfo()
-  }, [])
+    getUserInfo();
+  }, []);
 
   useEffect(() => {
-
     const saveUserIfo = async () => {
       if (propertySignInSuccess) {
-
-        let is_save_user = await saveData('remember_me', {
+        let is_save_user = await saveData("remember_me", {
           email,
-          password
-        })
+          password,
+        });
 
         if (is_save_user) {
-
           dispatch(saveUser());
         }
       }
     };
 
     if (isSavePassword && propertySignInSuccess) {
-
       saveUserIfo();
     } else {
-
       if (propertySignInSuccess) {
-
         dispatch(saveUser());
       }
 
       if (errors.length > 0) {
-
-        setIsLoading(false)
-        setLocalErros(errors)
-        dispatch(ResetStates())
+        setIsLoading(false);
+        setLocalErros(errors);
+        dispatch(ResetStates());
       }
     }
-
   }, [propertySignInSuccess, errors]);
 
   useEffect(() => {
+    console.log("yeesssssss");
+    if (ourIds !== null) {
+      console.log("yeesssssss");
+      dispatch(storeUserId(ourIds, email));
+    }
+  }, [ourIds]);
 
+  useEffect(() => {
     // dispatch(ResetStates())
-    setIsLoading(false)
+    setIsLoading(false);
     navigation.navigate("Route");
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   const handleLogin = () => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     if (email === object.email && password === object.password) {
-
       setLocalErros("Please use correct email and password");
-      setIsLoading(false)
-      return
+      setIsLoading(false);
+      return;
     }
     if (email !== "" && password !== "") {
-
       if (isUserSaved && !isSavePassword) {
-
-        removeData('remember_me')
+        removeData("remember_me");
       }
 
-      setManageClicks(manageClicks + 1)
+      setManageClicks(manageClicks + 1);
       setObject({
-        email, password
-      })
+        email,
+        password,
+      });
       setLocalErros("");
       dispatch(signInUser({ email, password }));
     } else {
       setLocalErros("Email and password required");
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   const saveData = async (key, data) => {
-    let string_data = JSON.stringify(data)
+    let string_data = JSON.stringify(data);
     await AsyncStorage.setItem(key, string_data);
-    return true
+    return true;
   };
 
   const removeData = async (key) => {
@@ -203,46 +194,63 @@ function Login({ navigation }) {
     });
   };
 
+  const getApi = async () => {
+    try {
+      await fetch(
+        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/users/"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("hahahaha", data);
+          setOurIds(data);
+        })
+        .catch((err) => {
+          console.log("error => ", err);
+        });
+    } catch (err) {
+      console.log("----------------------", err);
+    }
+  };
+
   //---------- return main view
 
   return (
-    <View
-      style={[AuthStyles.authContainer, { justifyContent: 'center' }]}
-    >
+    <View style={[AuthStyles.authContainer, { justifyContent: "center" }]}>
       <SafeAreaView />
       <View
-        style={[SpaceStyles.top14, SpaceStyles.padding10, { width: '100%' }]}
+        style={[SpaceStyles.top14, SpaceStyles.padding10, { width: "100%" }]}
       >
         <CustomText
           text={"Login"}
           style={[TextStyles.textBold48Black, { alignSelf: "center" }]}
         />
-        <View
-          style={[SpaceStyles.top10, , AuthStyles.textInputView]}
-        >
+        <View style={[SpaceStyles.top10, , AuthStyles.textInputView]}>
           <TextInput
-            style={[{ color: '#000', paddingVertical: 5 }]}
+            style={[{ color: "#000", paddingVertical: 5 }]}
             placeholderTextColor="gray"
             placeholder="Email"
             onChangeText={(text) => {
-              setLocalErros('')
-              onChangeEmail(text)
+              setLocalErros("");
+              onChangeEmail(text);
             }}
             value={email}
             textContentType="emailAddress"
           />
         </View>
         <View
-          style={[SpaceStyles.top10, , AuthStyles.textInputView, { flexDirection: 'row', alignContent: 'flex-end' }]}
+          style={[
+            SpaceStyles.top10,
+            ,
+            AuthStyles.textInputView,
+            { flexDirection: "row", alignContent: "flex-end" },
+          ]}
         >
-
           <TextInput
-            style={[{ color: '#000', paddingVertical: 5, width: '95%' }]}
+            style={[{ color: "#000", paddingVertical: 5, width: "95%" }]}
             placeholderTextColor="gray"
-
             onChangeText={(text) => {
-              setLocalErros('')
-              onChangepassword(text)
+              setLocalErros("");
+              onChangepassword(text);
             }}
             value={password}
             secureTextEntry={securePassword}
@@ -250,59 +258,55 @@ function Login({ navigation }) {
           />
 
           <TouchableOpacity
-            style={{ alignSelf: 'center' }}
+            style={{ alignSelf: "center" }}
             onPress={() => {
-              setSecurePassword(!securePassword)
+              setSecurePassword(!securePassword);
             }}
           >
-            {
-              securePassword ?
-                <Image
-                  style={{ height: 20, width: 20, alignSelf: 'center' }}
-                  source={show}
-                  resizeMode='cover'
-                />
-                :
-                <Image
-                  style={{ height: 20, width: 20, alignSelf: 'center' }}
-                  source={hide}
-                  resizeMode='cover'
-                />
-            }
+            {securePassword ? (
+              <Image
+                style={{ height: 20, width: 20, alignSelf: "center" }}
+                source={show}
+                resizeMode="cover"
+              />
+            ) : (
+              <Image
+                style={{ height: 20, width: 20, alignSelf: "center" }}
+                source={hide}
+                resizeMode="cover"
+              />
+            )}
           </TouchableOpacity>
-
         </View>
 
         <CheckBox
           style={SpaceStyles.top2}
           onClick={() => {
-            setIsSavePassword(!isSavePassword)
+            setIsSavePassword(!isSavePassword);
           }}
           isChecked={isSavePassword}
           rightText={"Remember me"}
-          rightTextStyle={{ color: '#000' }}
+          rightTextStyle={{ color: "#000" }}
         />
 
         <TouchableOpacity
           style={[AuthStyles.smallButton, SpaceStyles.top5]}
           onPress={() => {
             handleLogin();
+            getApi();
           }}
         >
-          {
-            isLoading ?
-              <View
-                style={{
-                  paddingHorizontal: 17
-                }}
-              >
-                <ActivityIndicator color={'#fff'} />
-              </View>
-              :
-              <CustomText
-                text={"Sign in"} style={TextStyles.textSegoe18White}
-              />
-          }
+          {isLoading ? (
+            <View
+              style={{
+                paddingHorizontal: 17,
+              }}
+            >
+              <ActivityIndicator color={"#fff"} />
+            </View>
+          ) : (
+            <CustomText text={"Sign in"} style={TextStyles.textSegoe18White} />
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -319,16 +323,8 @@ function Login({ navigation }) {
           />
         </TouchableOpacity>
 
-        <View
-          style={AuthStyles.errorsLogin}
-        >
-          <Text
-            style={AuthStyles.errorsLogintxt}
-          >
-            {
-              localErros
-            }
-          </Text>
+        <View style={AuthStyles.errorsLogin}>
+          <Text style={AuthStyles.errorsLogintxt}>{localErros}</Text>
         </View>
       </View>
       <SafeAreaView />

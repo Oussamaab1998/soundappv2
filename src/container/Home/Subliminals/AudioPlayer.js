@@ -21,7 +21,7 @@ import HeaderTitle from "../../../components/HeaderTitle";
 import HeaderLeft from "../../../components/HeaderLeft";
 
 // components
-import ModalContainer from '../../../Common/ModalContainer';
+import ModalContainer from "../../../Common/ModalContainer";
 
 import {
   amplifyIcon,
@@ -46,7 +46,7 @@ const AudioPlayer = ({ navigation, route }) => {
   //---------- state and params
   const {
     item,
-    songs                         // original songs
+    songs, // original songs
   } = route.params;
 
   // let songs = songs1           // for testing
@@ -69,32 +69,25 @@ const AudioPlayer = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-
     if (item?.url) {
-
-      setCurrentSong(item)
+      setCurrentSong(item);
       // setSongStatus(true)
     } else {
-
-      setCurrentSong(undefined)
+      setCurrentSong(undefined);
       // setSongStatus(false)
     }
-  }, [item?.url])
+  }, [item?.url]);
 
   useEffect(() => {
-
     if (currentSong?.url) {
-
-      playSound(currentSong)
+      playSound(currentSong);
     } else {
-
-      pauseSound()
-      setCurrentSong(undefined)
+      pauseSound();
+      setCurrentSong(undefined);
     }
 
-    console.log('update for current song', currentSong)
-
-  }, [currentSong?.url])
+    console.log("update for current song", currentSong);
+  }, [currentSong?.url]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -132,12 +125,10 @@ const AudioPlayer = ({ navigation, route }) => {
   };
 
   const playSound = (song) => {
-    
     pauseSound();
-    
-    console.log('call this function again and again', currentSong)
-    if (song.url) {
 
+    console.log("call this function again and again", currentSong);
+    if (song.url) {
       setSongStatus(true);
 
       // if (songVar !== null) pauseSound();
@@ -165,10 +156,8 @@ const AudioPlayer = ({ navigation, route }) => {
   };
 
   const pauseSound = () => {
-
-    console.log('songVar', songVar)
+    console.log("songVar", songVar);
     if (songVar) {
-
       songVar.pause();
       setSongStatus(false);
     }
@@ -178,8 +167,6 @@ const AudioPlayer = ({ navigation, route }) => {
 
   return (
     <>
-
-
       <ModalContainer
         navigation={navigation}
         isVisible={isAffirmations}
@@ -221,8 +208,12 @@ const AudioPlayer = ({ navigation, route }) => {
         </View>
       </Modal> */}
       <View style={styles.conatiner}>
-
-        <View style={[styles.header, { justifyContent:'center', alignItems:'center'}]}>
+        <View
+          style={[
+            styles.header,
+            { justifyContent: "center", alignItems: "center" },
+          ]}
+        >
           <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
           <Text style={styles.title2}>{item.title}</Text>
         </View>
@@ -286,19 +277,22 @@ const AudioPlayer = ({ navigation, route }) => {
                           }}
                           style={styles.gernre2}
                         >
-
                           <Image
                             source={pause}
                             resizeMode="cover"
                             style={{
                               height: 16,
                               width: 16,
-                              marginLeft: 2
+                              marginLeft: 2,
                             }}
-
                           />
 
-                          <Text style={[styles.title1, { fontWeight: "bold", marginLeft: 12 }]}>
+                          <Text
+                            style={[
+                              styles.title1,
+                              { fontWeight: "bold", marginLeft: 12 },
+                            ]}
+                          >
                             {song.title}
                           </Text>
                         </TouchableOpacity>
@@ -313,17 +307,18 @@ const AudioPlayer = ({ navigation, route }) => {
                           }}
                           style={styles.gernre2}
                         >
-
                           <Image
                             source={playIcon}
                             resizeMode="cover"
                             style={{
                               height: 20,
-                              width: 20
+                              width: 20,
                             }}
                           />
 
-                          <Text style={[styles.title1, { marginLeft: 10 }]}>{song.title}</Text>
+                          <Text style={[styles.title1, { marginLeft: 10 }]}>
+                            {song.title}
+                          </Text>
                         </TouchableOpacity>
                       );
                     }
@@ -349,37 +344,35 @@ const AudioPlayer = ({ navigation, route }) => {
                   resizeMode="cover"
                   style={SpaceStyles.left5}
                 />
-                {
-                  songStatus ? (
-                    <TouchableOpacity
-                      style={styles.playpauseIcon}
-                      onPress={() => {
-                        setCurrentSong({});
-                        // pauseSound()
-                      }}
-                    >
-                      <Image
-                        source={pause}
-                        resizeMode="cover"
-                        style={styles.pauseSyles}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      style={styles.playpauseIcon}
-                      onPress={() => {
-                        setCurrentSong(currentSong?.url ? currentSong : item);
-                        // playSound()
-                      }}
-                    >
-                      <Image
-                        source={playIcon}
-                        resizeMode="cover"
-                        style={SpaceStyles.left5}
-                      />
-                    </TouchableOpacity>
-                  )
-                }
+                {songStatus ? (
+                  <TouchableOpacity
+                    style={styles.playpauseIcon}
+                    onPress={() => {
+                      setCurrentSong({});
+                      // pauseSound()
+                    }}
+                  >
+                    <Image
+                      source={pause}
+                      resizeMode="cover"
+                      style={styles.pauseSyles}
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.playpauseIcon}
+                    onPress={() => {
+                      setCurrentSong(currentSong?.url ? currentSong : item);
+                      // playSound()
+                    }}
+                  >
+                    <Image
+                      source={playIcon}
+                      resizeMode="cover"
+                      style={SpaceStyles.left5}
+                    />
+                  </TouchableOpacity>
+                )}
 
                 <Image
                   source={endIcon}
@@ -401,36 +394,29 @@ const AudioPlayer = ({ navigation, route }) => {
                 />
               </TouchableOpacity> */}
 
-
               <View style={SpaceStyles.rowFlex}>
-
                 <TouchableOpacity
                   onPress={() => {
-                    setModalKey('save')
-                    setIsAffirmations(!isAffirmations)
+                    setModalKey("save");
+                    setIsAffirmations(!isAffirmations);
                   }}
                 >
-
-                  <Image
-                    source={addIcon}
-                    resizeMode='cover'
-                  />
+                  <Image source={addIcon} resizeMode="cover" />
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => {
-                    setModalKey('affirmations')
-                    setIsAffirmations(!isAffirmations)
+                    setModalKey("affirmations");
+                    setIsAffirmations(!isAffirmations);
                   }}
                 >
                   <Image
                     source={musicIcon}
-                    resizeMode='cover'
+                    resizeMode="cover"
                     style={SpaceStyles.left5}
                   />
                 </TouchableOpacity>
               </View>
-
             </View>
 
             {/* <View
@@ -498,7 +484,7 @@ const styles = StyleSheet.create({
   gernre2: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     marginBottom: 10,
   },
   thumbnail2: {
@@ -653,7 +639,7 @@ const songs1 = [
         "http://soundnsoulful.alliedtechnologies.co:8000/media/genres/song.jpg",
     },
     // url: "http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3",
-    url:'https://drive.google.com/file/d/1ooFUF0jOTmv6EMoXpjaLy6hshlZx6V2B/view?usp=sharing',
+    url: "https://drive.google.com/file/d/1ooFUF0jOTmv6EMoXpjaLy6hshlZx6V2B/view?usp=sharing",
     audio_id: "sG6sIjXlHWV2iqOu",
     title: "333 Clear Skin and Birds",
     description: "A sublimal that makes life great",

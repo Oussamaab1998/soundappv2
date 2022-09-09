@@ -30,7 +30,7 @@ import {
   waveIcon,
 } from "../../constants/Images";
 import { BLACK, INACTIVEDOT } from "../../constants/Colors";
-
+import { useSelector } from "react-redux";
 // constants
 let data = [
   {
@@ -52,19 +52,19 @@ let data = [
 ];
 
 //---------- component
+const mapState = ({ localReducer }) => ({
+  myUserId: localReducer.myUserId,
+});
 
 function Home({ navigation }) {
   //---------- state, veriable and hooks
 
   //---------- life cycle
-
+  const { myUserId } = useSelector(mapState);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRight
-          iconName1={musicIcon}
-          iconName3={bagIcon}
-        />
+        <HeaderRight iconName1={musicIcon} iconName3={bagIcon} />
       ),
       headerTitle: () => <HeaderTitle title={"Home"} />,
       headerLeft: () => (
@@ -76,6 +76,9 @@ function Home({ navigation }) {
       ),
     });
   }, [navigation]);
+  useEffect(() => {
+    console.log("myUserId ---------  => ", myUserId);
+  }, []);
 
   //---------- helper: user's actions
 
@@ -84,12 +87,8 @@ function Home({ navigation }) {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View
-          style={AuthStyles.authContainer}
-        >
-          <View
-            style={CommonStyles.homeTopView}
-          >
+        <View style={AuthStyles.authContainer}>
+          <View style={CommonStyles.homeTopView}>
             <CustomText
               text={"FIND YOUR FREQUENCY."}
               style={[
@@ -98,9 +97,7 @@ function Home({ navigation }) {
                 { fontWeight: "700" },
               ]}
             />
-            <View
-              style={{ flexDirection: "row" }}
-            >
+            <View style={{ flexDirection: "row" }}>
               <Image
                 source={waveIcon}
                 resizeMode="cover"
@@ -118,9 +115,7 @@ function Home({ navigation }) {
               />
             </View>
           </View>
-          <View
-            style={[SpaceStyles.height50, SpaceStyles.padding5]}
-          >
+          <View style={[SpaceStyles.height50, SpaceStyles.padding5]}>
             <Swiper
               dotColor={INACTIVEDOT}
               activeDotColor={BLACK}
@@ -128,56 +123,54 @@ function Home({ navigation }) {
               activeDotStyle={{ height: 12, width: 12, borderRadius: 90 }}
               removeClippedSubviews={false}
             >
-              {
-                data?.map((item, index) => {
-                  return (
-                    <View key={index}>
-                      <CustomText
-                        text={`“`}
-                        style={[
-                          TextStyles.textBoldQuicksand64Black,
-                          { textAlign: "center" },
-                        ]}
-                      />
-                      <CustomText
-                        text={item.content}
-                        style={[
-                          TextStyles.textQuicksand14LightGray,
-                          { textAlign: "center" },
-                        ]}
-                      />
-                      <CustomText
-                        text={item.name}
-                        style={[
-                          TextStyles.textQuicksand14Black,
-                          { textAlign: "right" },
-                        ]}
-                      />
-                      <CustomText
-                        text={`“`}
-                        style={[
-                          TextStyles.textBoldQuicksand64Black,
-                          { textAlign: "center" },
-                        ]}
-                      />
-                      <CustomText
-                        text={item.content2}
-                        style={[
-                          TextStyles.textQuicksand14LightGray,
-                          { textAlign: "center" },
-                        ]}
-                      />
-                      <CustomText
-                        text={item.name2}
-                        style={[
-                          TextStyles.textQuicksand14Black,
-                          { textAlign: "right" },
-                        ]}
-                      />
-                    </View>
-                  );
-                })
-              }
+              {data?.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <CustomText
+                      text={`“`}
+                      style={[
+                        TextStyles.textBoldQuicksand64Black,
+                        { textAlign: "center" },
+                      ]}
+                    />
+                    <CustomText
+                      text={item.content}
+                      style={[
+                        TextStyles.textQuicksand14LightGray,
+                        { textAlign: "center" },
+                      ]}
+                    />
+                    <CustomText
+                      text={item.name}
+                      style={[
+                        TextStyles.textQuicksand14Black,
+                        { textAlign: "right" },
+                      ]}
+                    />
+                    <CustomText
+                      text={`“`}
+                      style={[
+                        TextStyles.textBoldQuicksand64Black,
+                        { textAlign: "center" },
+                      ]}
+                    />
+                    <CustomText
+                      text={item.content2}
+                      style={[
+                        TextStyles.textQuicksand14LightGray,
+                        { textAlign: "center" },
+                      ]}
+                    />
+                    <CustomText
+                      text={item.name2}
+                      style={[
+                        TextStyles.textQuicksand14Black,
+                        { textAlign: "right" },
+                      ]}
+                    />
+                  </View>
+                );
+              })}
             </Swiper>
           </View>
         </View>

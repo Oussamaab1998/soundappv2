@@ -1,118 +1,100 @@
-import { StyleSheet, Dimensions } from 'react-native'
-import { Colors } from '../constants';
+import { StyleSheet, Dimensions } from "react-native";
+import { Colors } from "../constants";
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
 const CommonStyles = StyleSheet.create({
+  GrayBtn: {
+    backgroundColor: "#495057",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  authContainer: {
+    flex: 1,
+    backgroundColor: Colors.WHITE,
+  },
+  homeTopView: {
+    width: width,
+    height: 300,
 
+    marginLeft: -30,
+    backgroundColor: Colors.BLACK,
 
-    GrayBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerLeftView: {
+    marginLeft: 10,
+  },
 
-        backgroundColor: '#495057',
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius:5
-    },
-    authContainer: {
+  RowSpaceBetween: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 
-        flex: 1,
-        backgroundColor: Colors.WHITE
-    },
-    homeTopView: {
+  RowStart: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
 
-        width: width,
-        height: 300,
+  RowEnd: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
 
-        marginLeft: -30,
-        backgroundColor: Colors.BLACK,
+  drawerUserIconSection: {
+    marginVertical: 10,
+    height: 100,
+    width: 100,
 
-        alignItems: 'center',
-        justifyContent: 'center'
+    backgroundColor: Colors.BLACK,
+    borderRadius: 50,
 
-    },
-    headerLeftView: {
-        marginLeft: 10
-    },
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
 
-    RowSpaceBetween: {
+  borderView: {
+    height: 1,
+    width: "100%",
+    backgroundColor: Colors.LIGHTGRAY,
 
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
+    marginVertical: 20,
+  },
 
-    RowStart: {
+  musicBorderView: {
+    height: 1,
+    width: "100%",
+    backgroundColor: Colors.LIGHTGRAY,
+  },
 
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
+  musicCategory: {
+    marginVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
 
-    RowEnd: {
+  musicList: {
+    marginVertical: 5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
 
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
+  musicView: {
+    flex: 1,
 
-    drawerUserIconSection: {
+    width: width,
+    padding: 10,
 
-        marginVertical: 10,
-        height: 100,
-        width: 100,
-
-        backgroundColor: Colors.BLACK,
-        borderRadius: 50,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center'
-    },
-
-    borderView: {
-
-        height: 1,
-        width: '100%',
-        backgroundColor: Colors.LIGHTGRAY,
-
-        marginVertical: 20
-    },
-
-    musicBorderView: {
-
-        height: 1,
-        width: '100%',
-        backgroundColor: Colors.LIGHTGRAY,
-    },
-
-    musicCategory: {
-
-        marginVertical: 10,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-
-    musicList: {
-
-        marginVertical: 5,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-
-    musicView: {
-
-        flex: 1,
-
-        width: width,
-        padding: 10,
-
-        position: 'absolute',
-        bottom: 0,
-
-    },
-
-})
+    position: "absolute",
+    bottom: 0,
+  },
+});
 
 export default CommonStyles;
