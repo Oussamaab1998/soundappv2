@@ -65,8 +65,8 @@ function Login({ navigation }) {
   const { isLoggedIn } = useSelector(mapState);
 
   const dispatch = useDispatch();
-  const [email, onChangeEmail] = useState("dev.quality.soft@gmail.com");
-  const [password, onChangepassword] = useState("mahi8055");
+  const [email, onChangeEmail] = useState("");
+  const [password, onChangepassword] = useState("");
   const [object, setObject] = useState({});
   const [manageClicks, setManageClicks] = useState(0);
   const [ourIds, setOurIds] = useState(null);
