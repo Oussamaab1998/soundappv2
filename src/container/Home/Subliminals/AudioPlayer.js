@@ -129,7 +129,6 @@ const AudioPlayer = ({ navigation, route }) => {
 
     console.log("call this function again and again", currentSong);
     if (song.url) {
-      setSongStatus(true);
 
       // if (songVar !== null) pauseSound();
       var whoosh = new Sound(song.url, Sound.MAIN_BUNDLE, (error) => {
@@ -137,6 +136,9 @@ const AudioPlayer = ({ navigation, route }) => {
           console.log("failed to load the sound", error);
           return;
         }
+
+        setSongStatus(true);
+
         // loaded successfully
 
         whoosh.getCurrentTime((seconds) => setSongCS(seconds));

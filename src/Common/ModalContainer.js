@@ -102,28 +102,35 @@ function ModalContainer({
         return renderContentLayout({
           title: "Playlists",
           content: (
-            <TouchableOpacity
-              onPress={() => {
-                addToList();
+            <View
+              style={{
+                paddingVertical: 20
               }}
-              style={CommonStyles.RowStart}
             >
               <TextInput
                 style={styles.input}
                 // onChangeText={onChangeNumber}
                 // value={number}
                 placeholder="List name"
-                keyboardType="numeric"
+              // keyboardType="numeric"
               />
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <Image
-                  style={{ marginRight: 10 }}
-                  source={addIcon}
-                  resizeMode="cover"
-                />
-                <Text style={{ color: "#000" }}>{"Create New Plalist"}</Text>
-              </View>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  addToList();
+                }}
+                style={CommonStyles.RowStart}
+              >
+
+                <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 10 }}>
+                  <Image
+                    style={{ marginRight: 10 }}
+                    source={addIcon}
+                    resizeMode="cover"
+                  />
+                  <Text style={{ color: "#000" }}>{"Create New Plalist"}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           ),
         });
         break;
@@ -198,10 +205,11 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    margin: 12,
+    // margin: 12,
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
+    width: '100%',
   },
   centeredView1: {
     flex: 1,

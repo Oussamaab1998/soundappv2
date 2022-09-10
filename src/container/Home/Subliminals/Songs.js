@@ -9,6 +9,7 @@ import SongModal from "../../../components/SongModal";
 const Songs = ({ navigation }) => {
   const [songs, setSongs] = useState([]);
   const [error, setError] = useState("");
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -60,6 +61,10 @@ const Songs = ({ navigation }) => {
   useEffect(() => {
     fetchSongs();
   }, []);
+
+  console.log('----------------------')
+  console.log('songs :', songs)
+  console.log('----------------------')
 
   return (
     <View style={styles.container}>

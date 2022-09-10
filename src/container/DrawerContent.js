@@ -59,7 +59,7 @@ export default function DrawerContent(props) {
   //---------- state, veriable and hooks
   const dispatch = useDispatch();
   const { isLoggedIn, userData, isUserPremium } = useSelector(mapState);
-  console.log("curent property", userData);
+  // console.log("curent property", userData);
 
   //---------- life cycle
 
@@ -108,11 +108,12 @@ export default function DrawerContent(props) {
               // disabled={!isUserPremium}
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => {
-                if (isUserPremium) {
-                  NavigationService.navigate("Songs");
-                } else {
-                  Alert.alert("Go Premium");
-                }
+                NavigationService.navigate("Songs");
+                // if (isUserPremium) {
+                //   NavigationService.navigate("Songs");
+                // } else {
+                //   Alert.alert("Go Premium");
+                // }
               }}
             >
               <Image source={subliminalsIcon} />

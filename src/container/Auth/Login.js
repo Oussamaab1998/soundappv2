@@ -293,7 +293,7 @@ function Login({ navigation }) {
           style={[AuthStyles.smallButton, SpaceStyles.top5]}
           onPress={() => {
             handleLogin();
-            getApi();
+            // getApi();
           }}
         >
           {isLoading ? (
