@@ -127,22 +127,21 @@ const AudioPlayer = ({ navigation, route }) => {
   const playSound = (song) => {
     pauseSound();
 
-    console.log("call this function again and again", currentSong);
     if (song.url) {
 
+      setSongStatus(true);
       // if (songVar !== null) pauseSound();
-      var whoosh = new Sound(song.url, Sound.MAIN_BUNDLE, (error) => {
+      var whoosh = new Sound(song.url, '', (error) => {
         if (error) {
           console.log("failed to load the sound", error);
           return;
         }
 
-        setSongStatus(true);
-
         // loaded successfully
 
-        whoosh.getCurrentTime((seconds) => setSongCS(seconds));
         setSongVar(whoosh);
+        
+        whoosh.getCurrentTime((seconds) => setSongCS(seconds));
         setSongLength(whoosh.getDuration());
 
         // Play the sound with an onEnd callback
