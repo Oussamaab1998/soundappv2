@@ -9,6 +9,7 @@ import {
   Modal,
   Alert,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 
@@ -56,6 +57,7 @@ const AudioPlayer = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [songStatus, setSongStatus] = useState(false);
   const [isAffirmations, setIsAffirmations] = useState(false);
+  const [songInPrecess, setSongInProcess] = useState(true);
   const [songLength, setSongLength] = useState(0);
   const [songCS, setSongCS] = useState(0);
   const [songsSameGenre, setSongsSameGenre] = useState([]);
@@ -129,6 +131,7 @@ const AudioPlayer = ({ navigation, route }) => {
 
     if (song.url) {
 
+      setSongInProcess(true);
       setSongStatus(true);
       // if (songVar !== null) pauseSound();
       var whoosh = new Sound(song.url, '', (error) => {
@@ -140,7 +143,8 @@ const AudioPlayer = ({ navigation, route }) => {
         // loaded successfully
 
         setSongVar(whoosh);
-        
+        setSongInProcess(false);
+
         whoosh.getCurrentTime((seconds) => setSongCS(seconds));
         setSongLength(whoosh.getDuration());
 
@@ -345,35 +349,65 @@ const AudioPlayer = ({ navigation, route }) => {
                   resizeMode="cover"
                   style={SpaceStyles.left5}
                 />
-                {songStatus ? (
-                  <TouchableOpacity
-                    style={styles.playpauseIcon}
-                    onPress={() => {
-                      setCurrentSong({});
-                      // pauseSound()
-                    }}
-                  >
-                    <Image
-                      source={pause}
-                      resizeMode="cover"
-                      style={styles.pauseSyles}
-                    />
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.playpauseIcon}
-                    onPress={() => {
-                      setCurrentSong(currentSong?.url ? currentSong : item);
-                      // playSound()
-                    }}
-                  >
-                    <Image
-                      source={playIcon}
-                      resizeMode="cover"
-                      style={SpaceStyles.left5}
-                    />
-                  </TouchableOpacity>
-                )}
+                {
+                  songStatus ?
+                    <React.Fragment>
+                      {
+                        songInPrecess ?
+                          <View
+                            style={{
+                              marginHorizontal: 17
+                            }
+                            }
+                          >
+                            <ActivityIndicator />
+                          </View>
+                          :
+                          <TouchableOpacity
+                            style={styles.playpauseIcon}
+                            onPress={() => {
+                              setCurrentSong({});
+                              // pauseSound()
+                            }}
+                          >
+                            <Image
+                              source={pause}
+                              resizeMode="cover"
+                              style={styles.pauseSyles}
+                            />
+                          </TouchableOpacity>
+
+                      }
+                    </React.Fragment>
+                    : (
+                      <React.Fragment>
+
+                        {
+                          songInPrecess ?
+                            <View
+                              style={{
+                                marginHorizontal: 17
+                              }}
+                            >
+                              <ActivityIndicator />
+                            </View>
+                            :
+                            <TouchableOpacity
+                              style={styles.playpauseIcon}
+                              onPress={() => {
+                                setCurrentSong(currentSong?.url ? currentSong : item);
+                                // playSound()
+                              }}
+                            >
+                              <Image
+                                source={playIcon}
+                                resizeMode="cover"
+                                style={SpaceStyles.left5}
+                              />
+                            </TouchableOpacity>
+                        }
+                      </React.Fragment>
+                    )}
 
                 <Image
                   source={endIcon}
