@@ -19,11 +19,14 @@ function HeaderRight({ iconName1, iconName2, iconName3, onPress = () => { }, onP
 
             {
                 !!iconName1 &&
-                <Image
-                    source={iconName1}
-                    resizeMode='contain'
-                    style={{ margin: 5 }}
-                />
+                <TouchableOpacity onPress={onPress}>
+
+                    <Image
+                        source={iconName1}
+                        resizeMode='contain'
+                        style={{ margin: 5 }}
+                    />
+                </TouchableOpacity>
             }
             {
                 !!iconName2 &&

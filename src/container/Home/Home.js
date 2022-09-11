@@ -66,7 +66,10 @@ function Home({ navigation }) {
       headerRight: () => (
         <HeaderRight
           iconName1={musicIcon}
-          // iconName3={bagIcon}
+          onPress={() => {
+            alert('in progress...')
+          }}
+        // iconName3={bagIcon}
         />
       ),
       headerTitle: () => <HeaderTitle title={"Home"} />,
