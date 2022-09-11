@@ -18,6 +18,7 @@ import CheckBox from "react-native-check-box";
 
 // common navigation
 import NavigationService from "../../navigation/NavigationService";
+import HeaderLeft from "../../components/HeaderLeft";
 
 // common componets
 import CustomText from "../../components/CustomText";
@@ -25,6 +26,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 
 
 import {
+  backIcon,
   show,
   hide,
 } from "../../constants/Images";
@@ -129,9 +131,24 @@ function SignUp({ navigation }) {
 
   return (
     <View
-      style={[AuthStyles.authContainer, { justifyContent: 'center', alignItems: 'center' }]}
+      style={[AuthStyles.authContainer, { alignItems: 'center' }]}
     >
       <SafeAreaView />
+      <View
+        style={{
+          alignSelf: 'flex-start',
+          marginTop: 20,
+          marginLeft: -30
+        }}
+      >
+
+        <HeaderLeft
+          text={""}
+          iconName={backIcon}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[SpaceStyles.top5, SpaceStyles.padding10, { width: '100%' }]}

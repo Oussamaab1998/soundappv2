@@ -64,7 +64,10 @@ function Home({ navigation }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRight iconName1={musicIcon} iconName3={bagIcon} />
+        <HeaderRight
+          iconName1={musicIcon}
+          // iconName3={bagIcon}
+        />
       ),
       headerTitle: () => <HeaderTitle title={"Home"} />,
       headerLeft: () => (

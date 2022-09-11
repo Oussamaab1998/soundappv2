@@ -289,12 +289,18 @@ function Login({ navigation }) {
           rightTextStyle={{ color: "#000" }}
         />
 
+
+        <View style={AuthStyles.errorsLogin}>
+          <Text style={AuthStyles.errorsLogintxt}>{localErros}</Text>
+        </View>
+
         <TouchableOpacity
-          style={[AuthStyles.smallButton, SpaceStyles.top5]}
+          style={[AuthStyles.smallButton, SpaceStyles.top2]}
           onPress={() => {
             handleLogin();
             // getApi();
           }}
+
         >
           {isLoading ? (
             <View
@@ -323,9 +329,6 @@ function Login({ navigation }) {
           />
         </TouchableOpacity>
 
-        <View style={AuthStyles.errorsLogin}>
-          <Text style={AuthStyles.errorsLogintxt}>{localErros}</Text>
-        </View>
       </View>
       <SafeAreaView />
     </View>
