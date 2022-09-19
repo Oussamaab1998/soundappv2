@@ -19,6 +19,7 @@
 		5C7459A5D51847F8B9926426 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 397F32761AB54F41B5A7071F /* Quicksand-Light.ttf */; };
 		6D432C0B3CD29815C5273344 /* libPods-soundandsoulful-soundandsoulfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BB47834E3B188FCDC8E41D /* libPods-soundandsoulful-soundandsoulfulTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8E38BC6C28C660590006B497 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E38BC6B28C660590006B497 /* StoreKit.framework */; };
 		9C72CB0AF003411A8B2AAE5E /* Segoe UI Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4F7AC9BBE074745B1237A4D /* Segoe UI Bold.ttf */; };
 		CCD9EEAA9AD645FDB0C70346 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99C1746982A34ED394FD1694 /* Quicksand-Regular.ttf */; };
 		F5CEE5FA59E44F7BAA461CB2 /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6C94D00BC994C77BD6E8056 /* Quicksand-Medium.ttf */; };
@@ -51,6 +52,7 @@
 		510F87B2B02B40349A7B7424 /* Quicksand-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-SemiBold.ttf"; path = "../src/assets/fonts/Quicksand-SemiBold.ttf"; sourceTree = "<group>"; };
 		67A91B728F9F418A875180DD /* Segoe UI.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Segoe UI.ttf"; path = "../src/assets/fonts/Segoe UI.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = soundandsoulful/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8E38BC6B28C660590006B497 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		93BB47834E3B188FCDC8E41D /* libPods-soundandsoulful-soundandsoulfulTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-soundandsoulful-soundandsoulfulTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C1746982A34ED394FD1694 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Regular.ttf"; path = "../src/assets/fonts/Quicksand-Regular.ttf"; sourceTree = "<group>"; };
 		A6C94D00BC994C77BD6E8056 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Medium.ttf"; path = "../src/assets/fonts/Quicksand-Medium.ttf"; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2801E6E78E41B3F8DBC2EC3C /* libPods-soundandsoulful.a in Frameworks */,
+				8E38BC6C28C660590006B497 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +118,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E38BC6B28C660590006B497 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				EDEEA87ABC8B7D9339D31212 /* libPods-soundandsoulful.a */,
 				93BB47834E3B188FCDC8E41D /* libPods-soundandsoulful-soundandsoulfulTests.a */,
@@ -526,7 +530,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 7G99DAG8D8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = soundandsoulful/Info.plist;
@@ -558,7 +562,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 7G99DAG8D8;
 				INFOPLIST_FILE = soundandsoulful/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -573,7 +577,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.soundandsoulful1;
 				PRODUCT_NAME = soundandsoulful;
-				PROVISIONING_PROFILE_SPECIFIER = "sound and soulful";
+				PROVISIONING_PROFILE_SPECIFIER = SNS;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

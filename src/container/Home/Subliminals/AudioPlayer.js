@@ -63,6 +63,7 @@ const AudioPlayer = ({ navigation, route }) => {
   const [songsSameGenre, setSongsSameGenre] = useState([]);
   const [songVar, setSongVar] = useState(undefined);
   const [modalKey, setModalKey] = useState(undefined);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
   //---------- life cycles
 
@@ -116,12 +117,26 @@ const AudioPlayer = ({ navigation, route }) => {
 
   const fetchSameGenre = async () => {
     let arr = [];
-    let i = 0;
-    songs.map((song) => {
-      i++;
-      if (song.genre.id === item.genre.id) arr.push(song);
-    });
+    // let i = 0;
+
+    for (var i = 0; i < songs.length; i++) {
+
+      if (songs[i]?.genre?.id === item?.genre?.id) {
+
+        arr.push(songs[i]);
+      }
+
+      if (songs[i]?.id === item.id) {
+
+        setCurrentSongIndex(i);
+      }
+    }
+    // songs.map((song) => {
+    //   i++;
+    //   if (song.genre.id === item.genre.id) arr.push(song);
+    // });
     setSongsSameGenre(arr);
+    setCurrentSong(item);
     // if (songs.length - 1 === i) {
     // }
   };
@@ -159,6 +174,29 @@ const AudioPlayer = ({ navigation, route }) => {
       });
     }
   };
+
+  const handleNextOrPrevious = (key, index) => {
+
+    if (songInPrecess) {
+
+      alert('please wait song is in process...')
+      return;
+
+    } else {
+
+      pauseSound();
+
+      if (key === 'next') {
+        setCurrentSongIndex(index);
+        setCurrentSong(songsSameGenre[index])
+      }
+
+      if (key === 'previous') {
+        setCurrentSongIndex(index);
+        setCurrentSong(songsSameGenre[index])
+      }
+    }
+  }
 
   const pauseSound = () => {
     console.log("songVar", songVar);
@@ -244,6 +282,7 @@ const AudioPlayer = ({ navigation, route }) => {
                           key={index}
                           onPress={() => {
                             setCurrentSong(song);
+                            setCurrentSongIndex(index);
                             // playSound(song);
                           }}
                           style={styles.gernre2}
@@ -259,6 +298,7 @@ const AudioPlayer = ({ navigation, route }) => {
                           key={index}
                           onPress={() => {
                             setCurrentSong(song);
+                            setCurrentSongIndex(index);
                             // playSound(song);
                           }}
                           style={styles.gernre2}
@@ -344,11 +384,18 @@ const AudioPlayer = ({ navigation, route }) => {
               </TouchableOpacity>
 
               <View style={SpaceStyles.rowFlex}>
-                <Image
-                  source={skiptoStart}
-                  resizeMode="cover"
-                  style={SpaceStyles.left5}
-                />
+
+                <TouchableOpacity
+                  onPress={() => {
+                    handleNextOrPrevious('previous', (currentSongIndex - 1))
+                  }}
+                >
+                  <Image
+                    source={skiptoStart}
+                    resizeMode="cover"
+                    style={SpaceStyles.left5}
+                  />
+                </TouchableOpacity>
                 {
                   songStatus ?
                     <React.Fragment>
@@ -395,7 +442,11 @@ const AudioPlayer = ({ navigation, route }) => {
                             <TouchableOpacity
                               style={styles.playpauseIcon}
                               onPress={() => {
-                                setCurrentSong(currentSong?.url ? currentSong : item);
+                                setCurrentSong(currentSong?.url ?
+                                  currentSong :
+                                  (songsSameGenre.length > 0 && songsSameGenre[currentSongIndex].id === item.id) ?
+                                    item
+                                    : songsSameGenre[currentSongIndex]);
                                 // playSound()
                               }}
                             >
@@ -409,11 +460,17 @@ const AudioPlayer = ({ navigation, route }) => {
                       </React.Fragment>
                     )}
 
-                <Image
-                  source={endIcon}
-                  resizeMode="cover"
-                  style={SpaceStyles.left5}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    handleNextOrPrevious('next', (currentSongIndex + 1))
+                  }}
+                >
+                  <Image
+                    source={endIcon}
+                    resizeMode="cover"
+                    style={SpaceStyles.left5}
+                  />
+                </TouchableOpacity>
               </View>
 
               {/* <TouchableOpacity

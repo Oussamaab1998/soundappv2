@@ -65,8 +65,8 @@ function Login({ navigation }) {
   const { isLoggedIn } = useSelector(mapState);
 
   const dispatch = useDispatch();
-  const [email, onChangeEmail] = useState("");
-  const [password, onChangepassword] = useState("");
+  const [email, onChangeEmail] = useState("dev.quality.soft@gmail.com");
+  const [password, onChangepassword] = useState("mahi8055");
   const [object, setObject] = useState({});
   const [manageClicks, setManageClicks] = useState(0);
   const [ourIds, setOurIds] = useState(null);
@@ -88,6 +88,7 @@ function Login({ navigation }) {
         let parse_data = JSON.parse(data);
         onChangeEmail(parse_data.email);
         onChangepassword(parse_data.password);
+        
         setIsUserSaved(true);
         setIsSavePassword(true);
       }
