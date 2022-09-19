@@ -234,6 +234,28 @@ export default function DrawerContent(props) {
                 ]}
               />
             </TouchableOpacity>
+            {/* <TouchableOpacity
+              // disabled={!isUserPremium}
+              style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
+              onPress={() => {
+                NavigationService.navigate("PlayListSongs");
+                // if (isUserPremium) {
+                //   NavigationService.navigate("Songs");
+                // } else {
+                //   Alert.alert("Go Premium");
+                // }
+              }}
+            >
+              <Image source={audioIcon} />
+              <CustomText
+                text={"Custom Playlist"}
+                style={[
+                  TextStyles.textQuicksandMedium18Black,
+                  SpaceStyles.left10,
+                  { color: "black" },
+                ]}
+              />
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               onPress={() => [NavigationService.navigate("Disclaimer")]}
