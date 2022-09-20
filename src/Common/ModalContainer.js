@@ -61,6 +61,9 @@ function ModalContainer({
   //---------- helper: user's actions
 
   const showModal = () => setVisible(true);
+  const test = () => {
+    console.log("myUserId =>", myUserId);
+  };
   const addToList = async () => {
     try {
       const requestOptions = {
@@ -104,7 +107,7 @@ function ModalContainer({
           content: (
             <View
               style={{
-                paddingVertical: 20
+                paddingVertical: 20,
               }}
             >
               <TextInput
@@ -112,7 +115,7 @@ function ModalContainer({
                 // onChangeText={onChangeNumber}
                 // value={number}
                 placeholder="List name"
-              // keyboardType="numeric"
+                // keyboardType="numeric"
               />
               <TouchableOpacity
                 onPress={() => {
@@ -120,8 +123,13 @@ function ModalContainer({
                 }}
                 style={CommonStyles.RowStart}
               >
-
-                <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 10 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}
+                >
                   <Image
                     style={{ marginRight: 10 }}
                     source={addIcon}
@@ -209,7 +217,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
-    width: '100%',
+    width: "100%",
   },
   centeredView1: {
     flex: 1,

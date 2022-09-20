@@ -141,47 +141,6 @@ export const signUpUser =
         }),
       };
       console.log("Hello GOAT");
-      // axios({
-      //   headers: { "Content-Type": "application/json" },
-      //   method: 'post',
-      //   url: 'http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/register/',
-      //   data:{
-      //     email: email,
-      //     password: password,
-      //     password2: confirmPassword,
-      //     name: name,
-      //   }
-      // })
-      //   .then(function (response) {
-
-      //     console.log('-----------------------------------------------')
-      //     console.log('response :', response)
-      //     console.log('-----------------------------------------------')
-
-      //     if (response?.data?.errors) {
-      //       console.log("There is no user with this credentials");
-      //       const error = response?.data?.data?.message;
-      //       dispatch({
-      //         type: userTypes.SET_ERRORS,
-      //         payload: error,
-      //       });
-      //     } else {
-      //       console.log("Yess we are here");
-      //       dispatch({
-      //         type: userTypes.USER_SIGN_UP_SUCCESS,
-      //         payload: true,
-      //       });
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     console.log('=----------------------------------------=');
-      //     console.log(error);
-      //     console.log('=----------------------------------------=');
-      //     dispatch({
-      //       type: userTypes.SET_ERRORS,
-      //       payload: error,
-      //     });
-      //   });
 
       await fetch(
         "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/accounts/register/",

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AuthNavigation from "./AuthNavigator/AuthNavigation";
 import Route from "./HomeNavigator/Route";
 
-import SpalshScreen from '../container/Auth/SpalshScreen';
+import SpalshScreen from "../container/Auth/SpalshScreen";
 
 // global stack veriable
 const Stack = createStackNavigator();
@@ -32,13 +32,11 @@ function StackNaviagtion(props) {
 
   return (
     <Stack.Navigator initialRouteName="SpalshScreen">
-      
-      
       <Stack.Screen
         options={{ headerShown: false }}
-
         name="SpalshScreen"
-        component={SpalshScreen} />
+        component={SpalshScreen}
+      />
 
       {/* <Stack.Screen
         options={{ headerShown: false }}
