@@ -175,6 +175,7 @@ const AudioPlayer = ({ navigation, route }) => {
     }
   };
 
+  
   const handleNextOrPrevious = (key, index) => {
 
     if (songInPrecess) {
