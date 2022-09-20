@@ -546,7 +546,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.soundandsoulful1;
 				PRODUCT_NAME = soundandsoulful;
-				PROVISIONING_PROFILE_SPECIFIER = "sound and soulful";
+				PROVISIONING_PROFILE_SPECIFIER = 1SNS;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -577,7 +577,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.soundandsoulful1;
 				PRODUCT_NAME = soundandsoulful;
-				PROVISIONING_PROFILE_SPECIFIER = SNS;
+				PROVISIONING_PROFILE_SPECIFIER = 1SNS;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
