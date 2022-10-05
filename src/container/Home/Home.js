@@ -31,6 +31,7 @@ import {
 } from "../../constants/Images";
 import { BLACK, INACTIVEDOT } from "../../constants/Colors";
 import { useSelector } from "react-redux";
+import ModalContainer from "../../Common/ModalContainer";
 // constants
 let data = [
   {
@@ -57,17 +58,21 @@ const mapState = ({ localReducer }) => ({
 });
 
 function Home({ navigation }) {
+
   //---------- state, veriable and hooks
+  const [playlistData, setPlaylistData] =useState([])
 
   //---------- life cycle
   const { myUserId } = useSelector(mapState);
+  const [isPlaylist, setIsPlalist] = useState(false);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRight
           iconName1={musicIcon}
           onPress={() => {
-            alert('in progress...')
+            setIsPlalist(true)
           }}
         // iconName3={bagIcon}
         />
@@ -83,15 +88,43 @@ function Home({ navigation }) {
     });
   }, [navigation]);
   useEffect(() => {
+    getApi()
     console.log("myUserId ---------  => ", myUserId);
   }, []);
 
+
+  const getApi = async () => {
+    try {
+      await fetch(
+        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlist/1"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("hahahaha", data);
+          setPlaylistData(data?.data || [])
+        })
+        .catch((err) => {
+          console.log("error => ", err);
+        });
+    } catch (err) {
+      console.log("----------------------", err);
+    }
+  };
   //---------- helper: user's actions
 
   //---------- return main view
 
   return (
     <SafeAreaView>
+
+      <ModalContainer
+        navigation={navigation}
+        isVisible={isPlaylist}
+        render_view_key={'playlist'}
+        content={playlistData}
+        hideModal={() => setIsPlalist(false)}
+      />
+
       <ScrollView>
         <View style={AuthStyles.authContainer}>
           <View style={CommonStyles.homeTopView}>

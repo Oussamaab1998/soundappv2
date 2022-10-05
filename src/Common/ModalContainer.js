@@ -13,8 +13,9 @@ import {
   Modal,
   StyleSheet,
   Alert,
+  FlatList
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, } from "react-redux";
 // third party lib
 import { ScrollView } from "react-native-gesture-handler";
 import { Portal, Button, Provider } from "react-native-paper";
@@ -43,6 +44,8 @@ function ModalContainer({
   //---------- state, veriable and hooks
   const { myUserId } = useSelector(mapState);
   const [visible, setVisible] = React.useState(isVisible);
+  const [createPlaylistLoading, setCreatePlaylistLoading] = React.useState(false);
+  const [onChangeNumber, setOnChangeNumber] = React.useState('');
 
   //---------- life cycle
 
@@ -64,34 +67,48 @@ function ModalContainer({
   const test = () => {
     console.log("myUserId =>", myUserId);
   };
+
   const addToList = async () => {
-    try {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          list_name: "ouss",
-          user: `${myUserId}`,
-          songs: ["2"],
-        }),
-      };
-      await fetch(
-        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlist",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          console.log("Add To List :", response.data);
-          if (response.data.errors) {
-            console.log("We faced error");
-          } else {
-            Alert.alert("Playlist Successfully Created");
-          }
-        });
-    } catch (err) {
-      console.log("Error from catch in Add TO List actions", err);
+
+    if (onChangeNumber) {
+
+      setCreatePlaylistLoading(true);
+      try {
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            list_name: "ouss",
+            user: `${myUserId}`,
+            songs: ["2"],
+          }),
+        };
+        await fetch(
+          "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlist",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("Add To List :", response.data);
+            if (response.data.errors) {
+              setCreatePlaylistLoading(false);
+              console.log("We faced error");
+            } else {
+              setCreatePlaylistLoading(false);
+              setOnChangeNumber('')
+              Alert.alert("Playlist Successfully Created");
+            }
+          });
+      } catch (err) {
+        setCreatePlaylistLoading(false);
+        console.log("Error from catch in Add TO List actions", err);
+      }
+    } else {
+      setCreatePlaylistLoading(false);
+      alert('Pleas provide a name for the playlist!')
     }
   };
+
   const renderContent = (params) => {
     switch (params) {
       case "affirmations":
@@ -112,14 +129,17 @@ function ModalContainer({
             >
               <TextInput
                 style={styles.input}
-                // onChangeText={onChangeNumber}
-                // value={number}
+                onChangeText={text => setOnChangeNumber(text)}
+                value={onChangeNumber}
                 placeholder="List name"
-                // keyboardType="numeric"
+              // keyboardType="numeric"
               />
               <TouchableOpacity
                 onPress={() => {
-                  addToList();
+                  if (!createPlaylistLoading) {
+
+                    addToList();
+                  }
                 }}
                 style={CommonStyles.RowStart}
               >
@@ -130,11 +150,18 @@ function ModalContainer({
                     marginTop: 10,
                   }}
                 >
-                  <Image
-                    style={{ marginRight: 10 }}
-                    source={addIcon}
-                    resizeMode="cover"
-                  />
+                  {
+                    createPlaylistLoading ?
+                      <ActivityIndicator
+                        style={{ marginRight: 10 }}
+                      />
+                      :
+                      <Image
+                        style={{ marginRight: 10 }}
+                        source={addIcon}
+                        resizeMode="cover"
+                      />
+                  }
                   <Text style={{ color: "#000" }}>{"Create New Plalist"}</Text>
                 </View>
               </TouchableOpacity>
@@ -147,14 +174,65 @@ function ModalContainer({
         return renderItem();
         break;
 
+      case "playlist":
+        return renderContentLayout({
+          title: "Playlists",
+          content: (
+            <View
+              style={{
+                paddingVertical: 10,
+              }}
+            >
+              <FlatList
+
+                data={content}
+                renderItem={renderPlalist}
+                keyExtractor={item => item.id}
+              />
+
+            </View>
+          ),
+        });
+        break
+
       default:
         break;
     }
   };
 
+  const renderPlalist = ({ item, index }) => {
+
+    return (
+      <TouchableOpacity
+        key={index}
+        
+        onPress={() => {
+          
+          alert('in process ...')
+
+        }}
+
+        style={[CommonStyles.RowStart, { justifyContent: 'flex-start', paddingVertical: 5 }]}
+      >
+
+        <Text
+          numberOfLines={1}
+          style={{ color: "#000", alignSelf: 'flex-start' }}>
+          {
+            `- ${item.list_name}`
+          }
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+
   const renderContentLayout = ({ title, content }) => {
     return (
-      <React.Fragment>
+      <View
+        style={{
+          flex: render_view_key === 'playlist' ? 0.7 : 0,
+        }}
+      >
         <View
           style={[
             CommonStyles.RowSpaceBetween,
@@ -176,7 +254,7 @@ function ModalContainer({
             <Text style={TextStyles.textSegoe18White}>Close</Text>
           </TouchableOpacity>
         </View>
-      </React.Fragment>
+      </View>
     );
   };
   //---------- return main view
@@ -223,10 +301,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 30,
   },
   modalView: {
-    margin: 20,
+    maxHeight: '70%',
+    marginHorizontal: 20,
+    marginVertical: 50,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
