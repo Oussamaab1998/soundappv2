@@ -3,6 +3,7 @@
 // react
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import { View, Image, SafeAreaView, Text } from "react-native";
+import { useIsFocused } from '@react-navigation/native';
 
 // third party lib
 import Swiper from "react-native-swiper";
@@ -60,11 +61,14 @@ const mapState = ({ localReducer }) => ({
 function Home({ navigation }) {
 
   //---------- state, veriable and hooks
-  const [playlistData, setPlaylistData] =useState([])
+  const isFocused = useIsFocused();
+
+  const [playlistData, setPlaylistData] = useState([])
 
   //---------- life cycle
   const { myUserId } = useSelector(mapState);
   const [isPlaylist, setIsPlalist] = useState(false);
+  const [playlistLoading, setPlaylistLoading] = useState(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -90,10 +94,11 @@ function Home({ navigation }) {
   useEffect(() => {
     getApi()
     console.log("myUserId ---------  => ", myUserId);
-  }, []);
+  }, [isFocused]);
 
 
   const getApi = async () => {
+    setPlaylistData(true)
     try {
       await fetch(
         "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlist/1"
@@ -101,12 +106,15 @@ function Home({ navigation }) {
         .then((response) => response.json())
         .then((data) => {
           console.log("hahahaha", data);
+          setPlaylistData(false)
           setPlaylistData(data?.data || [])
         })
         .catch((err) => {
+          setPlaylistData(false)
           console.log("error => ", err);
         });
     } catch (err) {
+      setPlaylistData(false)
       console.log("----------------------", err);
     }
   };
@@ -118,6 +126,7 @@ function Home({ navigation }) {
     <SafeAreaView>
 
       <ModalContainer
+        loading={playlistLoading}
         navigation={navigation}
         isVisible={isPlaylist}
         render_view_key={'playlist'}

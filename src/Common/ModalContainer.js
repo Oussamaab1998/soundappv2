@@ -40,6 +40,7 @@ function ModalContainer({
   isVisible,
   renderItem,
   hideModal,
+  loading,
 }) {
   //---------- state, veriable and hooks
   const { myUserId } = useSelector(mapState);
@@ -183,13 +184,34 @@ function ModalContainer({
                 paddingVertical: 10,
               }}
             >
-              <FlatList
+              {
+                loading ?
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
+                  >
+                    <ActivityIndicator />
+                  </View>
+                  :
 
-                data={content}
-                renderItem={renderPlalist}
-                keyExtractor={item => item.id}
-              />
+                  content?.length >0 ?
 
+                    <FlatList
+
+                      data={content}
+                      renderItem={renderPlalist}
+                      keyExtractor={item => item.id}
+
+                    />
+                    :
+                    <View
+                      style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
+                    >
+                      <Text 
+                      style={{color:'#C5C5C5'}}
+                      > Plalist Empty
+                      </Text>
+                    </View>
+              }
             </View>
           ),
         });
@@ -205,9 +227,9 @@ function ModalContainer({
     return (
       <TouchableOpacity
         key={index}
-        
+
         onPress={() => {
-          
+
           alert('in process ...')
 
         }}
