@@ -79,7 +79,7 @@ function ModalContainer({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            list_name: "ouss",
+            list_name: onChangeNumber,
             user: `${myUserId}`,
             songs: ["2"],
           }),
@@ -97,6 +97,7 @@ function ModalContainer({
             } else {
               setCreatePlaylistLoading(false);
               setOnChangeNumber('')
+              hideModal()
               Alert.alert("Playlist Successfully Created");
             }
           });
@@ -115,7 +116,11 @@ function ModalContainer({
       case "affirmations":
         return renderContentLayout({
           title: "Affirmations",
-          content: <Text style={{ color: "#000" }}>{content}</Text>,
+          content: <ScrollView
+          style={{flex:1}}
+          >
+            <Text style={{ color: "#000" }}>{content}</Text>
+          </ScrollView>
         });
         break;
 
@@ -193,7 +198,7 @@ function ModalContainer({
                   </View>
                   :
 
-                  content?.length >0 ?
+                  content?.length > 0 ?
 
                     <FlatList
 
@@ -206,8 +211,8 @@ function ModalContainer({
                     <View
                       style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
                     >
-                      <Text 
-                      style={{color:'#C5C5C5'}}
+                      <Text
+                        style={{ color: '#C5C5C5' }}
                       > Plalist Empty
                       </Text>
                     </View>
@@ -252,7 +257,9 @@ function ModalContainer({
     return (
       <View
         style={{
-          flex: render_view_key === 'playlist' ? 0.7 : 0,
+          flex: render_view_key === 'playlist' ? 0.7
+            : render_view_key === 'affirmations' ? 1
+              : 0,
         }}
       >
         <View
@@ -264,12 +271,23 @@ function ModalContainer({
           <Text style={[TextStyles.textBold24Black]}>{title}</Text>
         </View>
 
-        <View style={AuthStyles.ModalContentContainer}>{content}</View>
+        <View
+
+          style={{
+            flex: render_view_key === 'affirmations' ? 1:0,
+          }}
+        >
+          <View style={[
+            AuthStyles.ModalContentContainer,
+            {flex: render_view_key === 'affirmations' ? 1:0,}
+            ]}>{content}</View>
+        </View>
 
         <View style={[CommonStyles.RowEnd, { padding: 10, width: "100%" }]}>
           <TouchableOpacity
             style={CommonStyles.GrayBtn}
             onPress={() => {
+              setOnChangeNumber('')
               hideModal();
             }}
           >
@@ -293,7 +311,7 @@ function ModalContainer({
       }}
     >
       <View style={styles.centeredView1}>
-        <View style={styles.modalView}>{renderContent(render_view_key)}</View>
+        <View style={[styles.modalView, { maxHeight: '70%' }]}>{renderContent(render_view_key)}</View>
       </View>
     </Modal>
   );
@@ -324,9 +342,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30,
+    backgroundColor:'rgba(0, 0, 0, 0.4)'
   },
   modalView: {
-    maxHeight: '70%',
+    // maxHeight: '70%',
     marginHorizontal: 20,
     marginVertical: 50,
     backgroundColor: "white",
