@@ -16,6 +16,11 @@ import SplashScreen from "react-native-splash-screen";
 // helper
 import NavigationService from "./src/navigation/NavigationService";
 
+
+// @temp
+import AudioPlayer from "./src/container/Home/Subliminals/AudioPlayer";
+import TrackPlayer from "react-native-track-player";
+
 //---------- main app / component
 
 const App = () => {
@@ -24,22 +29,34 @@ const App = () => {
 
   //---------- life cycle
 
-  useEffect(() => {
-    // SplashScreen.hide();
-  }, []);
+  // useEffect(() => {
+  //   // SplashScreen.hide();
+
+  //   console.log(' TrackPlayer :  ', TrackPlayer)
+
+  //   try {
+
+  //     TrackPlayer?.setupPlayer && TrackPlayer.setupPlayer()
+  //   } catch (error) {
+
+  //     console.log('-=-=-=-=-==-=-', error)
+  //   }
+
+  // }, []);
 
   //---------- return main view
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer
+        <AudioPlayer />
+        {/* <NavigationContainer
           ref={(navigatorRef) => {
             NavigationService.setTopLevelNavigator(navigatorRef);
           }}
         >
           <StackNaviagtion />
-        </NavigationContainer>
+        </NavigationContainer> */}
       </PersistGate>
     </Provider>
   );

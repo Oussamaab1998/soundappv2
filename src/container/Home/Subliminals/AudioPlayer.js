@@ -40,20 +40,23 @@ import {
 // styles
 import CommonStyles from "../../../style/CommonStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
+import TrackPlayer from "react-native-track-player";
 
 //---------- componets
 
 const AudioPlayer = ({ navigation, route }) => {
   //---------- state and params
-  const {
-    item,
-    songs, // original songs
-  } = route.params;
+  // const {
+  //   // item,
+  //   // songs, // original songs
+  // } = route.params;
+  let item = {}
 
-  // let songs = songs1           // for testing
+  let songs = songs1           // for testing : @temp
 
   // state
-  const [currentSong, setCurrentSong] = useState(item);
+  const [currentSong, setCurrentSong] = useState({});
+  // const [currentSong, setCurrentSong] = useState(item);
   const [modalVisible, setModalVisible] = useState(false);
   const [songStatus, setSongStatus] = useState(false);
   const [isAffirmations, setIsAffirmations] = useState(false);
@@ -93,25 +96,51 @@ const AudioPlayer = ({ navigation, route }) => {
   }, [currentSong?.url]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <HeaderRight
-          iconName1={""}
-          iconName2={""}
-          iconName3={drawerIcon}
-          onPress3={() => navigation.openDrawer()}
-        />
-      ),
-      headerTitle: () => <HeaderTitle title={"Song"} />,
-      headerLeft: () => (
-        <HeaderLeft
-          text={""}
-          iconName={backIcon}
-          onPress={() => navigation.goBack()}
-        />
-      ),
-    });
+    // navigation.setOptions({
+    //   headerRight: () => (
+    //     <HeaderRight
+    //       iconName1={""}
+    //       iconName2={""}
+    //       iconName3={drawerIcon}
+    //       onPress3={() => navigation.openDrawer()}
+    //     />
+    //   ),
+    //   headerTitle: () => <HeaderTitle title={"Song"} />,
+    //   headerLeft: () => (
+    //     <HeaderLeft
+    //       text={""}
+    //       iconName={backIcon}
+    //       onPress={() => navigation.goBack()}
+    //     />
+    //   ),
+    // });
+
   }, [navigation]);
+
+  useEffect(() => {
+    (async () => {
+
+      await TrackPlayer?.setupPlayer && TrackPlayer.setupPlayer()
+
+      await TrackPlayer.add(
+        {
+          id: 'trackId',
+          url: 'http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3',
+        }
+      )
+
+      // try {
+      // } catch (error) {
+
+      //   console.log('error', error)
+      // }
+
+
+    })();
+
+    return () => TrackPlayer?.destroy && TrackPlayer?.destroy();
+
+  }, []);
 
   //--------- users actions
 
@@ -140,6 +169,31 @@ const AudioPlayer = ({ navigation, route }) => {
     // if (songs.length - 1 === i) {
     // }
   };
+
+
+  TrackPlayer.setupPlayer({})
+    .then(() => {
+      TrackPlayer.updateOptions({
+        capabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+        ],
+        compactCapabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+        ]
+      })
+  })
+
+  TrackPlayer.updateOptions({
+    stopWithApp: false,
+    capabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
+    compactCapabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
+  })
 
   const playSound = (song) => {
     pauseSound();
@@ -175,7 +229,6 @@ const AudioPlayer = ({ navigation, route }) => {
     }
   };
 
-  
   const handleNextOrPrevious = (key, index) => {
 
     if (songInPrecess) {
@@ -200,6 +253,7 @@ const AudioPlayer = ({ navigation, route }) => {
   }
 
   const pauseSound = () => {
+
     console.log("songVar", songVar);
     if (songVar) {
       songVar.pause();
@@ -264,114 +318,124 @@ const AudioPlayer = ({ navigation, route }) => {
         <View style={[CommonStyles.musicView, { backgroundColor: "#ffffff" }]}>
           <View style={CommonStyles.musicBorderView} />
           <View style={{ padding: 10 }}>
+
             <View style={styles.genre}>
               <View style={styles.gernre2}>
                 <Image
-                  source={{ uri: item.genre.thumbnail }}
+                  source={{ uri: item?.genre?.thumbnail }}
                   style={styles.thumbnail2}
                 />
-                <Text style={styles.title1}>{item.genre.name}</Text>
+                <Text style={styles.title1}>{item?.genre?.name}</Text>
               </View>
             </View>
+
             <View style={styles.genre2}>
-              {songsSameGenre.length > 3 ? (
-                <ScrollView style={{ flex: 1, maxHeight: 100, width: "100%" }}>
-                  {songsSameGenre.map((song, index) => {
-                    if (currentSong?.id === song.id) {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setCurrentSong(song);
-                            setCurrentSongIndex(index);
-                            // playSound(song);
-                          }}
-                          style={styles.gernre2}
-                        >
-                          <Text style={[styles.title1, { fontWeight: "bold" }]}>
-                            {song.title}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    } else {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setCurrentSong(song);
-                            setCurrentSongIndex(index);
-                            // playSound(song);
-                          }}
-                          style={styles.gernre2}
-                        >
-                          <Text style={styles.title1}>{song.title}</Text>
-                        </TouchableOpacity>
-                      );
+              {
+                songsSameGenre.length > 3 ? (
+                  <ScrollView style={{ flex: 1, maxHeight: 100, width: "100%" }}>
+                    {
+                      songsSameGenre.map((song, index) => {
+                        if (currentSong?.id === song.id) {
+                          return (
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                setCurrentSong(song);
+                                setCurrentSongIndex(index);
+                                // playSound(song);
+                              }}
+                              style={styles.gernre2}
+                            >
+                              <Text
+                                style={[styles.title1, { fontWeight: "bold" }]}
+                              >
+                                {
+                                  song.title
+                                }
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        } else {
+                          return (
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                setCurrentSong(song);
+                                setCurrentSongIndex(index);
+                                // playSound(song);
+                              }}
+                              style={styles.gernre2}
+                            >
+                              <Text style={styles.title1}>{song.title}</Text>
+                            </TouchableOpacity>
+                          );
+                        }
+                      })
                     }
-                  })}
-                </ScrollView>
-              ) : (
-                <>
-                  {songsSameGenre.map((song, index) => {
-                    if (currentSong?.id === song.id && songStatus) {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setCurrentSong({});
-                            pauseSound();
-                          }}
-                          style={styles.gernre2}
-                        >
-                          <Image
-                            source={pause}
-                            resizeMode="cover"
-                            style={{
-                              height: 16,
-                              width: 16,
-                              marginLeft: 2,
+                  </ScrollView>
+                ) : (
+                  <>
+                    {songsSameGenre.map((song, index) => {
+                      if (currentSong?.id === song.id && songStatus) {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              setCurrentSong({});
+                              pauseSound();
                             }}
-                          />
-
-                          <Text
-                            style={[
-                              styles.title1,
-                              { fontWeight: "bold", marginLeft: 12 },
-                            ]}
+                            style={styles.gernre2}
                           >
-                            {song.title}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    } else {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setCurrentSong(song);
-                            // playSound(song);
-                          }}
-                          style={styles.gernre2}
-                        >
-                          <Image
-                            source={playIcon}
-                            resizeMode="cover"
-                            style={{
-                              height: 20,
-                              width: 20,
-                            }}
-                          />
+                            <Image
+                              source={pause}
+                              resizeMode="cover"
+                              style={{
+                                height: 16,
+                                width: 16,
+                                marginLeft: 2,
+                              }}
+                            />
 
-                          <Text style={[styles.title1, { marginLeft: 10 }]}>
-                            {song.title}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    }
-                  })}
-                </>
-              )}
+                            <Text
+                              style={[
+                                styles.title1,
+                                { fontWeight: "bold", marginLeft: 12 },
+                              ]}
+                            >
+                              {song.title}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      } else {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              setCurrentSong(song);
+                              // playSound(song);
+                            }}
+                            style={styles.gernre2}
+                          >
+                            <Image
+                              source={playIcon}
+                              resizeMode="cover"
+                              style={{
+                                height: 20,
+                                width: 20,
+                              }}
+                            />
+
+                            <Text style={[styles.title1, { marginLeft: 10 }]}>
+                              {song.title}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      }
+                    })}
+                  </>
+                )}
             </View>
+
             <View
               style={[
                 SpaceStyles.alignSpaceBlock,
@@ -386,6 +450,10 @@ const AudioPlayer = ({ navigation, route }) => {
 
               <View style={SpaceStyles.rowFlex}>
 
+                {
+                  //---------- previous section 
+                }
+
                 <TouchableOpacity
                   onPress={() => {
                     handleNextOrPrevious('previous', (currentSongIndex - 1))
@@ -397,6 +465,10 @@ const AudioPlayer = ({ navigation, route }) => {
                     style={SpaceStyles.left5}
                   />
                 </TouchableOpacity>
+
+                {
+                  //---------- play pause icon section 
+                }
                 {
                   songStatus ?
                     <React.Fragment>
@@ -461,6 +533,9 @@ const AudioPlayer = ({ navigation, route }) => {
                       </React.Fragment>
                     )}
 
+                {
+                  //---------- next button
+                }
                 <TouchableOpacity
                   onPress={() => {
                     handleNextOrPrevious('next', (currentSongIndex + 1))
@@ -487,6 +562,9 @@ const AudioPlayer = ({ navigation, route }) => {
                 />
               </TouchableOpacity> */}
 
+              {
+                //---------- save and affirmations icon section 
+              }
               <View style={SpaceStyles.rowFlex}>
                 <TouchableOpacity
                   onPress={() => {
