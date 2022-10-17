@@ -49,14 +49,14 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <AudioPlayer />
-        {/* <NavigationContainer
+        {/* <AudioPlayer /> */}
+        <NavigationContainer
           ref={(navigatorRef) => {
             NavigationService.setTopLevelNavigator(navigatorRef);
           }}
         >
           <StackNaviagtion />
-        </NavigationContainer> */}
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   );

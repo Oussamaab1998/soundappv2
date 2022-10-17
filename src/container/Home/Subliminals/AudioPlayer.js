@@ -15,6 +15,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 
 // third party lib
 import Sound from "react-native-sound";
+import TrackPlayer from "react-native-track-player";
 
 // headers
 import HeaderRight from "../../../components/HeaderRight";
@@ -40,23 +41,22 @@ import {
 // styles
 import CommonStyles from "../../../style/CommonStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
-import TrackPlayer from "react-native-track-player";
 
 //---------- componets
 
 const AudioPlayer = ({ navigation, route }) => {
   //---------- state and params
-  // const {
-  //   // item,
-  //   // songs, // original songs
-  // } = route.params;
-  let item = {}
+  const {
+    item,
+    songs, // original songs
+  } = route.params;
+  // let item = {}
 
-  let songs = songs1           // for testing : @temp
+  // let songs = songs1           // for testing : @temp
 
   // state
-  const [currentSong, setCurrentSong] = useState({});
-  // const [currentSong, setCurrentSong] = useState(item);
+  // const [currentSong, setCurrentSong] = useState({});
+  const [currentSong, setCurrentSong] = useState(item);
   const [modalVisible, setModalVisible] = useState(false);
   const [songStatus, setSongStatus] = useState(false);
   const [isAffirmations, setIsAffirmations] = useState(false);
@@ -96,51 +96,26 @@ const AudioPlayer = ({ navigation, route }) => {
   }, [currentSong?.url]);
 
   useLayoutEffect(() => {
-    // navigation.setOptions({
-    //   headerRight: () => (
-    //     <HeaderRight
-    //       iconName1={""}
-    //       iconName2={""}
-    //       iconName3={drawerIcon}
-    //       onPress3={() => navigation.openDrawer()}
-    //     />
-    //   ),
-    //   headerTitle: () => <HeaderTitle title={"Song"} />,
-    //   headerLeft: () => (
-    //     <HeaderLeft
-    //       text={""}
-    //       iconName={backIcon}
-    //       onPress={() => navigation.goBack()}
-    //     />
-    //   ),
-    // });
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRight
+          iconName1={""}
+          iconName2={""}
+          iconName3={drawerIcon}
+          onPress3={() => navigation.openDrawer()}
+        />
+      ),
+      headerTitle: () => <HeaderTitle title={"Song"} />,
+      headerLeft: () => (
+        <HeaderLeft
+          text={""}
+          iconName={backIcon}
+          onPress={() => navigation.goBack()}
+        />
+      ),
+    });
 
   }, [navigation]);
-
-  useEffect(() => {
-    (async () => {
-
-      await TrackPlayer?.setupPlayer && TrackPlayer.setupPlayer()
-
-      await TrackPlayer.add(
-        {
-          id: 'trackId',
-          url: 'http://soundnsoulful.alliedtechnologies.co:8000/media/songs/2022/07/28/wvd7x8ZrxGBZ9AsLdojX4itfFDSI2b.mp3',
-        }
-      )
-
-      // try {
-      // } catch (error) {
-
-      //   console.log('error', error)
-      // }
-
-
-    })();
-
-    return () => TrackPlayer?.destroy && TrackPlayer?.destroy();
-
-  }, []);
 
   //--------- users actions
 
@@ -187,50 +162,79 @@ const AudioPlayer = ({ navigation, route }) => {
           TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
         ]
       })
-  })
+    })
 
-  TrackPlayer.updateOptions({
-    stopWithApp: false,
-    capabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
-    compactCapabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
-  })
 
-  const playSound = (song) => {
-    pauseSound();
+  // TrackPlayer.updateOptions({
+  //   stopWithApp: false,
+  //   capabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
+  //   compactCapabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
+  // })
+
+  const playSound = async (song) => {
+
+
+    //---------- @temp
+
+    await pauseSound();
 
     if (song.url) {
 
+      await TrackPlayer.add({
+        id: song.id,
+        url: song.url,
+      });
+
       setSongInProcess(true);
       setSongStatus(true);
-      // if (songVar !== null) pauseSound();
-      var whoosh = new Sound(song.url, '', (error) => {
-        if (error) {
-          console.log("failed to load the sound", error);
-          return;
-        }
 
-        // loaded successfully
+      // Start playing it
+      await TrackPlayer.play();
 
-        setSongVar(whoosh);
-        setSongInProcess(false);
+      setSongInProcess(false)
 
-        whoosh.getCurrentTime((seconds) => setSongCS(seconds));
-        setSongLength(whoosh.getDuration());
-
-        // Play the sound with an onEnd callback
-        whoosh.play((success) => {
-          if (success) {
-            console.log("successfully finished playing");
-          } else {
-            console.log("playback failed due to audio decoding errors");
-          }
-        });
-      });
     }
+
+    //---------- @temp
+
+
+
+    // pauseSound();
+
+    // if (song.url) {
+
+    //   setSongInProcess(true);
+    //   setSongStatus(true);
+    //   // if (songVar !== null) pauseSound();
+    //   var whoosh = new Sound(song.url, '', (error) => {
+    //     if (error) {
+    //       console.log("failed to load the sound", error);
+    //       return;
+    //     }
+
+    //     // loaded successfully
+
+    //     setSongVar(whoosh);
+    //     setSongInProcess(false);
+
+    //     whoosh.getCurrentTime((seconds) => setSongCS(seconds));
+    //     setSongLength(whoosh.getDuration());
+
+    //     // Play the sound with an onEnd callback
+    //     whoosh.play((success) => {
+    //       if (success) {
+    //         console.log("successfully finished playing");
+    //       } else {
+    //         console.log("playback failed due to audio decoding errors");
+    //       }
+    //     });
+    //   });
+    // }
   };
 
-  const handleNextOrPrevious = (key, index) => {
+  const handleNextOrPrevious = async (key, index) => {
 
+    console.log('-=-=-=-=', index)
     if (songInPrecess) {
 
       alert('please wait song is in process...')
@@ -238,27 +242,38 @@ const AudioPlayer = ({ navigation, route }) => {
 
     } else {
 
-      pauseSound();
+      await pauseSound();
 
       if (key === 'next') {
+
+
         setCurrentSongIndex(index);
         setCurrentSong(songsSameGenre[index])
       }
 
       if (key === 'previous') {
+
+
         setCurrentSongIndex(index);
         setCurrentSong(songsSameGenre[index])
       }
     }
   }
 
-  const pauseSound = () => {
+  const pauseSound = async () => {
 
-    console.log("songVar", songVar);
-    if (songVar) {
-      songVar.pause();
-      setSongStatus(false);
-    }
+    await TrackPlayer.pause();
+    setSongStatus(false);
+    setSongInProcess(false);
+
+    // setSongStatus(true);
+
+    // console.log("songVar", songVar);
+    // if (songVar) {
+    //   songVar.pause();
+    //   setSongStatus(false);
+    // }
+
   };
 
   //---------- render main view
@@ -456,7 +471,14 @@ const AudioPlayer = ({ navigation, route }) => {
 
                 <TouchableOpacity
                   onPress={() => {
-                    handleNextOrPrevious('previous', (currentSongIndex - 1))
+
+                    if (currentSongIndex === 0) {
+
+                      handleNextOrPrevious('previous', (songsSameGenre.length - 1))
+                    } else {
+
+                      handleNextOrPrevious('previous', (currentSongIndex - 1))
+                    }
                   }}
                 >
                   <Image
@@ -538,7 +560,15 @@ const AudioPlayer = ({ navigation, route }) => {
                 }
                 <TouchableOpacity
                   onPress={() => {
-                    handleNextOrPrevious('next', (currentSongIndex + 1))
+
+                    if(currentSongIndex === (songsSameGenre?.length-1)){
+
+                      handleNextOrPrevious('next', 0)
+
+                    }else{
+
+                      handleNextOrPrevious('next', (currentSongIndex + 1))
+                    }
                   }}
                 >
                   <Image
