@@ -6,7 +6,8 @@ import HeaderLeft from "../../../components/HeaderLeft";
 import { backIcon, drawerIcon } from "../../../constants/Images";
 import SongModal from "../../../components/SongModal";
 
-const Songs = ({ navigation }) => {
+const Songs = ({ navigation, route }) => {
+  const {selectedSublimal,sublimalID, fromPlayList,songsID} = route.params
   const [songs, setSongs] = useState([]);
   const [error, setError] = useState("");
 
@@ -45,7 +46,24 @@ const Songs = ({ navigation }) => {
       .then((response) => response.json())
       .then((res) => {
         if (res.status) {
-          setSongs(res.data);
+          var checkData = res.data?.songs
+          if(fromPlayList){
+            var result = checkData.filter(function(value) {
+              if(songsID.indexOf(value.id) !== -1) {
+                  return value
+              }
+          });
+          console.log(result,'RESULT')
+          setSongs(result)
+          } else {
+            var result = checkData.map(val => {
+              if(val.sublimal == sublimalID) {
+                console.log('GOT IT')
+              }
+            })
+          setSongs(checkData)
+          }
+          // setSongs(result);
         } else {
           const err = "Something went wrong please try again later";
           setError(err);
@@ -62,9 +80,9 @@ const Songs = ({ navigation }) => {
     fetchSongs();
   }, []);
 
-  console.log('----------------------')
-  console.log('songs :', songs)
-  console.log('----------------------')
+  // console.log('----------------------')
+  // console.log('songs :', songs)
+  // console.log('----------------------')
 
   return (
     <View style={styles.container}>

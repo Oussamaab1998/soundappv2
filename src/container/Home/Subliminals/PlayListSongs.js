@@ -41,6 +41,7 @@ const PlayListSongs = ({ navigation }) => {
     })
       .then((response) => response.json())
       .then((res) => {
+        console.log(res,'PLAYLIST')
         if (res) {
           setSongs(res);
         } else {

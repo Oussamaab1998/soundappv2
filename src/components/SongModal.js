@@ -5,6 +5,7 @@ const SongModal = (props) => {
   const { item, index, navigation, songs } = props;
   const handlePress = () => {
     console.log("Clicked");
+    console.log('yehhh')
     navigation.navigate("audioPlayer", { item: item, songs: songs });
   };
 

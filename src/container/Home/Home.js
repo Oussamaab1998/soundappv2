@@ -101,7 +101,7 @@ function Home({ navigation }) {
     setPlaylistData(true)
     try {
       await fetch(
-        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlist/1"
+        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlists"
       )
         .then((response) => response.json())
         .then((data) => {

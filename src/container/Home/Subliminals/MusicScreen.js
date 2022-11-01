@@ -8,6 +8,8 @@ import { View, Image, SafeAreaView, Text } from 'react-native'
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
+import TrackPlayer from "react-native-track-player";
+
 
 // common components
 import CustomText from "../../../components/CustomText";
@@ -54,6 +56,37 @@ const data = [
 
 function MusicScreen({ navigation }) {
 
+    const trackPlayer = async() => {
+        TrackPlayer.setupPlayer({waitForBuffer:true})
+        await TrackPlayer.add({
+            artist:'Sound and Soul',
+            title:'Sound and Soul',
+            id:1,
+            url:'https://raw.githubusercontent.com/zmxv/react-native-sound-demo/master/advertising.mp3'
+        })
+        .then(async() => {
+          TrackPlayer.updateOptions({
+            capabilities: [
+              TrackPlayer.CAPABILITY_PLAY,
+              TrackPlayer.CAPABILITY_PAUSE,
+              TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+              TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+            ],
+            compactCapabilities: [
+              TrackPlayer.CAPABILITY_PLAY,
+              TrackPlayer.CAPABILITY_PAUSE,
+              TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+              TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+            ]
+          })
+        })
+      }
+    
+      useEffect(() => {
+        trackPlayer()
+      },[])
+    
+
     //---------- state, veriable and hooks
 
     // veriable
@@ -61,17 +94,17 @@ function MusicScreen({ navigation }) {
 
     //---------- life cycle
 
-    useEffect(() => {
-        Sound.setCategory('Playback', true); // true = mixWithOthers
-        return () => {
-            if (sound1) sound1.release();
-            if (sound2) sound2.release();
-            if (sound3) sound3.release();
-            if (sound4) sound4.release();
-            if (sound5) sound5.release();
-            if (sound6) sound6.release();
-        };
-    }, []);
+    // useEffect(() => {
+    //     Sound.setCategory('Playback', true); // true = mixWithOthers
+    //     return () => {
+    //         if (sound1) sound1.release();
+    //         if (sound2) sound2.release();
+    //         if (sound3) sound3.release();
+    //         if (sound4) sound4.release();
+    //         if (sound5) sound5.release();
+    //         if (sound6) sound6.release();
+    //     };
+    // }, []);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -83,18 +116,40 @@ function MusicScreen({ navigation }) {
 
     //---------- helper: user's actions
 
-    const playSound = () => {
+    const playSound = async() => {
         console.log("...........11");
-        sound1 = new Sound('https://raw.githubusercontent.com/zmxv/react-native-sound-demo/master/advertising.mp3', '', (error, _sound) => {
-            console.log(_sound, "_sound===");
-            if (error) {
-                alert('error' + error.message);
-                return;
-            }
-            sound1.play(() => {
-                sound1.release();
-            });
-        });
+        // sound1 = new Sound('https://raw.githubusercontent.com/zmxv/react-native-sound-demo/master/advertising.mp3', '', (error, _sound) => {
+        //     console.log(_sound, "_sound===");
+        //     if (error) {
+        //         alert('error' + error.message);
+        //         return;
+        //     }
+        //     sound1.play(() => {
+        //         sound1.release();
+        //     });
+        // });
+        var getState = await TrackPlayer.getState()
+        if(getState === 'playing'){
+            console.log('HE')
+            await TrackPlayer.reset()
+            await TrackPlayer.pause()
+        }
+        await TrackPlayer.add({
+            artist:'Sound and Soul',
+            title:'Sound and Soul',
+            id:1,
+            url:'https://raw.githubusercontent.com/zmxv/react-native-sound-demo/master/advertising.mp3'
+        })
+        await TrackPlayer.play()
+
+        // await TrackPlayer.pause()
+        // console.log(await TrackPlayer.getState())
+        // await TrackPlayer.play()
+
+
+
+        // await TrackPlayer.play()
+        
     }
 
     //---------- return main view

@@ -31,6 +31,7 @@ import Contact from "../../container/Home/Contact";
 import Intellectual from "../../container/Home/Intellectual";
 import Premium from "../../container/Home/Premium";
 import PlayListSongs from "../../container/Home/Subliminals/PlayListSongs";
+import MyPlayer from "../../container/Home/Subliminals/MyPlayer";
 
 // global stack veriable
 const Drawer = createDrawerNavigator();
@@ -82,6 +83,16 @@ function HomeNavigation(props) {
         }}
         name="audioPlayer"
         component={AudioPlayer}
+      />
+            <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: WHITE,
+          },
+          headerTitle: () => null,
+        }}
+        name="myPlayer"
+        component={MyPlayer}
       />
       <Stack.Screen
         options={{

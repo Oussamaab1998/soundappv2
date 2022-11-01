@@ -3,7 +3,7 @@
 
 // react
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { View, Image, SafeAreaView, Text } from 'react-native'
+import { View, Image, SafeAreaView, Text, ActivityIndicator } from 'react-native'
 
 // third party lib
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
@@ -23,6 +23,7 @@ import AuthStyles from "../../../style/AuthStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
 import TextStyles from "../../../style/TextStyles";
 import { backIcon, bagIcon, drawerIcon, musicIcon, splashLog, grayStarIcon, blackRoundIcon } from "../../../constants/Images";
+import axios from "axios";
 
 // constants
 const data = [
@@ -39,7 +40,35 @@ const data = [
 
 //---------- component
 
-function CategoryList({ navigation }) {
+function CategoryList({ navigation, route }) {
+    const {selectedSublimal,sublimalCategory,sublimalID} = route.params
+    const [categories, setCategories] = useState()
+    const [loading, setLoading] = useState(false)
+
+
+    //---------- state, veriable and hooks
+    const getCategories = async() => {
+        setLoading(true)
+        await axios({
+            method:'GET',
+            url:'http://soundnsoulful.alliedtechnologies.co:8000/v1/api/categories',
+        }).then((res) => {
+            var checkData = res.data?.data
+            var result = checkData.filter(function(value) {
+                if(sublimalCategory.indexOf(value.id) !== -1) {
+                    return value
+                }
+            });
+            setCategories(result)
+            setLoading(false)
+        }).catch(err => {
+            console.log(err,'ERROR')
+        })
+    }
+    
+    useEffect(() => {
+        getCategories()
+    },[])
 
     //---------- state, veriable and hooks
 
@@ -57,8 +86,17 @@ function CategoryList({ navigation }) {
 
     //---------- return main view
 
+    if(loading) {
+        return (
+            <View style={{display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}>
+                <ActivityIndicator color={'black'} size='large'/>
+            </View>
+        )
+    }
+
+
     return (
-        <SafeAreaView >
+        <SafeAreaView style={{flex:1, backgroundColor:'white'}} >
             <ScrollView>
 
                 <View
@@ -75,19 +113,27 @@ function CategoryList({ navigation }) {
                                 resizeMode='cover'
                             />
                             <CustomText
-                                text={'BEAUTY'}
+                                text={selectedSublimal}
                                 style={[TextStyles.quicksandRegular24Black, SpaceStyles.left5]}
                             />
                         </TouchableOpacity>
 
                         <CustomText
-                            text={'Subliminal to amplify beauty'}
+                            text={`Subliminal to amplify ${selectedSublimal}`}
                             style={[TextStyles.textBold24Black, SpaceStyles.textAlign, SpaceStyles.vertical2]}
                         />
-                        {data.map((i) => {
+                        {categories && categories.map((i) => {
                             return (
                                 <TouchableOpacity
                                  style={CommonStyles.musicCategory} 
+                                 onPress={() => {
+                                    navigation.navigate('Songs', {
+                                        selectedSublimal:selectedSublimal,
+                                        sublimalID:sublimalID,
+                                        fromPlayList:false,
+                                        songsID:[]
+                                    })
+                                 }}
                                 >
                                     <Image
                                         source={blackRoundIcon}

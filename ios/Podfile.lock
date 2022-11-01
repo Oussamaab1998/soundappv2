@@ -266,11 +266,6 @@ PODS:
     - glog
     - RCT-Folly (= 2021.06.28.00-v2)
     - React-jsi/Default (= 0.66.3)
-  - React-jsi/Default (0.66.3):
-    - boost (= 1.76.0)
-    - DoubleConversion
-    - glog
-    - RCT-Folly (= 2021.06.28.00-v2)
   - React-jsiexecutor (0.66.3):
     - DoubleConversion
     - glog
@@ -291,9 +286,8 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
-  - react-native-track-player (3.2.0-d23c3fb990aaf9d6783881fabe21e059b62b0782):
-    - React-Core
-    - SwiftAudioEx (= 0.15.3)
+  - react-native-track-player (1.1.8):
+    - React
   - React-perflogger (0.66.3)
   - React-RCTActionSheet (0.66.3):
     - React-Core/RCTActionSheetHeaders (= 0.66.3)
@@ -412,7 +406,6 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - SwiftAudioEx (0.15.3)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -502,7 +495,6 @@ SPEC REPOS:
     - OpenSSL-Universal
     - SDWebImage
     - SDWebImageWebPCoder
-    - SwiftAudioEx
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -626,7 +618,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-slider: e540525ea731783850802b7af457d8551edb0711
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
-  react-native-track-player: 1705f88530db9636598cb688e8031ee29aff4944
+  react-native-track-player: 6e4e91a246efe7121cdef5a43258659a062499db
   React-perflogger: 73732888d37d4f5065198727b167846743232882
   React-RCTActionSheet: 96c6d774fa89b1f7c59fc460adc3245ba2d7fd79
   React-RCTAnimation: 8940cfd3a8640bd6f6372150dbdb83a79bcbae6c
@@ -643,16 +635,15 @@ SPEC CHECKSUMS:
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNFastImage: 3207b9eb17c2425d574ca40db35185db6e324f4e
   RNGestureHandler: b7a872907ee289ada902127f2554fa1d2c076122
-  RNReanimated: 183d1c48d3ec449cfbc95cbf14abe029b32199a1
+  RNReanimated: 05e496ae02eda5c5c492c92a0e06f1bdff3477ae
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  SwiftAudioEx: 83eabba2940924fc1c0d5cb0896049921365229c
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 91a0e0ec9063943410aeb0bfa7e8afb704804b2e
+PODFILE CHECKSUM: c412eaa7e29645bc354d98d7b7ac39e7cea11046
 
 COCOAPODS: 1.11.3

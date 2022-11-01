@@ -2,7 +2,7 @@
 
 // react
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { View, Image, SafeAreaView, Text } from 'react-native'
+import { View, Image, SafeAreaView, Text, ActivityIndicator } from 'react-native'
 
 // third party lib
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -22,6 +22,7 @@ import CommonStyles from "../../../style/CommonStyles";
 import SpaceStyles from "../../../style/SpaceStyles";
 import TextStyles from "../../../style/TextStyles";
 import { backIcon, bagIcon, drawerIcon, musicIcon, splashLog, grayStarIcon } from "../../../constants/Images";
+import axios from "axios";
 
 // constants
 const data = [
@@ -41,9 +42,28 @@ const data = [
 //---------- component
 
 function Subliminals({ navigation }) {
+    const [sublimals, setSublimals] = useState()
+    const [loading, setLoading] = useState(false)
 
 
     //---------- state, veriable and hooks
+    const getSublimals = async() => {
+        setLoading(true)
+        await axios({
+            method:'GET',
+            url:'http://soundnsoulful.alliedtechnologies.co:8000/v1/api/sublimals',
+        }).then((res) => {
+            setSublimals(res.data?.data)
+            setLoading(false)
+        }).catch(err => {
+            console.log(err,'ERROR')
+        })
+    }
+    
+    useEffect(() => {
+        getSublimals()
+    },[])
+    
 
     //---------- life cycle
 
@@ -59,15 +79,27 @@ function Subliminals({ navigation }) {
 
     //---------- return main view
 
+    if(loading) {
+        return (
+            <View style={{display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}>
+                <ActivityIndicator color={'black'} size='large'/>
+            </View>
+        )
+    }
+
     return (
         <View style={AuthStyles.authContainer}>
             <SafeAreaView>
                 <View style={SpaceStyles.top5}>
-                    {data.map((i) => {
+                    {sublimals && sublimals.map((i) => {
                         return (
                             <TouchableOpacity
                              style={CommonStyles.musicCategory}
-                             onPress={() => NavigationService.navigate('categoryListScreen')}>
+                             onPress={() => NavigationService.navigate('categoryListScreen', {
+                                selectedSublimal:i.name,
+                                sublimalCategory:i.category,
+                                sublimalID:i.id
+                             })}>
                                 <Image
                                     source={grayStarIcon}
                                     resizeMode='cover'

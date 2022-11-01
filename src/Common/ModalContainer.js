@@ -31,6 +31,7 @@ import TextStyles from "../style/TextStyles";
 //---------- component
 const mapState = ({ localReducer }) => ({
   myUserId: localReducer.myUserId,
+  myUserEmail: localReducer.userData
 });
 
 function ModalContainer({
@@ -43,7 +44,7 @@ function ModalContainer({
   loading,
 }) {
   //---------- state, veriable and hooks
-  const { myUserId } = useSelector(mapState);
+  const { myUserId, myUserEmail } = useSelector(mapState);
   const [visible, setVisible] = React.useState(isVisible);
   const [createPlaylistLoading, setCreatePlaylistLoading] = React.useState(false);
   const [onChangeNumber, setOnChangeNumber] = React.useState('');
@@ -70,7 +71,7 @@ function ModalContainer({
   };
 
   const addToList = async () => {
-
+    console.log(myUserId,'EMAILLLLL')
     if (onChangeNumber) {
 
       setCreatePlaylistLoading(true);
@@ -80,16 +81,18 @@ function ModalContainer({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             list_name: onChangeNumber,
-            user: `${myUserId}`,
+            date_created:"2022-10-31T22:46:00Z",
+            creator: "2",
             songs: ["2"],
           }),
         };
         await fetch(
-          "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlist",
+          "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/create_playlists/",
           requestOptions
         )
           .then((response) => response.json())
           .then((response) => {
+            console.log('ADDDDEDDDDDD')
             console.log("Add To List :", response.data);
             if (response.data.errors) {
               setCreatePlaylistLoading(false);
@@ -102,6 +105,7 @@ function ModalContainer({
             }
           });
       } catch (err) {
+        console.log(err,'ERRRORRRRRR')
         setCreatePlaylistLoading(false);
         console.log("Error from catch in Add TO List actions", err);
       }
@@ -234,9 +238,13 @@ function ModalContainer({
         key={index}
 
         onPress={() => {
-
-          alert('in process ...')
-
+          navigation.navigate('Songs', {
+            selectedSublimal:0,
+            sublimalID:0,
+            fromPlayList:true,
+            songsID:item.songs
+          })
+          hideModal()
         }}
 
         style={[CommonStyles.RowStart, { justifyContent: 'flex-start', paddingVertical: 5 }]}

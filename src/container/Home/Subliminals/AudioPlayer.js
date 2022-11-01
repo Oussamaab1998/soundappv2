@@ -67,6 +67,7 @@ const AudioPlayer = ({ navigation, route }) => {
   const [songVar, setSongVar] = useState(undefined);
   const [modalKey, setModalKey] = useState(undefined);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [pauseState, setPauseState] = useState(false)
 
   //---------- life cycles
 
@@ -74,15 +75,46 @@ const AudioPlayer = ({ navigation, route }) => {
     if (songs) fetchSameGenre();
   }, []);
 
+  const trackPlayer = async() => {
+    var newSongs = songs.map(val => ({
+      ...val,
+      artist:'Vinay'
+    }))
+    console.log(newSongs,'NEW')
+    TrackPlayer.setupPlayer({waitForBuffer:true})
+    .then(async() => {
+      await TrackPlayer.add([...newSongs]);
+      TrackPlayer.updateOptions({
+        capabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+        ],
+        compactCapabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+        ]
+      })
+    })
+  }
+
   useEffect(() => {
-    if (item?.url) {
-      setCurrentSong(item);
-      // setSongStatus(true)
-    } else {
-      setCurrentSong(undefined);
-      // setSongStatus(false)
-    }
-  }, [item?.url]);
+    console.log(songs,'SONGS ARRAY')
+    trackPlayer()
+  },[])
+
+  // useEffect(() => {
+  //   if (item?.url) {
+  //     setCurrentSong(item);
+  //     // setSongStatus(true)
+  //   } else {
+  //     setCurrentSong(undefined);
+  //     // setSongStatus(false)
+  //   }
+  // }, [item?.url]);
 
   useEffect(() => {
     if (currentSong?.url) {
@@ -93,7 +125,11 @@ const AudioPlayer = ({ navigation, route }) => {
     }
 
     console.log("update for current song", currentSong);
-  }, [currentSong?.url]);
+  }, [currentSong]);
+
+  // useEffect(async() => {
+  //   console.log('HEY')
+  // },[TrackPlayer.getCurrentTrack()])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -145,26 +181,6 @@ const AudioPlayer = ({ navigation, route }) => {
     // }
   };
 
-
-  TrackPlayer.setupPlayer({})
-    .then(() => {
-      TrackPlayer.updateOptions({
-        capabilities: [
-          TrackPlayer.CAPABILITY_PLAY,
-          TrackPlayer.CAPABILITY_PAUSE,
-          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
-        ],
-        compactCapabilities: [
-          TrackPlayer.CAPABILITY_PLAY,
-          TrackPlayer.CAPABILITY_PAUSE,
-          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
-        ]
-      })
-    })
-
-
   // TrackPlayer.updateOptions({
   //   stopWithApp: false,
   //   capabilities: [TrackPlayer.CAPABILITY_PLAY, TrackPlayer.CAPABILITY_PAUSE],
@@ -173,33 +189,74 @@ const AudioPlayer = ({ navigation, route }) => {
 
   const playSound = async (song) => {
 
-
+    console.log(song,'SONGSS')
+    console.log(currentSongIndex,'CURRENT')
     //---------- @temp
 
-    await pauseSound();
+    console.log(songInPrecess,'PROCESS')
+    console.log(currentSong,'CURRENT SONG')
+    console.log(await TrackPlayer.getCurrentTrack(),'TRACK CURRENT')
 
     if (song.url) {
 
-      await TrackPlayer.add({
-        id: song.id,
-        url: song.url,
-      });
+      // await TrackPlayer.add({
+      //   id: song.id,
+      //   url: song.url,
+      //   artist:'Vinay',
+      //   title:'HAHAHA'
+      // });
 
+      console.log(await TrackPlayer.getTrack(song.id.toString()),'QUEUE')
+      await TrackPlayer.pause()
       setSongInProcess(true);
+      console.log(await TrackPlayer.getState(),'ID')
+      await TrackPlayer.skip(song.id.toString())
       setSongStatus(true);
 
       // Start playing it
-      await TrackPlayer.play();
 
       setSongInProcess(false)
+      await TrackPlayer.play();
+      console.log(await TrackPlayer.getState(),'ID after')
+
+
+
+
 
     }
 
     //---------- @temp
 
+    TrackPlayer.registerEventHandler(async(data)=>{
+      console.log("got event",data.type,data)
+      await TrackPlayer.getCurrentTrack().then(async(track_id)=>{
+          // this.currentIndex = this.tracks.findIndex(t => t.id === track_id)
+          if(data.type === 'playback-track-changed') {
+            var currentIndex = songs.find(t => t.id === track_id)
+            console.log(await TrackPlayer.getCurrentTrack())
+            var newSong = songs.find(x => x.id == track_id)
+            console.log(newSong,'NEWW')
+            setCurrentSong(newSong)
+            setCurrentSongIndex(track_id)
+            await TrackPlayer.play()
+            
+          }          
+      })
 
-
-    // pauseSound();
+      if(data.type === 'playback-track-changed') {
+          // if(this.repeat) {
+          //     //don't mess with anything if already on the track to repeat
+          //     if(data.nextTrack === this.trackToRepeat) return
+          //     if(!data.track && data.nextTrack && this.trackToRepeat === null) {
+          //         this.trackToRepeat = data.nextTrack
+          //     } else {
+          //         TrackPlayer.pause()
+          //         TrackPlayer.skip(this.trackToRepeat).then(()=>TrackPlayer.play())
+          //     }
+          // }
+      }
+    })
+    // // pauseSound();
 
     // if (song.url) {
 
@@ -276,6 +333,14 @@ const AudioPlayer = ({ navigation, route }) => {
 
   };
 
+  const getCurrentIcon = async() => {
+    if(await TrackPlayer.getState() == 'playing') {
+      return playIcon
+    } else {
+      return pause
+    }
+  }
+
   //---------- render main view
 
   return (
@@ -327,8 +392,8 @@ const AudioPlayer = ({ navigation, route }) => {
             { justifyContent: "center", alignItems: "center" },
           ]}
         >
-          <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-          <Text style={styles.title2}>{item.title}</Text>
+          <Image source={{ uri: currentSong.thumbnail }} style={styles.thumbnail} />
+          <Text style={styles.title2}>{currentSong.title}</Text>
         </View>
         <View style={[CommonStyles.musicView, { backgroundColor: "#ffffff" }]}>
           <View style={CommonStyles.musicBorderView} />
@@ -355,6 +420,7 @@ const AudioPlayer = ({ navigation, route }) => {
                             <TouchableOpacity
                               key={index}
                               onPress={() => {
+                                console.log('HII')
                                 setCurrentSong(song);
                                 setCurrentSongIndex(index);
                                 // playSound(song);
@@ -375,6 +441,8 @@ const AudioPlayer = ({ navigation, route }) => {
                             <TouchableOpacity
                               key={index}
                               onPress={() => {
+                                console.log('HII DIFF')
+                                pauseSound()
                                 setCurrentSong(song);
                                 setCurrentSongIndex(index);
                                 // playSound(song);
@@ -396,8 +464,8 @@ const AudioPlayer = ({ navigation, route }) => {
                           <TouchableOpacity
                             key={index}
                             onPress={() => {
-                              setCurrentSong({});
-                              pauseSound();
+                              // setCurrentSong({});
+                              // pauseSound();
                             }}
                             style={styles.gernre2}
                           >
@@ -470,15 +538,8 @@ const AudioPlayer = ({ navigation, route }) => {
                 }
 
                 <TouchableOpacity
-                  onPress={() => {
-
-                    if (currentSongIndex === 0) {
-
-                      handleNextOrPrevious('previous', (songsSameGenre.length - 1))
-                    } else {
-
-                      handleNextOrPrevious('previous', (currentSongIndex - 1))
-                    }
+                  onPress={async() => {
+                    await TrackPlayer.skipToPrevious()
                   }}
                 >
                   <Image
@@ -507,13 +568,21 @@ const AudioPlayer = ({ navigation, route }) => {
                           :
                           <TouchableOpacity
                             style={styles.playpauseIcon}
-                            onPress={() => {
-                              setCurrentSong({});
+                            onPress={async() => {
+                              // setCurrentSong({});
                               // pauseSound()
+                              console.log(await TrackPlayer.getState())
+                              if(await TrackPlayer.getState() === 'playing') {
+                                await TrackPlayer.pause()
+                                setPauseState(true)
+                              } else {
+                                await TrackPlayer.play()
+                                setPauseState(false)
+                              }
                             }}
                           >
                             <Image
-                              source={pause}
+                              source={pauseState ? playIcon : pause}
                               resizeMode="cover"
                               style={styles.pauseSyles}
                             />
@@ -536,13 +605,15 @@ const AudioPlayer = ({ navigation, route }) => {
                             :
                             <TouchableOpacity
                               style={styles.playpauseIcon}
-                              onPress={() => {
-                                setCurrentSong(currentSong?.url ?
-                                  currentSong :
-                                  (songsSameGenre.length > 0 && songsSameGenre[currentSongIndex].id === item.id) ?
-                                    item
-                                    : songsSameGenre[currentSongIndex]);
-                                // playSound()
+                              onPress={async() => {
+                                // setCurrentSong(currentSong?.url ?
+                                //   currentSong :
+                                //   (songsSameGenre.length > 0 && songsSameGenre[currentSongIndex].id === item.id) ?
+                                //     item
+                                //     : songsSameGenre[currentSongIndex]);
+                                console.log(await TrackPlayer.getState())
+                                
+                                // playSound(item)
                               }}
                             >
                               <Image
@@ -559,16 +630,8 @@ const AudioPlayer = ({ navigation, route }) => {
                   //---------- next button
                 }
                 <TouchableOpacity
-                  onPress={() => {
-
-                    if(currentSongIndex === (songsSameGenre?.length-1)){
-
-                      handleNextOrPrevious('next', 0)
-
-                    }else{
-
-                      handleNextOrPrevious('next', (currentSongIndex + 1))
-                    }
+                  onPress={async() => {
+                    await TrackPlayer.skipToNext()
                   }}
                 >
                   <Image
