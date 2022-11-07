@@ -68,6 +68,7 @@ const AudioPlayer = ({ navigation, route }) => {
   const [modalKey, setModalKey] = useState(undefined);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [pauseState, setPauseState] = useState(false)
+  const [playListData, setPlaylistData] = useState()
 
   //---------- life cycles
 
@@ -228,12 +229,27 @@ const AudioPlayer = ({ navigation, route }) => {
     //---------- @temp
 
     TrackPlayer.registerEventHandler(async(data)=>{
-      console.log("got event",data.type,data)
+      // console.log("got event",data.type,data)
+      console.log('TRACK CHANGED',data)
+      if(data.type === 'playback-queue-ended'){
+        await TrackPlayer.getCurrentTrack().then(async(track_id)=>{
+          var newSong = songs.find(x => x.id == track_id)
+            setCurrentSong(newSong)
+            setCurrentSongIndex(track_id)
+        })
+      }
       await TrackPlayer.getCurrentTrack().then(async(track_id)=>{
+        
           // this.currentIndex = this.tracks.findIndex(t => t.id === track_id)
+          if(data.state == 'paused' || data.state == 'loading') { 
+            setPauseState(true)
+          } else {
+            setPauseState(false)
+          }
           if(data.type === 'playback-track-changed') {
-            var currentIndex = songs.find(t => t.id === track_id)
-            console.log(await TrackPlayer.getCurrentTrack())
+
+            // var currentIndex = songs.find(t => t.id === track_id)
+            console.log(await TrackPlayer.getCurrentTrack(),'Current Track')
             var newSong = songs.find(x => x.id == track_id)
             console.log(newSong,'NEWW')
             setCurrentSong(newSong)
@@ -333,6 +349,33 @@ const AudioPlayer = ({ navigation, route }) => {
 
   };
 
+  useEffect(() => {
+    getApi()
+  },[])
+
+  const getApi = async () => {
+    setPlaylistData(true)
+    try {
+      await fetch(
+        "http://soundnsoulful.alliedtechnologies.co:8000/v1/api/playlists"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("hahahaha", data);
+          setPlaylistData(false)
+          setPlaylistData(data?.data || [])
+        })
+        .catch((err) => {
+          setPlaylistData(false)
+          console.log("error => ", err);
+        });
+    } catch (err) {
+      setPlaylistData(false)
+      console.log("----------------------", err);
+    }
+  };
+
+
   const getCurrentIcon = async() => {
     if(await TrackPlayer.getState() == 'playing') {
       return playIcon
@@ -349,8 +392,9 @@ const AudioPlayer = ({ navigation, route }) => {
         navigation={navigation}
         isVisible={isAffirmations}
         render_view_key={modalKey}
-        content={item.affirmations_song}
+        content={modalKey == 'save' ? playListData : item.affirmations_song}
         hideModal={() => setIsAffirmations(false)}
+        songForPlaylist={currentSong}
       />
 
       {/* <Modal

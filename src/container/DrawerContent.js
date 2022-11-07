@@ -104,7 +104,7 @@ export default function DrawerContent(props) {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               // disabled={!isUserPremium}
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}
               onPress={() => {
@@ -125,7 +125,7 @@ export default function DrawerContent(props) {
                   { color: isUserPremium ? "black" : "red" },
                 ]}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={[SpaceStyles.rowFlex, SpaceStyles.top2]}

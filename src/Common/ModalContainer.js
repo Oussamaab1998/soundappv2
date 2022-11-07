@@ -42,6 +42,7 @@ function ModalContainer({
   renderItem,
   hideModal,
   loading,
+  songForPlaylist
 }) {
   //---------- state, veriable and hooks
   const { myUserId, myUserEmail } = useSelector(mapState);
@@ -70,8 +71,8 @@ function ModalContainer({
     console.log("myUserId =>", myUserId);
   };
 
-  const addToList = async () => {
-    console.log(myUserId,'EMAILLLLL')
+  const addToList = async (createdList) => {
+    console.log(myUserId, 'EMAILLLLL')
     if (onChangeNumber) {
 
       setCreatePlaylistLoading(true);
@@ -81,9 +82,9 @@ function ModalContainer({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             list_name: onChangeNumber,
-            date_created:"2022-10-31T22:46:00Z",
+            date_created: "2022-10-31T22:46:00Z",
             creator: "2",
-            songs: ["2"],
+            songs: [songForPlaylist.id],
           }),
         };
         await fetch(
@@ -105,7 +106,7 @@ function ModalContainer({
             }
           });
       } catch (err) {
-        console.log(err,'ERRRORRRRRR')
+        console.log(err, 'ERRRORRRRRR')
         setCreatePlaylistLoading(false);
         console.log("Error from catch in Add TO List actions", err);
       }
@@ -121,7 +122,7 @@ function ModalContainer({
         return renderContentLayout({
           title: "Affirmations",
           content: <ScrollView
-          style={{flex:1}}
+            style={{ flex: 1 }}
           >
             <Text style={{ color: "#000" }}>{content}</Text>
           </ScrollView>
@@ -160,6 +161,7 @@ function ModalContainer({
                     marginTop: 10,
                   }}
                 >
+
                   {
                     createPlaylistLoading ?
                       <ActivityIndicator
@@ -175,6 +177,26 @@ function ModalContainer({
                   <Text style={{ color: "#000" }}>{"Create New Plalist"}</Text>
                 </View>
               </TouchableOpacity>
+              {
+                content?.length > 0 ?
+
+                  <FlatList
+
+                    data={content}
+                    renderItem={saveInCurrent}
+                    keyExtractor={item => item.id}
+
+                  />
+                  :
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
+                  >
+                    <Text
+                      style={{ color: '#C5C5C5' }}
+                    > Plalist Empty
+                    </Text>
+                  </View>
+              }
             </View>
           ),
         });
@@ -239,12 +261,36 @@ function ModalContainer({
 
         onPress={() => {
           navigation.navigate('Songs', {
-            selectedSublimal:0,
-            sublimalID:0,
-            fromPlayList:true,
-            songsID:item.songs
+            selectedSublimal: 0,
+            sublimalID: 0,
+            fromPlayList: true,
+            songsID: item.songs
           })
           hideModal()
+        }}
+
+        style={[CommonStyles.RowStart, { justifyContent: 'flex-start', paddingVertical: 5 }]}
+      >
+
+        <Text
+          numberOfLines={1}
+          style={{ color: "#000", alignSelf: 'flex-start' }}>
+          {
+            `- ${item.list_name}`
+          }
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+
+  const saveInCurrent = ({ item, index }) => {
+
+    return (
+      <TouchableOpacity
+        key={index}
+
+        onPress={() => {
+          addToList()
         }}
 
         style={[CommonStyles.RowStart, { justifyContent: 'flex-start', paddingVertical: 5 }]}
@@ -282,13 +328,13 @@ function ModalContainer({
         <View
 
           style={{
-            flex: render_view_key === 'affirmations' ? 1:0,
+            flex: render_view_key === 'affirmations' ? 1 : 0,
           }}
         >
           <View style={[
             AuthStyles.ModalContentContainer,
-            {flex: render_view_key === 'affirmations' ? 1:0,}
-            ]}>{content}</View>
+            { flex: render_view_key === 'affirmations' ? 1 : 0, }
+          ]}>{content}</View>
         </View>
 
         <View style={[CommonStyles.RowEnd, { padding: 10, width: "100%" }]}>
@@ -350,7 +396,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30,
-    backgroundColor:'rgba(0, 0, 0, 0.4)'
+    backgroundColor: 'rgba(0, 0, 0, 0.4)'
   },
   modalView: {
     // maxHeight: '70%',
